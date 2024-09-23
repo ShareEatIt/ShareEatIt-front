@@ -1,0 +1,31 @@
+:root {
+  --white: #ffffff;
+
+  --black: #000000;
+
+  --yellow-pri: #ffb849;
+
+  --red-pri: #f0635a;
+
+  background-color: var(--white);
+
+  font-family: Pretendard;
+
+  -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+* {
+  font-family: Pretendard;
+}
+#root {
+  width: 375px;
+  height: 100svh;
+  margin: 0 auto;
+}
+@media (max-width: 374px) {
+  #root {
+    width: 100svw;
+  }
+}
