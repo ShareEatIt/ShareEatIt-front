@@ -7,12 +7,13 @@ const S = {
         display: flex;
         align-items: center;
         justify-content: center;
+        margin: 0 0.5rem;
         margin-top: 1rem;
     `,
     ImgContainer: styled.div`
         display: flex;
         overflow: hidden;
-        width: 100%;
+        width: 85%;
         margin: 0 0.88rem;
         align-items: center;
         border: 1px red solid;
@@ -20,15 +21,21 @@ const S = {
         text-align: center;
         font-size: 40px;
     `,
-    ImgContent: styled.div`
+    ImgContent: styled.img`
         width: 100%;
         height: 300px;
-        flex-shrink: 0; /*이 구역안에 생기는 영역들이 공간을 분배하여 가지지 않도록 적용*/
+        flex-shrink: 0;
         font-size: 40px;
         text-align: center;
+        object-fit: cover;
+        background: lightgray 50%;
     `,
-    PrevArrow: styled(IoIosArrowBack)``,
-    NextArrow: styled(IoIosArrowForward)``,
+    PrevArrow: styled(IoIosArrowBack)`
+        font-size: 1.5rem;
+    `,
+    NextArrow: styled(IoIosArrowForward)`
+        font-size: 1.5rem;
+    `,
 };
 
 export { S };

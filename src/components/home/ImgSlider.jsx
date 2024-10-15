@@ -23,7 +23,7 @@ const ImgSlider = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [prevIndex, setPrevIndex] = useState(0);
     const [isTransitioning, setIsTransitioning] = useState(true);
-    const slideWidth = 20;
+    const slideWidth = 100;
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -45,28 +45,26 @@ const ImgSlider = () => {
 
     return (
         <S.Layout>
+            <S.PrevArrow onClick={prevSlide}></S.PrevArrow>
             <S.ImgContainer>
                 {ImgContents.map((image, index) => (
                     <S.ImgContent
                         key={index}
                         src={image.img}
                         alt={`slide ${index}`}
-                        active={index === currentIndex} // 현재 슬라이드 활성화
+                        active={index === currentIndex}
                         style={{
                             transform: `translateX(-${
                                 currentIndex * slideWidth
-                            }rem)`,
+                            }%)`,
                             transition: isTransitioning
                                 ? "all 0.4s ease-in-out"
                                 : "none",
                         }}
                     />
                 ))}
-                <S.PrevArrow onClick={prevSlide}></S.PrevArrow>
-
-                {/* 다음 버튼 */}
-                <S.NextArrow onClick={nextSlide}></S.NextArrow>
             </S.ImgContainer>
+            <S.NextArrow onClick={nextSlide}></S.NextArrow>
         </S.Layout>
     );
 };

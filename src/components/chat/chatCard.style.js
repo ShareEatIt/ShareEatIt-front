@@ -26,12 +26,12 @@ const S = {
         justify-content: center;
         gap: 0.5rem;
     `,
-    UserNameWrapper: styled.div`
+    TitleWrapper: styled.div`
         width: 100%;
         font-size: 0.9375rem;
         font-weight: 700;
     `,
-    ChatWrapper: styled.div`
+    ContentWrapper: styled.div`
         width: 100%;
         font-size: 0.8rem;
     `,

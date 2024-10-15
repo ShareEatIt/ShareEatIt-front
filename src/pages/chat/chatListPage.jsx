@@ -1,5 +1,4 @@
-import ChatCard from "../../components/chat/chatCard";
-import BackButton from "../../components/common/BackButton/backButton";
+import { ChatCard } from "../../components/chat/card";
 import NavigationBar from "../../components/common/Navigition/navigationBar";
 import { S } from "./chatListPage.style";
 const ChatListPage = () => {
@@ -8,7 +7,6 @@ const ChatListPage = () => {
             <NavigationBar />
             <S.ChatListWholeWrapper>
                 <S.TitleWrapper>채팅</S.TitleWrapper>
-                <ChatCard />
                 <ChatCard />
             </S.ChatListWholeWrapper>
         </S.Layout>

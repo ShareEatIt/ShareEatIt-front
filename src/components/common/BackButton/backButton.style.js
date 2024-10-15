@@ -7,7 +7,8 @@ const S = {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        width: 50rem;
+        width: 100%;
+        box-sizing: border-box;
     `,
     BackButtonIcon: styled(IoMdArrowRoundBack)`
         font-size: 24px;
