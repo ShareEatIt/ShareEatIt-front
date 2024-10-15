@@ -1,5 +1,4 @@
 //화면 상단에 있는 뒤로가기 버튼과 상단에 글자 있을 경우 그것까지 만들기
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { S } from "./backButton.style";
 

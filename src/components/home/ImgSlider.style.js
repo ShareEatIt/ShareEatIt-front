@@ -7,12 +7,13 @@ const S = {
         display: flex;
         align-items: center;
         justify-content: center;
+        margin-top: 1rem;
     `,
     ImgContainer: styled.div`
         display: flex;
         overflow: hidden;
-        width: 20rem;
-        margin: 0 50px;
+        width: 100%;
+        margin: 0 0.88rem;
         align-items: center;
         border: 1px red solid;
         border: 2px green dotted;

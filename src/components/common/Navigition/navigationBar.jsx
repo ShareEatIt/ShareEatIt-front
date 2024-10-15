@@ -17,7 +17,11 @@ const NavigationBar = ({ text }) => {
             <S.LogoImg />
             <S.NavContainer>
                 {navmenu.map((it) => (
-                    <S.NavLink key={it.name} to={it.to}>
+                    <S.NavLink
+                        key={it.name}
+                        to={it.to}
+                        activeclassname="active"
+                    >
                         {it.name}
                     </S.NavLink>
                 ))}
