@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import BackButton from "../../components/common/BackButton/backButton";
 import { ReactComponent as Arrow } from "../../assets/common/right_arrow.svg";
 import { ReactComponent as Profile } from "../../assets/common/profile.svg";
 import { ReactComponent as Camera } from "../../assets/my/camera.svg";
@@ -10,6 +11,7 @@ const ProfileEditPage = () => {
 
   return (
     <M.Layout>
+      <BackButton text="프로필 수정" />
       <M.Form>
         <M.ImageContainer>
           <Profile style={{ width: "136px", height: "136px" }} />

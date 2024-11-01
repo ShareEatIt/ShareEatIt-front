@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import BackButton from "../../components/common/BackButton/backButton";
 import { ReactComponent as X } from "../../assets/my/x.svg";
 import { M, S } from "./my";
 import { ReactComponent as Bread } from "../../assets/my/bread.svg";
@@ -25,6 +26,7 @@ const ShareStatPage = () => {
   const [other, setOther] = useState("3");
   return (
     <M.Layout>
+      <BackButton text="나눔통계" />
       <M.StatTitleWrapper>{name}님의 나눔통계 </M.StatTitleWrapper>
       <M.CntTextWrapper>총 나눔 횟수 {count}건</M.CntTextWrapper>
       <M.StatBackground>
