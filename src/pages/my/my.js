@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const S = {
   Layout: styled.div`
-    dislay: flex;
+    display: flex;
     align-items: center;
   `,
 };
@@ -33,6 +33,11 @@ const M = {
   `,
   TextWrapper: styled.div`
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  `,
+  EditBtn: styled.button`
+    font-size: 10px;
   `,
   MyContentContainer: styled.div`
     display: flex;
@@ -42,6 +47,9 @@ const M = {
   Label: styled.label`
     color: red;
     font-size: 13px;
+  `,
+  Btn: styled.button`
+    font-size: 17px;
   `,
   Text: styled.div`
     font-size: 17px;
@@ -65,6 +73,7 @@ const M = {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 40px;
   `,
   ImageContainer: styled.div`
     display: flex;
@@ -85,7 +94,7 @@ const M = {
     display: flex;
     justify-content: center;
     width: 335px;
-    height: 25px;
+    height: 23px;
     padding: 10px;
     border: 1px solid black;
     border-radius: 8px;
@@ -173,7 +182,29 @@ const M = {
     background-color: white;
     border-radius: 8px;
   `,
-
+  KeyContainer: styled.div`
+    position: absolute;
+    bottom: 25px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  `,
+  KeyTextarea: styled.textarea`
+    width: 270px;
+    height: 29px;
+    resize: none;
+    border: 0px solid;
+    border-radius: 8px;
+    margin-right: 8px;
+    padding-top: 13px;
+    padding-left: 10px;
+  `,
+  KeyBtn: styled.button`
+    width: 50px;
+    height: 42px;
+    background-color: var(--yellow-100);
+    border-radius: 8px;
+  `,
   //나눔통계
   StatBackground: styled.div`
     display: flex;
