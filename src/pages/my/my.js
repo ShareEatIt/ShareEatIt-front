@@ -209,7 +209,7 @@ const M = {
   StatBackground: styled.div`
     display: flex;
     justify-content: center;
-    width: 375px;
+
     height: 713px;
     padding-top: 20px;
     background-color: var(--yellow-40);
