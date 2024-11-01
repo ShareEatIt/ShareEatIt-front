@@ -12,8 +12,6 @@ const M = {
   Layout: styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
   `,
   InfoContainer: styled.div`
     display: flex;
@@ -23,6 +21,7 @@ const M = {
 
     border: 1px solid var(--yellow-100);
     border-radius: 8px;
+    margin: 20px 30px 0px 30px;
   `,
   ProfileWrapper: styled.div`
     margin-right: 10px;
@@ -43,6 +42,7 @@ const M = {
     display: flex;
     flex-direction: column;
     margin-bottom: 40px;
+    margin: 30px;
   `,
   Label: styled.label`
     color: red;
@@ -167,7 +167,7 @@ const M = {
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
-    width: 375px;
+
     height: 713px;
     padding-top: 20px;
     background-color: var(--yellow-40);
