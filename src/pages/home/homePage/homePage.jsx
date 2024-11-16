@@ -25,6 +25,14 @@ const HomePage = () => {
         navigate(`/postdetail/${id}`);
     };
 
+    const handleWriteButtonClick = () => {
+        navigate("/createpost"); // 글 작성 페이지로 이동
+    };
+
+    const handleMapButtonClick = () => {
+        navigate("/mappage"); // 글 작성 페이지로 이동
+    };
+
     const dummyList = [
         { id: 1, title: "게시물 1" },
         { id: 2, title: "게시물 2" },
@@ -58,6 +66,8 @@ const HomePage = () => {
                     <ShareList />
                 </S.SectionWrapper>
             </S.ContentContainer>
+            <S.MapButton onClick={handleMapButtonClick} />
+            <S.WriteButton onClick={handleWriteButtonClick} />
         </S.Layout>
     );
 };

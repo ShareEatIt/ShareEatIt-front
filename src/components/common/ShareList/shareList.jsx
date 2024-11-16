@@ -28,14 +28,6 @@ const ShareList = () => {
         navigate(`/postdetail/${id}`);
     };
 
-    const handleWriteButtonClick = () => {
-        navigate("/createpost"); // 글 작성 페이지로 이동
-    };
-
-    const handleMapButtonClick = () => {
-        navigate("/mappage"); // 글 작성 페이지로 이동
-    };
-
     return (
         <>
             {dummyData.map((item) => (
@@ -65,8 +57,6 @@ const ShareList = () => {
                     </S.CardContent>
                 </S.Layout>
             ))}
-            <S.MapButton onClick={handleMapButtonClick} />
-            <S.WriteButton onClick={handleWriteButtonClick} />
         </>
     );
 };

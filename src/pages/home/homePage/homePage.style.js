@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { ReactComponent as SerchIcon } from "../../../assets/common/SearchIcon.svg";
+import { ReactComponent as PenIcon } from "../../../assets/common/pen.svg";
+import { ReactComponent as MapIcon } from "../../../assets/common/map.svg";
 const S = {
     Layout: styled.div`
         display: flex;
@@ -54,6 +56,24 @@ const S = {
         &::placeholder {
             color: var(--yellow-90);
         }
+    `,
+
+    MapButton: styled(MapIcon)`
+        position: fixed; /* 화면에 고정 */
+        bottom: 80px; /* 하단에서 20px */
+        right: 20px; /* 오른쪽에서 20px */
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+    `,
+
+    WriteButton: styled(PenIcon)`
+        position: fixed; /* 화면에 고정 */
+        bottom: 20px; /* 하단에서 20px */
+        right: 20px; /* 오른쪽에서 20px */
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
     `,
 };
 
