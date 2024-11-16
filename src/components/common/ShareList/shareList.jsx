@@ -19,14 +19,6 @@ const dummyData = [
         category: "과자",
         timeAgo: "10분 전",
     },
-    {
-        id: 3,
-        title: "제목 3",
-        endDate: "2024-10-15",
-        author: "정유진",
-        category: "빵",
-        timeAgo: "15분 전",
-    },
 ];
 
 const ShareList = () => {
@@ -34,6 +26,14 @@ const ShareList = () => {
 
     const handleClick = (id) => {
         navigate(`/postdetail/${id}`);
+    };
+
+    const handleWriteButtonClick = () => {
+        navigate("/createpost"); // 글 작성 페이지로 이동
+    };
+
+    const handleMapButtonClick = () => {
+        navigate("/mappage"); // 글 작성 페이지로 이동
     };
 
     return (
@@ -65,6 +65,8 @@ const ShareList = () => {
                     </S.CardContent>
                 </S.Layout>
             ))}
+            <S.MapButton onClick={handleMapButtonClick} />
+            <S.WriteButton onClick={handleWriteButtonClick} />
         </>
     );
 };
