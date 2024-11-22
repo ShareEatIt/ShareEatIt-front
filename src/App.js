@@ -9,38 +9,43 @@ import ProfileEditPage from "./pages/my/profileEditPage";
 import ShareStatPage from "./pages/my/shareStatPage";
 import ShareStatusPage from "./pages/my/shareStatusPage";
 import ParticipationStatusPage from "./pages/my/participationStatusPage";
+import KakaoLoginPage from "./pages/login/KakaoLoginPage";
+import OAuthRedirectPage from "./pages/login/Redirect";
+import HomePage from "./pages/home/homePage/homePage";
+import ReportPage from "./pages/home/reportPage";
 import PostSharePage from "./pages/home/postSharePage";
-function App() {
-    const HomePage = lazy(() => import("./pages/home/homePage/homePage"));
-    return (
-        <Router>
-            <Suspense fallback={<div>Loading...</div>}>
-                <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/postdetail" element={<ChatListPage />} />
-                    <Route
-                        path="/postdetail/:id"
-                        element={<NotificationPage />}
-                    />
-                    <Route path="/chatlist" element={<ChatListPage />} />
-                    <Route path="/chatlist/:chatId" element={<ChatPage />} />
-                    <Route path="/noti" element={<NotificationPage />} />
-                    <Route path="/createpost" element={<PostSharePage />} />
 
-                    <Route path="/chat" element={<ChatPage />} />
-                    <Route path="/mypage" element={<MyPage />} />
-                    <Route path="/keyword" element={<KeywordPage />} />
-                    <Route path="/profile" element={<ProfileEditPage />} />
-                    <Route path="/sharestat" element={<ShareStatPage />} />
-                    <Route path="/sharestatus" element={<ShareStatusPage />} />
-                    <Route
-                        path="/participationstatus"
-                        element={<ParticipationStatusPage />}
-                    />
-                </Routes>
-            </Suspense>
-        </Router>
+function App() {
+    //const HomePage = lazy(() => import("./pages/home/homePage/homePage"));
+    return (
+        <Routes>
+            <Route path="/oauth2/authorize" element={<OAuthRedirectPage />} />
+            <Route path="/login" element={<KakaoLoginPage />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/postdetail" element={<ChatListPage />} />
+            <Route path="/postdetail/:id" element={<NotificationPage />} />
+            <Route path="/chatlist" element={<ChatListPage />} />
+            <Route path="/chatlist/:chatId" element={<ChatPage />} />
+            <Route path="/noti" element={<NotificationPage />} />
+            <Route path="/createpost" element={<PostSharePage />} />
+            <Route path="/chat" element={<ChatPage />} />
+            <Route path="/mypage" element={<MyPage />} />
+            <Route path="/keyword" element={<KeywordPage />} />
+            <Route path="/profile" element={<ProfileEditPage />} />
+            <Route path="/sharestat" element={<ShareStatPage />} />
+            <Route path="/sharestatus" element={<ShareStatusPage />} />
+            <Route path="/report" element={<ReportPage />} />
+            <Route
+                path="/participationstatus"
+                element={<ParticipationStatusPage />}
+            />
+        </Routes>
     );
 }
+
+/*<Suspense fallback={<div>Loading...</div>}></Suspense>
+<Router>
+  <Suspense fallback={<div>Loading...</div>}></Suspense>
+</Router>;*/
 
 export default App;
