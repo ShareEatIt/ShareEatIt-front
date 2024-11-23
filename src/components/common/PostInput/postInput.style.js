@@ -14,10 +14,35 @@ const S = {
     InputWrapper: styled.input`
         display: flex;
         align-items: center;
-        border-radius: 5px;
+
         width: 100%;
-        border: solid 2px black;
+        height: 1.5rem;
+        border-radius: 5px;
+        border: solid 1.5px
+            ${({ isFocused }) => (isFocused ? "#ffb849" : "black")};
         &::placeholder {
+        }
+    `,
+    MenuWrapper: styled.div`
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-height: 1.5rem;
+        border-radius: 5px;
+        border: solid 1.5px
+            ${({ isFocused }) => (isFocused ? "#ffb849" : "black")};
+        background-color: white;
+        cursor: pointer;
+        z-index: 10;
+    `,
+
+    MenuItem: styled.div`
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        color: #333;
+        &:hover {
+            background-color: #f1f1f1;
         }
     `,
 };
