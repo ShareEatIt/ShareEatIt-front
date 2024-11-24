@@ -10,7 +10,7 @@ const NotificationPage = () => {
     try {
       const response = await getNotice();
       const { title, message } = response.data.data.noticeList;
-      const notiList = [...title, ...message];
+      setNotiList = [...title, ...message];
     } catch (err) {
       console.error(err);
     }
