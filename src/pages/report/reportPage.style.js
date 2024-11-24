@@ -2,6 +2,10 @@ import styled from "styled-components";
 
 const M = {
   //신고글 작성
+  Layout: styled.div`
+    display: flex;
+    flex-direction: column;
+  `,
   Form: styled.form`
     display: flex;
     flex-direction: column;
@@ -9,12 +13,18 @@ const M = {
     align-items: center;
     margin-top: 40px;
   `,
-  ImageContainer: styled.div`
-    display: flex;
-    justify-content: center;
-    width: 136px;
-    height: 136px;
-    position: relative;
+
+  ImageWrapper: styled.div`
+    width: 118px;
+    height: 118px;
+    border: 1px solid black;
+    border-radius: 8px;
+  `,
+  ImagePreview: styled.div`
+    width: 118px;
+    height: 118px;
+    border: 1px solid black;
+    border-radius: 8px;
   `,
   FieldSet: styled.fieldset`
     margin-top: 15px;
@@ -44,20 +54,8 @@ const M = {
       outline: none;
     }
   `,
-  CameraWrapper: styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 31px;
-    height: 31px;
-    border: 1px solid black;
-    border-radius: 50%;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    background-color: var(--white);
-  `,
 };
 
 const S = {};
-export default { M, S };
+
+export { M, S };

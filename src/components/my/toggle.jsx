@@ -1,17 +1,13 @@
 import { useState } from "react";
-import ToggleContainer from "./toggle.style";
-const Toggle = () => {
-  const [on, setOn] = useState(false);
-  const toggleHandler = () => {
-    setOn(!on);
-  };
-  return (
-    <>
-      <ToggleContainer onClick={toggleHandler}>
-        <div className={`toggle-container ${on ? "toggle-checked" : null}`} />
-        <div className={`toggle-circle ${on ? "toggle-checked" : null}`} />
-      </ToggleContainer>
-    </>
-  );
-};
+import { M, S } from "./toggle.style";
+
+const Toggle = ({ isChecked, onChange }) => (
+  <M.ToggleContainer>
+    <M.HiddenCheckbox type="checkbox" checked={isChecked} onChange={onChange} />
+    <M.StyledSwitch className={isChecked ? "on" : "off"}>
+      <M.Circle className={isChecked ? "on" : "off"} />
+    </M.StyledSwitch>
+  </M.ToggleContainer>
+);
+
 export default Toggle;

@@ -1,35 +1,42 @@
 import styled from "styled-components";
 
-const ToggleContainer = styled.div`
-  position: relative;
-  cursor: pointer;
+const M = {
+  ToggleContainer: styled.label`
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  `,
 
-  > .toggle-container {
+  HiddenCheckbox: styled.input`
+    display: none;
+  `,
+
+  StyledSwitch: styled.div`
     width: 50px;
     height: 24px;
-    border-radius: 30px;
-    background-color: var(--white);
-    border-color: var(--yellow-100);
-  }
+    background-color: ${({ className }) =>
+      className === "on" ? "#FFD700" : "#ccc"};
+    border-radius: 15px;
+    position: relative;
+    transition: background-color 0.3s ease-in-out;
 
-  > .toggle-checked {
-    background-color: var(--yellow-40);
-    transition: 0.5s;
-  }
-  > .toggle-circle {
-    position: absolute;
-    top: 1px;
-    left: 1px;
-    width: 22px;
-    height: 22px;
+    &:hover {
+      background-color: ${({ className }) =>
+        className === "on" ? "#FFC107" : "#bbb"};
+    }
+  `,
+
+  Circle: styled.div`
+    width: 20px;
+    height: 20px;
+    background-color: white;
     border-radius: 50%;
-    background-color: var(--yellow-100);
-    transition: 0.5s;
-  }
-  > .toggle-checked {
-    left: 27px;
-    transition: 0.5s;
-  }
-`;
-
-export default ToggleContainer;
+    position: absolute;
+    top: 2px;
+    left: ${({ className }) => (className === "on" ? "26px" : "2px")};
+    transition: left 0.3s ease-in-out;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  `,
+};
+const S = {};
+export { M, S };

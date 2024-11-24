@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BackButton from "../../components/common/BackButton/backButton";
 import { ReactComponent as X } from "../../assets/my/x.svg";
 import { M, S } from "./my";
@@ -11,19 +11,54 @@ import { ReactComponent as Spaghetti } from "../../assets/my/spaghetti.svg";
 import { ReactComponent as Snack } from "../../assets/my/snack.svg";
 import { ReactComponent as Grocery } from "../../assets/my/grocery.svg";
 import { ReactComponent as Other } from "../../assets/my/other.svg";
+import { getMemberPostStatus } from "../../api/member";
 
 const ShareStatPage = () => {
-  const [name, setName] = useState("이승진");
-  const [count, setCount] = useState("21");
-  const [bread, setBread] = useState("1");
-  const [drink, setDrink] = useState("1");
-  const [convenience, setConvenience] = useState("2");
-  const [korean, setKorean] = useState("3");
-  const [chinese, setChinese] = useState("4");
-  const [western, setWestern] = useState("5");
-  const [snack, setSnack] = useState("4");
-  const [grocery, setGrocery] = useState("2");
-  const [other, setOther] = useState("3");
+  const [name, setName] = useState("");
+  const [count, setCount] = useState("");
+  const [bakery, setBakery] = useState("");
+  const [beverage, setBeverage] = useState("");
+  const [conveniencefood, setConveniencefood] = useState("");
+  const [korean, setKorean] = useState("");
+  const [chinese, setChinese] = useState("");
+  const [western, setWestern] = useState("");
+  const [snack, setSnack] = useState("");
+  const [groceries, setGroceries] = useState("");
+  const [etc, setEtc] = useState("");
+
+  const readMemberPostStatus = async () => {
+    try {
+      const response = await getMemberPostStatus();
+      const {
+        bakery,
+        conveniencefood,
+        snack,
+        western,
+        beverage,
+        etc,
+        groceries,
+        korean,
+        chinese,
+      } = response.data.data.statusByCategory;
+      setBakery(bakery);
+      setConveniencefood(conveniencefood);
+      setSnack(snack);
+      setWestern(western);
+      setBeverage(beverage);
+      setEtc(etc);
+      setGroceries(groceries);
+      setKorean(korean);
+      setChinese(chinese);
+      const { nickname, sharingTotal } = response.data.data.writer;
+      setName(nickname);
+      setCount(sharingTotal);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  useEffect(() => {
+    readMemberPostStatus();
+  }, []);
   return (
     <M.Layout>
       <BackButton text="나눔통계" />
@@ -35,19 +70,19 @@ const ShareStatPage = () => {
             <M.StatImageWrapper>
               <Bread />
             </M.StatImageWrapper>
-            <M.CountText>빵 {bread}건</M.CountText>
+            <M.CountText>빵 {bakery}건</M.CountText>
           </M.CountContainer>
           <M.CountContainer>
             <M.StatImageWrapper>
               <Drink />
             </M.StatImageWrapper>
-            <M.CountText>음료 {drink}건</M.CountText>
+            <M.CountText>음료 {beverage}건</M.CountText>
           </M.CountContainer>
           <M.CountContainer>
             <M.StatImageWrapper>
               <Ramen />
             </M.StatImageWrapper>
-            <M.CountText>간편식 {convenience}건</M.CountText>
+            <M.CountText>간편식 {conveniencefood}건</M.CountText>
           </M.CountContainer>
           <M.CountContainer>
             <M.StatImageWrapper>
@@ -77,13 +112,13 @@ const ShareStatPage = () => {
             <M.StatImageWrapper>
               <Grocery />
             </M.StatImageWrapper>
-            <M.CountText>식료품 {grocery}건</M.CountText>
+            <M.CountText>식료품 {groceries}건</M.CountText>
           </M.CountContainer>
           <M.CountContainer>
             <M.StatImageWrapper>
               <Other />
             </M.StatImageWrapper>
-            <M.CountText>기타 {other}건</M.CountText>
+            <M.CountText>기타 {etc}건</M.CountText>
           </M.CountContainer>
         </M.StatContainer>
       </M.StatBackground>

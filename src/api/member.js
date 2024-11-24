@@ -30,12 +30,27 @@ export const getMemberPostStatus = async () => {
   }
 };
 
-//멤버 키워드 사용/알람여부 설정 변경
-export const patchMemberKeyAlarm = async (isKeywordAvail, isNoticeAvail) => {
+//멤버 키워드 사용여부 설정 변경
+export const patchIsKeywordAvail = async (isKeywordAvail) => {
   try {
-    const response = await client.patch(`/members/avail`, {
-      isKeywordAvail: isKeywordAvail,
-      isNoticeAvail: isNoticeAvail,
+    const response = await client.patch(`/members/avail/keyword`, {
+      params: {
+        keyword: isKeywordAvail,
+      },
+    });
+    return response;
+  } catch (err) {
+    throw err;
+  }
+};
+
+//멤버 키워드 사용여부 설정 변경
+export const patchIsNoticeAvail = async (isNoticeAvail) => {
+  try {
+    const response = await client.patch(`/members/avail/notice`, {
+      params: {
+        notice: isNoticeAvail,
+      },
     });
     return response;
   } catch (err) {
@@ -44,7 +59,7 @@ export const patchMemberKeyAlarm = async (isKeywordAvail, isNoticeAvail) => {
 };
 
 //멤버 정보수정
-export const patchMemberInfo = async () => {
+export const putMemberInfo = async () => {
   try {
     const response = await client.put(`/members`);
     return response;

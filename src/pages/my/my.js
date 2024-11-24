@@ -16,7 +16,7 @@ const M = {
   InfoContainer: styled.div`
     display: flex;
     flex-direction: row;
-
+    justify-content: space-around;
     padding: 10px;
 
     border: 1px solid var(--yellow-100);
@@ -29,9 +29,11 @@ const M = {
   TextContainer: styled.div`
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
   `,
   TextWrapper: styled.div`
     display: flex;
+    align-items: center;
     flex-direction: row;
     justify-content: space-between;
   `,
@@ -76,6 +78,13 @@ const M = {
     margin-top: 40px;
   `,
   ImageContainer: styled.div`
+    display: flex;
+    justify-content: center;
+    width: 136px;
+    height: 136px;
+    position: relative;
+  `,
+  ImageWrapper: styled.div`
     display: flex;
     justify-content: center;
     width: 136px;
@@ -172,12 +181,17 @@ const M = {
     padding-top: 20px;
     background-color: var(--yellow-40);
   `,
+  KeywordContainer: styled.div`
+    display: flex;
+    flex-direction: column;
+  `,
   KeyItemContainer: styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding: 10px;
-    width: 320px;
+    margin: 4px;
+    width: 400px;
     height: 20px;
     background-color: white;
     border-radius: 8px;
@@ -185,7 +199,8 @@ const M = {
   KeyContainer: styled.div`
     position: absolute;
     bottom: 25px;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     align-items: center;
     margin-bottom: 20px;
   `,
@@ -200,8 +215,9 @@ const M = {
     padding-left: 10px;
   `,
   KeyBtn: styled.button`
-    width: 50px;
+    width: 80px;
     height: 42px;
+    margin: 4px;
     background-color: var(--yellow-100);
     border-radius: 8px;
   `,
