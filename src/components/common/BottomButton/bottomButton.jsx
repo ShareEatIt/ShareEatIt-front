@@ -1,8 +1,8 @@
 import { S } from "./bottomButton.style";
 
-const BottomButton = ({ text }) => {
+const BottomButton = ({ text, onClick, type = "button" }) => {
     return (
-        <S.Layout>
+        <S.Layout type={type} onClick={onClick}>
             <S.TextWrapper>{`${text}`}</S.TextWrapper>
         </S.Layout>
     );
