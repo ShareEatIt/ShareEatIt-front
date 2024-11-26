@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { S } from "./postInput.style";
 
-const DropDown = ({ text, options }) => {
+const DropDown = ({ text, options, onChange }) => {
     const [selected, setSelected] = useState("");
     const [isOpen, setIsOpen] = useState(false);
 
@@ -11,6 +11,7 @@ const DropDown = ({ text, options }) => {
         setSelected(option);
         setIsOpen(false);
         setIsFocused(false);
+        if (onChange) onChange(option);
     };
 
     useEffect(() => {
@@ -33,16 +34,18 @@ const DropDown = ({ text, options }) => {
                 {selected || " "}
             </S.MenuWrapper>
             {isOpen && (
-                <S.MenuWrapper>
-                    {options.map((option, index) => (
-                        <S.MenuItem
-                            key={index}
-                            onClick={() => handleSelect(option)}
-                        >
-                            {option}
-                        </S.MenuItem>
-                    ))}
-                </S.MenuWrapper>
+                <>
+                    <S.DropDownWrapper>
+                        {options.map((option, index) => (
+                            <S.MenuItem
+                                key={index}
+                                onClick={() => handleSelect(option)}
+                            >
+                                {option}
+                            </S.MenuItem>
+                        ))}
+                    </S.DropDownWrapper>
+                </>
             )}
         </S.Layout>
     );

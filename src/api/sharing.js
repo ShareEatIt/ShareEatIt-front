@@ -1,21 +1,29 @@
 import { client } from "./api";
 
 // 나눔글 생성
-export const postSharing = async (dto, imglist) => {
+export const postSharing = async (dto, imglist, accessToken) => {
     try {
         const formData = new FormData();
 
-        if (imglist && imglist.length > 0) {
-            imglist.forEach((image, index) => {
+        if (Array.isArray(imglist) && imglist.length > 0) {
+            imglist.forEach((image) => {
                 formData.append("imglist", image);
             });
         }
 
-        formData.append("dto", JSON.stringify(dto));
-
+        formData.append(
+            "dto",
+            new Blob([JSON.stringify(dto)], { type: "application/json" })
+        );
+        const accessToken = localStorage.getItem("token");
+        console.log("Sending request to server...");
+        console.log("DTO (JSON):", dto);
+        console.log("Images:", imglist);
+        console.log("토큰:", accessToken);
         const response = await client.post(`/sharing`, formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
+                Authorization: accessToken,
             },
         });
 
