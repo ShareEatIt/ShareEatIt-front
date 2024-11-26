@@ -8,13 +8,15 @@ const S = {
         justify-content: space-between;
         align-items: center;
         width: 100%;
+        margin-top: 1rem;
         box-sizing: border-box;
     `,
     BackButtonIcon: styled(IoMdArrowRoundBack)`
         font-size: 24px;
+        margin-left: 1rem;
     `,
     TextWrapper: styled.div`
-        font-size: 2rem;
+        font-size: 1.5rem;
     `,
     RightBox: styled.div`
         width: 1rem;
