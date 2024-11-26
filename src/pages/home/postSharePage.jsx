@@ -36,6 +36,7 @@ const PostSharePage = () => {
         expDate: "",
         purchaseDate: "",
         description: "",
+        imgList: "",
         address: "",
         addressDetail: "",
         latitude: "",
@@ -50,8 +51,8 @@ const PostSharePage = () => {
         setFormData((prev) => ({ ...prev, [field]: value }));
     };
 
-    const handleImageUpload = (imageFiles) => {
-        setImages(imageFiles);
+    const handleImageUpload = (uploadedImages) => {
+        setImages(uploadedImages);
     };
 
     const handleSubmit = async () => {
@@ -104,7 +105,7 @@ const PostSharePage = () => {
                 />
                 <ImageUploader
                     text={"이미지(유통기한 이미지 첨부 추천)"}
-                    onChange={handleImageUpload}
+                    onChange={(value) => handleImageUpload(value)}
                 />
                 <AdditionalInput
                     text={"추가 설명"}

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { S } from "./postInput.style";
 
-const ImageUploader = ({ text, maxFiles = 5, onChange }) => {
+const ImageUploader = ({ text, maxFiles = 4, onChange }) => {
     const [images, setImages] = useState([]);
     const [error, setError] = useState("");
 

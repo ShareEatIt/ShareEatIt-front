@@ -2,26 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { S } from "./shareList.style";
 import { isEditable } from "@testing-library/user-event/dist/utils";
 
-const dummyData = [
-    {
-        id: 1,
-        title: "제목 1",
-        endDate: "2024-10-15",
-        author: "이승진",
-        category: "빵",
-        timeAgo: "5분 전",
-    },
-    {
-        id: 2,
-        title: "제목 2",
-        endDate: "2024-10-15",
-        author: "이가은",
-        category: "과자",
-        timeAgo: "10분 전",
-    },
-];
-
-const ShareList = () => {
+const ShareList = ({ sharingList }) => {
     const navigate = useNavigate();
 
     const handleClick = (id) => {
@@ -30,7 +11,7 @@ const ShareList = () => {
 
     return (
         <>
-            {dummyData.map((item) => (
+            {sharingList.map((item) => (
                 <S.Layout key={item.id} onClick={() => handleClick(item.id)}>
                     <S.CardImage />
                     <S.CardContent>
