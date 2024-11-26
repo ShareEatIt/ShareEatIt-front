@@ -12,7 +12,7 @@ import ParticipationStatusPage from "./pages/my/participationStatusPage";
 import KakaoLoginPage from "./pages/login/KakaoLoginPage";
 import OAuthRedirectPage from "./pages/login/Redirect";
 import HomePage from "./pages/home/homePage/homePage";
-import ReportPage from "./pages/home/reportPage";
+import ReportPage from "./pages/report/reportPage";
 function App() {
   //const HomePage = lazy(() => import("./pages/home/homePage/homePage"));
   return (

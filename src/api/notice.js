@@ -3,7 +3,8 @@ import { client } from "./api";
 //알림 목록 조회
 export const getNotice = async () => {
   try {
-    const response = await client.get("/notice");
+    const response = await client.get("/notice/list");
+    console.log(response);
     return response;
   } catch (err) {
     throw err;

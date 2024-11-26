@@ -14,6 +14,7 @@ const ProfileEditPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [postcode, setPostcode] = useState("");
+  const [addressDetail, setAddressDetail] = useState("");
   const navigate = useNavigate();
 
   //이미치 변경 핸들러
@@ -33,7 +34,9 @@ const ProfileEditPage = () => {
       const { nickname, email, location } = response.data.data;
       setName(nickname);
       setEmail(email);
-      setPostcode(location);
+      setPostcode(location.addressSt);
+      setAddressDetail(location.addressDetail);
+      console.log(location.addressDetail);
     } catch (err) {
       console.error(err);
     }
@@ -105,17 +108,21 @@ const ProfileEditPage = () => {
         <M.FieldSet>
           <M.Legend>주소</M.Legend>
           <M.PostCodeContainer>
-            <M.PostcodeTextarea></M.PostcodeTextarea>
+            <M.PostcodeTextarea
+              value={postcode}
+              placeholder="우편번호를 입력해주세요"
+              onChange={(e) => setPostcode(e.target.value)}
+            ></M.PostcodeTextarea>
             <M.PostcodeBtn>우편번호 찾기</M.PostcodeBtn>
           </M.PostCodeContainer>
           <M.Textarea
-            value={postcode}
+            value={addressDetail}
             placeholder="상세주소를 입력해주세요"
-            onChange={(e) => setPostcode(e.target.value)}
+            onChange={(e) => setAddressDetail(e.target.value)}
           ></M.Textarea>
         </M.FieldSet>
       </M.Form>
-      <BottomButton text="수정 완료" />
+      <BottomButton text="수정 완료" onClick={handleEditBtn} />
     </M.Layout>
   );
 };

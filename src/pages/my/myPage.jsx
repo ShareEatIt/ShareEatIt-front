@@ -20,6 +20,7 @@ import {
 import ShareStatPage from "./shareStatPage";
 import ShareStatusPage from "./shareStatusPage";
 import KeywordPage from "./keywordPage";
+import { TbWashDryP } from "react-icons/tb";
 const MyPage = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
@@ -29,17 +30,27 @@ const MyPage = () => {
   const [smile3, setSmile3] = useState(0);
   const [smile4, setSmile4] = useState(0);
   const [smile5, setSmile5] = useState(0);
-  const [isKeywordAvail, setIsKeywordAvail] = useState(true);
-  const [isNoticeAvail, setIsNoticeAvail] = useState(true);
-  const getMemberSticker = async () => {
+  const [isKeyword, setIsKeyword] = useState(false);
+  const [isNotice, setIsNotice] = useState(false);
+  const readMemberInfo = async () => {
     try {
       const response = await getMemberInfo();
-      const { nickname, email, stickers, isNoticeAvail, isKeywordAvail } =
-        response.data.data;
+      const { nickname, email, location } = response.data.data;
       setName(nickname);
       setEmail(email);
-      setIsKeywordAvail(isKeywordAvail);
-      setIsNoticeAvail(isNoticeAvail);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const readMemberSticker = async () => {
+    try {
+      const response = await getMemberSticker();
+      const { stickers, isNoticeAvail, isKeywordAvail } = response.data.data;
+      console.log(response);
+      setIsKeyword(isKeywordAvail ?? false);
+      setIsNotice(isNoticeAvail ?? false);
+      console.log(isKeyword);
+
       Object.keys(stickers).forEach((key) => {
         const value = stickers[key] ?? 0; // null 방지용 기본값 0
         if (key === "smile1") setSmile1(value);
@@ -54,16 +65,16 @@ const MyPage = () => {
   };
 
   const handleToggleKeyword = () => {
-    setIsKeywordAvail((prev) => !prev);
+    setIsKeyword((prev) => !prev);
   };
   const handleToggleNotice = () => {
-    setIsNoticeAvail((prev) => !prev);
+    setIsNotice((prev) => !prev);
   };
 
   //키워드 사용여부 변경 API 연결
   const updateKeywordAvail = async () => {
     try {
-      const response = await patchIsKeywordAvail(isKeywordAvail);
+      const response = await patchIsKeywordAvail(isKeyword);
       return response;
     } catch (err) {
       console.error(err);
@@ -73,7 +84,7 @@ const MyPage = () => {
   //키워드 알람 여부 변경 API 연결
   const updateNoticeAvail = async () => {
     try {
-      const response = await patchIsNoticeAvail(isNoticeAvail);
+      const response = await patchIsNoticeAvail(isNotice);
       return response;
     } catch (err) {
       console.error(err);
@@ -91,14 +102,15 @@ const MyPage = () => {
   };
   useEffect(() => {
     updateKeywordAvail();
-  }, [isKeywordAvail]);
+  }, [isKeyword]);
   useEffect(() => {
-    if (isNoticeAvail !== null) {
+    if (isNotice !== null) {
       updateNoticeAvail();
     }
   });
   useEffect(() => {
-    getMemberSticker();
+    readMemberSticker();
+    readMemberInfo();
   }, []);
   return (
     <M.Layout>
@@ -148,12 +160,12 @@ const MyPage = () => {
         <M.Label>알림</M.Label>
         <M.MyItemContainer>
           <M.Text>알림 수신여부</M.Text>
-          <Toggle isChecked={isNoticeAvail} onChange={handleToggleNotice} />
+          <Toggle isChecked={isNotice} onChange={handleToggleNotice} />
         </M.MyItemContainer>
         <M.HLine />
         <M.MyItemContainer>
           <M.Text>키워드 알림받기</M.Text>
-          <Toggle isChecked={isKeywordAvail} onChange={handleToggleKeyword} />
+          <Toggle isChecked={isKeyword} onChange={handleToggleKeyword} />
         </M.MyItemContainer>
         <M.HLine />
         <M.MyItemContainer>

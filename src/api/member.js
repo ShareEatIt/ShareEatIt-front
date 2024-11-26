@@ -4,6 +4,7 @@ import { client } from "./api";
 export const getMemberInfo = async () => {
   try {
     const response = await client.get(`/members`);
+
     return response;
   } catch (err) {
     throw err;
@@ -33,11 +34,12 @@ export const getMemberPostStatus = async () => {
 //멤버 키워드 사용여부 설정 변경
 export const patchIsKeywordAvail = async (isKeywordAvail) => {
   try {
-    const response = await client.patch(`/members/avail/keyword`, {
+    const response = await client.patch(`/members/avail/keyword`, null, {
       params: {
         keyword: isKeywordAvail,
       },
     });
+
     return response;
   } catch (err) {
     throw err;
@@ -47,7 +49,7 @@ export const patchIsKeywordAvail = async (isKeywordAvail) => {
 //멤버 키워드 사용여부 설정 변경
 export const patchIsNoticeAvail = async (isNoticeAvail) => {
   try {
-    const response = await client.patch(`/members/avail/notice`, {
+    const response = await client.patch(`/members/avail/notice`, null, {
       params: {
         notice: isNoticeAvail,
       },
@@ -58,19 +60,10 @@ export const patchIsNoticeAvail = async (isNoticeAvail) => {
   }
 };
 
-//멤버 정보수정
-export const putMemberInfo = async () => {
-  try {
-    const response = await client.put(`/members`);
-    return response;
-  } catch (err) {
-    throw err;
-  }
-};
 // 유저 정보 수정
-export const patchUserInfo = async (userData) => {
+export const putMemberInfo = async (userData) => {
   try {
-    const response = await client.patch(`/users`, userData, {
+    const response = await client.patch(`/members`, userData, {
       headers: { "Content-type": "multipart/form-data" },
     });
     return response;

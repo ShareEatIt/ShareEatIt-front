@@ -36,12 +36,13 @@ const ChatCard = () => {
   );
 };
 
-const NotiCard = (data) => {
+const NotiCard = ({ data }) => {
+  const { title, message } = data;
   return (
     <S.Layout>
       <S.ChatContentContainer>
-        <S.TitleWrapper>{data.title}</S.TitleWrapper>
-        <S.ContentWrapper>{data.message}</S.ContentWrapper>
+        <S.TitleWrapper>{title}</S.TitleWrapper>
+        <S.ContentWrapper>{message}</S.ContentWrapper>
       </S.ChatContentContainer>
     </S.Layout>
   );
