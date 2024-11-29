@@ -12,6 +12,8 @@ const M = {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 150px;
+    padding: 150px;
   `,
 };
 
