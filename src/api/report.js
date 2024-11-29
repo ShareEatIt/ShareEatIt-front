@@ -12,10 +12,12 @@ export const postReport = async (imgFile, dto) => {
       new Blob([JSON.stringify(dto)], { type: "application/json" })
     );
     const response = await client.post(`/report`, formData, {
-      headers: { "Content=type": "multipart/form-data" },
+      headers: { "Content-type": "multipart/form-data" },
     });
-    return response.data;
+    console.log(response);
+    return response;
   } catch (err) {
+    console.log("erro");
     console.error(err);
   }
 };

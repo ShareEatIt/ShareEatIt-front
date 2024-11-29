@@ -1,24 +1,15 @@
 import { client } from "./api";
 
-export const logout = async (code) => {
+//로그아웃
+export const logout = async () => {
   try {
-    const response = await client.get(`/oauth2/authorize`, {
-      params: { code: code },
+    //const code = localStorage.getItem("code");
+    const response = await client.get(`/auth/logout`, {
+      //params: { code: code },
     });
-    return response;
-  } catch (err) {
-    throw err;
-  }
-};
-
-//멤버 키워드 사용여부 설정 변경
-export const patchIsKeywordAvail = async (isKeywordAvail) => {
-  try {
-    const response = await client.patch(`/members/avail/keyword`, {
-      params: {
-        keyword: isKeywordAvail,
-      },
-    });
+    console.log("logout success");
+    //localStorage.removeItem("code");
+    localStorage.removeItem("token");
     return response;
   } catch (err) {
     throw err;
