@@ -5,6 +5,8 @@ const M = {
   Layout: styled.div`
     display: flex;
     flex-direction: column;
+
+    align-items: center;
   `,
   Form: styled.form`
     display: flex;
@@ -15,14 +17,18 @@ const M = {
   `,
 
   ImageWrapper: styled.div`
-    width: 118px;
-    height: 118px;
+    width: 700px;
+    height: 335px;
     border: 1px solid black;
     border-radius: 8px;
+    padding: 10px;
+    @media (max-width: 800px) {
+      width: 340px;
+    }
   `,
   ImagePreview: styled.div`
-    width: 118px;
-    height: 118px;
+    width: 335px;
+    height: 335px;
     border: 1px solid black;
     border-radius: 8px;
   `,
@@ -37,7 +43,7 @@ const M = {
   Textarea: styled.textarea`
     display: flex;
     justify-content: center;
-    width: 335px;
+    width: 700px;
     height: 23px;
     padding: 10px;
     border: 1px solid black;
@@ -47,11 +53,14 @@ const M = {
     resize: none;
     font-size: 18px;
     &::placeholder {
-      color: var(--black);
+      color: var(--gray);
     }
     &:focus {
       border: 2px solid var(--yellow-100);
       outline: none;
+    }
+    @media (max-width: 800px) {
+      width: 340px;
     }
   `,
 };
