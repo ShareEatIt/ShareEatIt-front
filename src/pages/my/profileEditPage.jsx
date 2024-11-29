@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import DaumPostcode from "react-daum-postcode";
 import BackButton from "../../components/common/BackButton/backButton";
 import BottomButton from "../../components/common/BottomButton/bottomButton";
-import { ReactComponent as Arrow } from "../../assets/common/right_arrow.svg";
 import { ReactComponent as Profile } from "../../assets/common/profile.svg";
 import { ReactComponent as Camera } from "../../assets/my/camera.svg";
-import { M, S } from "./my";
-import { getMemberInfo, patchMemberInfo } from "../../api/member";
+import { M } from "./my";
+import { getMemberInfo, putMemberInfo } from "../../api/member";
 
 const ProfileEditPage = () => {
-  const [imgFile, setImgFile] = useState(null);
-  const [imgPreview, setImgPreview] = useState(null);
+  const [imgFile, setImgFile] = useState("");
+  const [imgPreview, setImgPreview] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [postcode, setPostcode] = useState("");
+  const [addressSt, setAddressSt] = useState("");
   const [addressDetail, setAddressDetail] = useState("");
+  const [isPostcodeOpen, setIsPostcodeOpen] = useState(false); // 우편번호 모달 상태
   const navigate = useNavigate();
 
-  //이미치 변경 핸들러
+  // 이미지 변경 핸들러
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -27,41 +28,67 @@ const ProfileEditPage = () => {
     }
   };
 
-  //유저 정보조회 API
+  // 유저 정보 조회 API
   const readMemberInfo = async () => {
     try {
       const response = await getMemberInfo();
       const { nickname, email, location } = response.data.data;
       setName(nickname);
       setEmail(email);
-      setPostcode(location.addressSt);
-      setAddressDetail(location.addressDetail);
-      console.log(location.addressDetail);
+      setAddressSt(location?.addressSt || "");
+      setAddressDetail(location?.addressDetail || "");
+      console.log("success");
     } catch (err) {
       console.error(err);
     }
   };
 
-  //버튼 클릭 핸들러
+  // 주소 검색 완료 핸들러
+  const handleCompletePostcode = (data) => {
+    const fullAddress = data.address;
+    setAddressSt(fullAddress);
+    setIsPostcodeOpen(false); // 모달 닫기
+  };
+
+  // 버튼 클릭 핸들러
   const handleEditBtn = async () => {
     const response = await createUserInfo();
     if (response) {
       navigate("/my");
     }
   };
-  //유저 정보수정 API
+
+  // 유저 정보 수정 API
   const createUserInfo = async () => {
     try {
+      const formData = new FormData();
+      if (imgFile) {
+        formData.append("profileImage", imgFile);
+      }
+      const dto = {
+        profileImg: imgPreview || "",
+        nickname: name,
+        latitude: 37.5665,
+        longitude: 126.978,
+        addressSt: addressSt || "",
+        addressDetail: addressDetail || "",
+        provider: "INDIVIDUAL",
+      };
+      formData.append("dto", JSON.stringify(dto));
+      const response = await putMemberInfo(formData);
+      console.log("formData", formData);
+      return response;
     } catch (err) {
-      console.error(err);
+      console.error("Error:", err.response?.data || err);
     }
   };
 
   useEffect(() => {
     readMemberInfo();
   }, []);
+
   return (
-    <M.Layout>
+    <M.ProfileLayout>
       <BackButton text="프로필 수정" />
       <M.Form>
         <M.ImageContainer>
@@ -109,11 +136,19 @@ const ProfileEditPage = () => {
           <M.Legend>주소</M.Legend>
           <M.PostCodeContainer>
             <M.PostcodeTextarea
-              value={postcode}
+              value={addressSt}
               placeholder="우편번호를 입력해주세요"
-              onChange={(e) => setPostcode(e.target.value)}
+              readOnly
             ></M.PostcodeTextarea>
-            <M.PostcodeBtn>우편번호 찾기</M.PostcodeBtn>
+            <M.PostcodeBtn
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                setIsPostcodeOpen(true);
+              }}
+            >
+              우편번호 찾기
+            </M.PostcodeBtn>
           </M.PostCodeContainer>
           <M.Textarea
             value={addressDetail}
@@ -123,7 +158,37 @@ const ProfileEditPage = () => {
         </M.FieldSet>
       </M.Form>
       <BottomButton text="수정 완료" onClick={handleEditBtn} />
-    </M.Layout>
+      {isPostcodeOpen && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.6)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 1000,
+          }}
+        >
+          <div
+            style={{
+              background: "white",
+              padding: "20px",
+              borderRadius: "8px",
+              maxWidth: "600px",
+              width: "100%",
+            }}
+          >
+            <DaumPostcode onComplete={handleCompletePostcode} />
+            <button onClick={() => setIsPostcodeOpen(false)}>닫기</button>
+          </div>
+        </div>
+      )}
+    </M.ProfileLayout>
   );
 };
+
 export default ProfileEditPage;

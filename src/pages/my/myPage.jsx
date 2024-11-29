@@ -17,6 +17,7 @@ import {
   patchIsNoticeAvail,
   deleteMember,
 } from "../../api/member";
+import { logout } from "../../api/login";
 import ShareStatPage from "./shareStatPage";
 import ShareStatusPage from "./shareStatusPage";
 import KeywordPage from "./keywordPage";
@@ -64,6 +65,17 @@ const MyPage = () => {
     }
   };
 
+  const readLogout = async () => {
+    try {
+      const response = await logout();
+      console.log("logout success");
+      console.log(response.data);
+
+      navigate("/login");
+    } catch (err) {
+      console.error(err);
+    }
+  };
   const handleToggleKeyword = () => {
     setIsKeyword((prev) => !prev);
   };
@@ -121,20 +133,20 @@ const MyPage = () => {
         </M.ProfileWrapper>
         <M.TextContainer>
           <M.TextWrapper>
-            {name}
+            <M.NameWrapper>{name}</M.NameWrapper>
             <M.EditBtn onClick={() => navigate("/profile")}>정보수정</M.EditBtn>
           </M.TextWrapper>
           <M.TextWrapper>{email}</M.TextWrapper>
           <M.TextWrapper>
-            <img src={emoji1} />
+            <img src={emoji1} width="32px" />
             {smile1 ?? 0}
-            <img src={emoji2} />
+            <img src={emoji2} width="32px" />
             {smile2 ?? 0}
-            <img src={emoji3} />
+            <img src={emoji3} width="32px" />
             {smile3 ?? 0}
-            <img src={emoji4} />
+            <img src={emoji4} width="32px" />
             {smile4 ?? 0}
-            <img src={emoji5} />
+            <img src={emoji5} width="32px" />
             {smile5 ?? 0}
           </M.TextWrapper>
         </M.TextContainer>
@@ -177,7 +189,7 @@ const MyPage = () => {
         <M.Label>계정</M.Label>
         <M.MyItemContainer>
           <M.Text>로그아웃</M.Text>
-          <Arrow />
+          <Arrow onClick={readLogout} />
         </M.MyItemContainer>
         <M.HLine />
         <M.MyItemContainer>

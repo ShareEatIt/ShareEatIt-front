@@ -6,6 +6,7 @@ import { api } from "../../api/api";
 const OAuthRedirectPage = () => {
   console.log("Oauth");
   const code = new URL(window.location.href).searchParams.get("code");
+  localStorage.setItem("code", code);
   const navigate = useNavigate();
   //const url = process.env.REACT_APP_BASE_URL;
   const readAccessTokenKakao = async () => {

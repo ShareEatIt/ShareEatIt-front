@@ -75,7 +75,6 @@ const KeywordPage = () => {
   return (
     <M.Layout>
       <BackButton text="키워드 설정" />
-      키워드 목록
       <M.Background>
         <M.KeywordContainer>
           {keywordList.length > 0 ? (

@@ -32,6 +32,7 @@ const ReportPage = () => {
   const createReport = async () => {
     try {
       const dto = {
+        postId: 5,
         title,
         content,
       };
