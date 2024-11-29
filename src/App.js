@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -19,18 +19,31 @@ import OAuthRedirectPage from "./pages/login/Redirect";
 import HomePage from "./pages/home/homePage/homePage";
 import ReportPage from "./pages/report/reportPage";
 function App() {
+  const [isFirstVisit, setIsFirstVisit] = useState(true);
+
+  useEffect(() => {
+    // 첫 방문 여부를 Local Storage에서 확인
+    const hasVisited = localStorage.getItem("hasVisited");
+    if (hasVisited) {
+      setIsFirstVisit(false); // 이미 방문한 적이 있다면 false로 설정
+    } else {
+      localStorage.setItem("hasVisited", "true"); // 첫 방문 기록 저장
+    }
+  }, []);
   //const HomePage = lazy(() => import("./pages/home/homePage/homePage"));
   return (
     <Routes>
       <Route path="/oauth2/authorize" element={<OAuthRedirectPage />} />
       <Route path="/login" element={<KakaoLoginPage />} />
-      <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route
+        path="/"
+        element={isFirstVisit ? <Navigate to="/login" replace /> : <HomePage />}
+      />
       <Route path="/postdetail" element={<ChatListPage />} />
       <Route path="/postdetail/:id" element={<NotificationPage />} />
       <Route path="/chatlist" element={<ChatListPage />} />
       <Route path="/chatlist/:chatId" element={<ChatPage />} />
       <Route path="/noti" element={<NotificationPage />} />
-
       <Route path="/chat" element={<ChatPage />} />
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/keyword" element={<KeywordPage />} />
