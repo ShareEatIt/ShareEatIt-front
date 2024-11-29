@@ -1,5 +1,10 @@
 import React, { lazy, Suspense } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import ChatListPage from "./pages/chat/chatListPage";
 import NotificationPage from "./pages/notice/notificationPage";
 import ChatPage from "./pages/chat/chatPage";
@@ -19,7 +24,7 @@ function App() {
     <Routes>
       <Route path="/oauth2/authorize" element={<OAuthRedirectPage />} />
       <Route path="/login" element={<KakaoLoginPage />} />
-      <Route path="/" element={<HomePage />} />
+      <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path="/postdetail" element={<ChatListPage />} />
       <Route path="/postdetail/:id" element={<NotificationPage />} />
       <Route path="/chatlist" element={<ChatListPage />} />
