@@ -143,6 +143,19 @@ const S = {
     HiddenInput: styled.input`
         display: none;
     `,
+
+    LoadingText: styled.p`
+        color: gray;
+        font-size: 14px;
+        text-align: center;
+        margin-top: 10px;
+    `,
+    ErrorText: styled.p`
+        color: red;
+        font-size: 14px;
+        text-align: center;
+        margin-top: 10px;
+    `,
 };
 
 export { S };

@@ -18,8 +18,11 @@ const HomePage = () => {
     const [clicked, setClicked] = useState(menuList[0]);
     const [sharingList, setSharingList] = useState([]); // 나눔글 데이터
     const [loading, setLoading] = useState(true); // 로딩 상태
-
     const [currentPosition, setCurrentPosition] = useState(null);
+
+    const [postType, setPostType] = useState("");
+    const [latitude, setLatitude] = useState("");
+    const [longitude, setLongitude] = useState("");
 
     useEffect(() => {
         const fetchLocation = async () => {
@@ -35,8 +38,15 @@ const HomePage = () => {
         fetchLocation();
     }, []);
 
+    useEffect(() => {
+        if (currentPosition) {
+            fetchSharingList();
+        }
+    }, [clicked, currentPosition]);
+    //유저 정보조회 API
     const fetchSharingList = async () => {
-        setLoading(true);
+        console.log("fetchSharingList: 함수 호출됨");
+        console.log("fetchSharingList: 현재 위치:", currentPosition);
         try {
             const postType =
                 clicked === "전체"
@@ -44,15 +54,24 @@ const HomePage = () => {
                     : clicked === "가게"
                     ? "STORE"
                     : "INDIVIDUAL";
-            const latitude = currentPosition.latitude; // 예시 위도 (사용자 위치로 교체 가능)
-            const longitude = currentPosition.longitude; // 예시 경도 (사용자 위치로 교체 가능)
 
-            const data = await getSharingList(postType, latitude, longitude);
-            setSharingList(data);
+            setLatitude(currentPosition.latitude);
+            setLongitude(currentPosition.longitude);
+
+            console.log("fetchSharingList: API 호출");
+            console.log("파라미터:", { postType, latitude, longitude });
+            console.log("경도:", longitude);
+            const response = await getSharingList(
+                postType,
+                latitude,
+                longitude
+            );
+
+            console.log("나눔글 조회 결과 호출:", response);
+            // 데이터 설정
+            setSharingList(response.data.data.postList || []);
         } catch (err) {
-            console.error("Error fetching sharing list:", err);
-        } finally {
-            setLoading(false);
+            console.error(err);
         }
     };
 

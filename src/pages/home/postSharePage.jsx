@@ -31,17 +31,17 @@ const PostSharePage = () => {
     const [formData, setFormData] = useState({
         title: "",
         category: "",
-        foodType: "",
+        isFinished: "",
         foodName: "",
         expDate: "",
         purchaseDate: "",
-        description: "",
-        imgList: "",
-        address: "",
+        addressSt: "",
         addressDetail: "",
+        description: "",
+        kakaoLocationCode: "",
         latitude: "",
         longitude: "",
-        kakaoLocationCode: "",
+        postType: "",
         endAt: "",
     });
 
@@ -53,6 +53,7 @@ const PostSharePage = () => {
 
     const handleImageUpload = (uploadedImages) => {
         setImages(uploadedImages);
+        console.log("이미지:", uploadedImages);
     };
 
     const handleSubmit = async () => {
@@ -62,8 +63,11 @@ const PostSharePage = () => {
                 isFinished: false, // 추가 필드 기본값 설정
                 postType: "INDIVIDUAL", // 기본값 설정
             };
+            console.log("전송 데이터:", dataToSend);
+            console.log("이미지 파일:", images);
 
             await postSharing(dataToSend, images); // API 호출
+            console.log("이미지2:", images);
             alert("게시글이 성공적으로 등록되었습니다!");
         } catch (error) {
             alert("게시글 등록에 실패했습니다. 다시 시도해주세요.");
@@ -105,7 +109,7 @@ const PostSharePage = () => {
                 />
                 <ImageUploader
                     text={"이미지(유통기한 이미지 첨부 추천)"}
-                    onChange={(value) => handleImageUpload(value)}
+                    onChange={handleImageUpload}
                 />
                 <AdditionalInput
                     text={"추가 설명"}
@@ -116,7 +120,7 @@ const PostSharePage = () => {
                 <TradePlace
                     text={"나눔희망 장소"}
                     onChange={(place) => {
-                        handleInputChange("address", place.address);
+                        handleInputChange("addressSt", place.address);
                         handleInputChange("latitude", place.latitude);
                         handleInputChange("longitude", place.longitude);
                         handleInputChange(

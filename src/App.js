@@ -14,6 +14,7 @@ import OAuthRedirectPage from "./pages/login/Redirect";
 import HomePage from "./pages/home/homePage/homePage";
 import ReportPage from "./pages/home/reportPage";
 import PostSharePage from "./pages/home/postSharePage";
+import ShareDetailPage from "./pages/shareDetail/shareDetailPage";
 
 function App() {
     //const HomePage = lazy(() => import("./pages/home/homePage/homePage"));
@@ -22,10 +23,10 @@ function App() {
             <Route path="/oauth2/authorize" element={<OAuthRedirectPage />} />
             <Route path="/login" element={<KakaoLoginPage />} />
             <Route path="/" element={<HomePage />} />
-            <Route path="/postdetail" element={<ChatListPage />} />
-            <Route path="/postdetail/:id" element={<NotificationPage />} />
+            <Route path="/postdetail" element={<ShareDetailPage />} />
+            <Route path="/postdetail/:id" element={<ShareDetailPage />} />
             <Route path="/chatlist" element={<ChatListPage />} />
-            <Route path="/chatlist/:chatId" element={<ChatPage />} />
+            <Route path="/chatlist/:chatRoomId" element={<ChatPage />} />
             <Route path="/noti" element={<NotificationPage />} />
             <Route path="/createpost" element={<PostSharePage />} />
             <Route path="/chat" element={<ChatPage />} />
