@@ -6,37 +6,35 @@ export const postSharing = async (dto, imgList) => {
     try {
         const formData = new FormData();
 
-        // imgList가 비어 있지 않은지 확인
+        // 이미지 추가
         if (Array.isArray(imgList) && imgList.length > 0) {
             imgList.forEach((image) => {
-                formData.append("imgList", image); // 이미지 파일 추가
+                console.log("추가 중인 파일:", image.name);
+                formData.append("imgList", image);
             });
         } else {
-            console.error("imgList가 비어 있습니다. 이미지를 업로드하세요.");
+            console.error("imgList가 비어있습니다.");
         }
-        // dto를 JSON 문자열로 변환하여 추가
-        if (dto) {
-            formData.append(
-                "dto",
-                new Blob([JSON.stringify(dto)], { type: "application/json" })
-            );
-        } else {
-            console.error("dto가 비어 있습니다. 전송할 데이터를 확인하세요.");
+        formData.append("dto", JSON.stringify(dto));
+
+        // 디버깅: FormData 내용 출력
+        console.log("최종 전송 FormData:");
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
         }
+
+        // 전송
         const tokenString = localStorage.getItem("token");
-        console.log("토큰 전체:", tokenString);
-        const token = JSON.parse(tokenString); // 문자열을 객체로 변환
+        const token = JSON.parse(tokenString);
         const accessToken = token?.accessToken;
-        console.log("FormData 전송 중...");
-        console.log("DTO 데이터:", dto);
-        console.log("이미지 리스트:", imgList);
-        console.log("토큰:", accessToken);
+
         const response = await client.post(`/sharing`, formData, {
             headers: {
-                Authorization: `Bearer ${accessToken}`, // 인증 토큰 추가
+                Authorization: `Bearer ${accessToken}`,
             },
         });
-        console.log("응답:", response.data);
+
+        console.log("응답 데이터:", response.data);
         return response;
     } catch (err) {
         console.error("Error posting sharing:", err);

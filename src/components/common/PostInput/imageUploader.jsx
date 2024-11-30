@@ -25,6 +25,10 @@ const ImageUploader = ({ text, maxFiles = 4, onChange }) => {
         setImagePreviews((prev) => [...prev, ...newPreviews]);
 
         if (onChange) {
+            console.log(
+                "onChange 호출됨, 전달할 파일:",
+                updatedImages.map((img) => img.file)
+            );
             onChange(updatedImages.map((img) => img.file));
         }
     };
