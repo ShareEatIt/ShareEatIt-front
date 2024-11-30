@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { S } from "./postInput.style";
 
 const ImageUploader = ({ text, maxFiles = 4, onChange }) => {
-    const [images, setImages] = useState([]); // 로컬 미리보기 상태
+    const [images, setImages] = useState([]); // 로컬 파일 상태
+    const [imagePreviews, setImagePreviews] = useState([]); // 미리보기 URL 상태
 
     const handleFileChange = (e) => {
         const files = Array.from(e.target.files);
@@ -20,8 +21,9 @@ const ImageUploader = ({ text, maxFiles = 4, onChange }) => {
 
         const updatedImages = [...images, ...newImages];
         setImages(updatedImages);
+        const newPreviews = newImages.map((img) => img.preview);
+        setImagePreviews((prev) => [...prev, ...newPreviews]);
 
-        // 부모 컴포넌트로 파일 전달
         if (onChange) {
             onChange(updatedImages.map((img) => img.file));
         }
@@ -29,9 +31,12 @@ const ImageUploader = ({ text, maxFiles = 4, onChange }) => {
 
     const handleRemoveImage = (index) => {
         const updatedImages = images.filter((_, i) => i !== index);
-        setImages(updatedImages);
+        const updatedPreviews = imagePreviews.filter((_, i) => i !== index);
 
-        // 부모 컴포넌트로 업데이트된 파일 전달
+        setImages(updatedImages);
+        setImagePreviews(updatedPreviews);
+
+        // 부모 컴포넌트로 변경된 파일 리스트 전달
         if (onChange) {
             onChange(updatedImages.map((img) => img.file));
         }
@@ -42,10 +47,10 @@ const ImageUploader = ({ text, maxFiles = 4, onChange }) => {
             <S.TitleWrapper>{`${text} *`}</S.TitleWrapper>
 
             <S.ImageWrapper>
-                {images.map((image, index) => (
+                {imagePreviews.map((preview, index) => (
                     <S.ImagePreview key={index}>
                         <S.PreviewImage
-                            src={image.preview}
+                            src={preview}
                             alt={`uploaded-${index}`}
                         />
                         <S.RemoveButton

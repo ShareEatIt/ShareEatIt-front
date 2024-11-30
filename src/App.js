@@ -29,7 +29,7 @@ function App() {
             <Route path="/chatlist/:chatRoomId" element={<ChatPage />} />
             <Route path="/noti" element={<NotificationPage />} />
             <Route path="/createpost" element={<PostSharePage />} />
-            <Route path="/chat" element={<ChatPage />} />
+
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/keyword" element={<KeywordPage />} />
             <Route path="/profile" element={<ProfileEditPage />} />

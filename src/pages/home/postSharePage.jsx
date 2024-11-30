@@ -44,16 +44,15 @@ const PostSharePage = () => {
         postType: "",
         endAt: "",
     });
-
-    const [images, setImages] = useState([]);
+    const [imageUrls, setImageUrls] = useState([]);
 
     const handleInputChange = (field, value) => {
         setFormData((prev) => ({ ...prev, [field]: value }));
     };
 
-    const handleImageUpload = (uploadedImages) => {
-        setImages(uploadedImages);
-        console.log("이미지:", uploadedImages);
+    const handleImageUpload = (uploadedFiles) => {
+        setImageUrls(uploadedFiles); // 이미지 파일 상태 업데이트
+        console.log("업로드된 이미지 파일:", uploadedFiles);
     };
 
     const handleSubmit = async () => {
@@ -64,10 +63,8 @@ const PostSharePage = () => {
                 postType: "INDIVIDUAL", // 기본값 설정
             };
             console.log("전송 데이터:", dataToSend);
-            console.log("이미지 파일:", images);
 
-            await postSharing(dataToSend, images); // API 호출
-            console.log("이미지2:", images);
+            await postSharing(dataToSend, imageUrls); // API 호출
             alert("게시글이 성공적으로 등록되었습니다!");
         } catch (error) {
             alert("게시글 등록에 실패했습니다. 다시 시도해주세요.");

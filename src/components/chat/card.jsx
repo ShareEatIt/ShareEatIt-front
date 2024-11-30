@@ -60,7 +60,7 @@ const ChatCard = () => {
                 >
                     <S.ProfileImage />
                     <S.ChatContentContainer>
-                        <S.TitleWrapper>{item.chatRoomId}</S.TitleWrapper>
+                        <S.TitleWrapper>{item.opponent}</S.TitleWrapper>
                         <S.ContentWrapper>{item.status}</S.ContentWrapper>
                         <S.ModifiedATWrapper>
                             {item.modifiedAt}
