@@ -1,4 +1,7 @@
-import { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import SockJS from "sockjs-client";
+import { Client } from "@stomp/stompjs";
+import { useNavigate, useParams } from "react-router-dom";
 import { S } from "./chatPage.style";
 import BackButton from "../../components/common/BackButton/backButton";
 
@@ -14,28 +17,93 @@ const dummyMessages = [
 ];
 
 const ChatPage = () => {
-    const [messages, setMessages] = useState(dummyMessages);
-    const [inputText, setInputText] = useState("");
+    const [messages, setMessages] = useState([]); // 채팅 메시지 상태
+    const [inputText, setInputText] = useState(""); // 입력 메시지 상태
+    const [isConnected, setIsConnected] = useState(false); // 연결 상태
+    const stompClient = useRef(null); // STOMP 클라이언트 인스턴스 관리
+    const serverUrl = "http://54.180.228.54:8080/ws"; // WebSocket 서버 URL
+    const token = JSON.parse(localStorage.getItem("token"))?.accessToken; // 토큰 가져오기
 
-    const handleSendMessage = () => {
-        if (inputText.trim() === "") return;
+    // WebSocket 연결 설정
+    useEffect(() => {
+        console.log("WebSocket 연결 시도...");
 
-        const newMessage = {
-            id: messages.length + 1,
-            user: "나",
-            text: inputText,
-            time: new Date().toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-            }),
+        // SockJS와 STOMP 클라이언트 초기화
+        const socket = new SockJS(serverUrl);
+        const client = new Client({
+            webSocketFactory: () => socket,
+            reconnectDelay: 5000, // 재연결 딜레이
+            connectHeaders: {
+                Authorization: `Bearer ${token}`, // Authorization 헤더 추가
+            },
+            onConnect: () => {
+                console.log("WebSocket 연결 성공");
+                setIsConnected(true);
+
+                // 특정 채팅방 구독
+                client.subscribe(`/topic/chatRoom/3`, (message) => {
+                    console.log(
+                        "서버로부터 수신한 메시지:",
+                        JSON.parse(message.body)
+                    );
+                    const newMessage = JSON.parse(message.body);
+                    setMessages((prevMessages) => [
+                        ...prevMessages,
+                        newMessage,
+                    ]);
+                });
+            },
+            onDisconnect: () => {
+                console.log("WebSocket 연결 종료");
+                setIsConnected(false);
+            },
+            onStompError: (error) => {
+                console.error("STOMP 오류:", error.headers["message"]);
+            },
+        });
+
+        // STOMP 클라이언트 활성화
+        client.activate();
+        stompClient.current = client;
+
+        // 컴포넌트 언마운트 시 WebSocket 연결 해제
+        return () => {
+            if (client.active) {
+                client.deactivate();
+            }
         };
+    }, [serverUrl, token]);
 
-        setMessages([...messages, newMessage]);
-        setInputText("");
+    const sendMessage = () => {
+        if (
+            stompClient.current &&
+            stompClient.current.connected &&
+            inputText.trim()
+        ) {
+            const chatMessage = {
+                chatRoomId: 3, // 채팅방 ID
+                user: "나", // 사용자 정보
+                text: inputText, // 입력한 메시지
+                time: new Date().toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                }),
+            };
+
+            console.log("보내는 메시지:", chatMessage);
+
+            stompClient.current.publish({
+                destination: "/app/chat/message", // 메시지 전송 경로
+                body: JSON.stringify(chatMessage),
+            });
+
+            setInputText("");
+        }
     };
 
     return (
-        <S.Layout>
+        <span>웹소켓 연결 테스트 페이지</span>
+        /*<S.Layout>
             <BackButton text={"이가은"} />
             <S.MessageContainer>
                 {messages.map((msg) => (
@@ -50,7 +118,7 @@ const ChatPage = () => {
                     </S.MessageWrapper>
                 ))}
             </S.MessageContainer>
-        </S.Layout>
+        </S.Layout>*/
     );
 };
 

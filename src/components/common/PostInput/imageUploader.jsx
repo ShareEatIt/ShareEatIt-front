@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { S } from "./postInput.style";
 
-const ImageUploader = ({ text, maxFiles = 5, onChange }) => {
-    const [images, setImages] = useState([]);
-    const [error, setError] = useState("");
+const ImageUploader = ({ text, maxFiles = 4, onChange }) => {
+    const [images, setImages] = useState([]); // 로컬 파일 상태
+    const [imagePreviews, setImagePreviews] = useState([]); // 미리보기 URL 상태
 
     const handleFileChange = (e) => {
         const files = Array.from(e.target.files);
@@ -16,13 +16,14 @@ const ImageUploader = ({ text, maxFiles = 5, onChange }) => {
 
         const newImages = files.map((file) => ({
             file,
-            preview: URL.createObjectURL(file), // 미리보기 URL 생성
+            preview: URL.createObjectURL(file), // 로컬 미리보기 URL 생성
         }));
 
         const updatedImages = [...images, ...newImages];
         setImages(updatedImages);
+        const newPreviews = newImages.map((img) => img.preview);
+        setImagePreviews((prev) => [...prev, ...newPreviews]);
 
-        // 부모 컴포넌트로 알림
         if (onChange) {
             onChange(updatedImages.map((img) => img.file));
         }
@@ -30,9 +31,12 @@ const ImageUploader = ({ text, maxFiles = 5, onChange }) => {
 
     const handleRemoveImage = (index) => {
         const updatedImages = images.filter((_, i) => i !== index);
-        setImages(updatedImages);
+        const updatedPreviews = imagePreviews.filter((_, i) => i !== index);
 
-        // 부모 컴포넌트로 알림
+        setImages(updatedImages);
+        setImagePreviews(updatedPreviews);
+
+        // 부모 컴포넌트로 변경된 파일 리스트 전달
         if (onChange) {
             onChange(updatedImages.map((img) => img.file));
         }
@@ -43,11 +47,10 @@ const ImageUploader = ({ text, maxFiles = 5, onChange }) => {
             <S.TitleWrapper>{`${text} *`}</S.TitleWrapper>
 
             <S.ImageWrapper>
-                {/* 이미지 미리보기 */}
-                {images.map((image, index) => (
+                {imagePreviews.map((preview, index) => (
                     <S.ImagePreview key={index}>
                         <S.PreviewImage
-                            src={image.preview}
+                            src={preview}
                             alt={`uploaded-${index}`}
                         />
                         <S.RemoveButton
@@ -58,7 +61,6 @@ const ImageUploader = ({ text, maxFiles = 5, onChange }) => {
                     </S.ImagePreview>
                 ))}
 
-                {/* 업로드 버튼 */}
                 {images.length < maxFiles && (
                     <S.UploadButton htmlFor="image-uploader">
                         +

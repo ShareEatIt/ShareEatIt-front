@@ -35,6 +35,9 @@ const S = {
         width: 100%;
         font-size: 0.8rem;
     `,
+    ModifiedATWrapper: styled.div`
+        font-size: 0.5rem;
+    `,
 };
 
 export { S };
