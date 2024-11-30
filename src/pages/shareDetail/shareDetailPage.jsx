@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { ReactComponent as Profile } from "../../assets/common/profile.svg";
 import { ReactComponent as Emoji1 } from "../../assets/my/drink.svg";
 import { ReactComponent as Emoji2 } from "../../assets/my/drink.svg";
@@ -9,8 +10,11 @@ import { ReactComponent as Pen } from "../../assets/my/pen.svg";
 import { ReactComponent as Trash } from "../../assets/my/trash.svg";
 
 import { M, S } from "./shareDetail";
+import { getPostDetail } from "../../api/sharing";
+import ImageContainer from "../../components/common/ImageList/imageContainer ";
 
 const ShareDetailPage = () => {
+    const { id } = useParams();
     const [title, setTitle] = useState("게시글 제목");
     const [category, setCategory] = useState("빵");
     const [type, setType] = useState("완제품");
@@ -28,6 +32,35 @@ const ShareDetailPage = () => {
     );
     const [status, setStatus] = useState("나눔중");
     const [detail, setDetail] = useState("");
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await getPostDetail(id); // API 호출
+                console.log("불러온 데이터:", data);
+
+                const res = data.data.data;
+
+                // 상태 업데이트
+                setTitle(res.title);
+                setCategory(res.category || "");
+                setType(res.foodType || "");
+                setName(res.foodName || "");
+                setEdate(res.expDate || "");
+                setBdate(res.purchaseDate || "");
+                setPlace(res.addressSt || "");
+                setEndDate(res.endAt || "");
+                setWriter(res.writer.nickname || "");
+                setNum(res.transactionCount || 0);
+                setPostDate(res.createdAt || "");
+                setDetail(res.description || "");
+            } catch (err) {
+                console.error("데이터를 불러오지 못했습니다:", err);
+            }
+        };
+
+        fetchData();
+    }, [id]);
 
     const handleDetailChange = (e) => {
         setDetail(e.target.value);
@@ -146,7 +179,7 @@ const ShareDetailPage = () => {
     };
     return (
         <M.Layout>
-            <M.ImageContainer>Image</M.ImageContainer>
+            <ImageContainer></ImageContainer>
             <M.TitleWrapper>
                 <M.TopContainer>
                     {title} {reaction}

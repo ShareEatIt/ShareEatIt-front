@@ -85,7 +85,7 @@ const HomePage = () => {
 
     const navigate = useNavigate();
 
-    const handlePosetClick = (id) => {
+    const handlePostClick = (id) => {
         navigate(`/postdetail/${id}`);
     };
 
@@ -124,7 +124,10 @@ const HomePage = () => {
                     {loading ? (
                         <p>로딩 중...</p>
                     ) : (
-                        <ShareList sharingList={sharingList} />
+                        <ShareList
+                            sharingList={sharingList}
+                            onClick={handlePostClick}
+                        />
                     )}
                 </S.SectionWrapper>
             </S.ContentContainer>

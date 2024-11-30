@@ -6,15 +6,8 @@ export const postSharing = async (dto, imgList) => {
     try {
         const formData = new FormData();
 
-        // 이미지 추가
-        if (Array.isArray(imgList) && imgList.length > 0) {
-            imgList.forEach((image) => {
-                console.log("추가 중인 파일:", image.name);
-                formData.append("imgList", image);
-            });
-        } else {
-            console.error("imgList가 비어있습니다.");
-        }
+        formData.append("imgList", imgList);
+
         formData.append("dto", JSON.stringify(dto));
 
         // 디버깅: FormData 내용 출력
@@ -91,7 +84,6 @@ export const getSharingList = async (postType, latitude, longitude) => {
     }
 };*/
 
-// 채팅방 조회
 export const getSharingList = async (postType, latitude, longitude) => {
     console.log("요기서 받아오기 시작");
     try {
@@ -117,58 +109,13 @@ export const getSharingList = async (postType, latitude, longitude) => {
     }
 };
 
-//http 규정
-/*
-export const getSharingList = async (postType, latitude, longitude) => {
-    console.log("getSharingList 함수 호출됨!");
-    console.log("파라미터:", { postType, latitude, longitude });
-
-    try {
-        // 로컬 스토리지에서 토큰 가져오기
-        const tokenString = localStorage.getItem("token");
-        const token = JSON.parse(tokenString);
-        const accessToken = token?.accessToken?.replace("Bearer ", ""); // Bearer 제거
-
-        console.log("토큰:", accessToken);
-
-        // GET 요청
-        const response = await fetch(
-            `${process.env.REACT_APP_BASE_URL}/sharing`,
-            {
-                method: "GET", // GET 요청
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: accessToken, // 인증 헤더 추가
-                },
-                body: JSON.stringify({
-                    postType: "ALL",
-                    latitude: 37.5665,
-                    longitude: 126.978,
-                }),
-            }
-        );
-
-        // 응답 처리
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log("나눔글 조회 결과:", data);
-        return data;
-    } catch (err) {
-        console.error("요청 실패:", err);
-        throw err;
-    }
-};
-*/
-
 // 나눔글 상세 조회
 export const getPostDetail = async (id) => {
     try {
-        const res = await client.get(`/sharing/${id}`);
-        return res.data;
+        const response = await client.get(`/sharing/${id}`);
+        console.log(response);
+        return response;
     } catch (err) {
-        console.log(err);
+        throw err;
     }
 };
