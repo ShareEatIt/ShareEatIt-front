@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { ReactComponent as Profile } from "../../assets/common/profile.svg";
-import { ReactComponent as Emoji1 } from "../../assets/my/emoji1.svg";
-import { ReactComponent as Emoji2 } from "../../assets/my/emoji2.svg";
-import { ReactComponent as Emoji3 } from "../../assets/my/emoji3.svg";
-import { ReactComponent as Emoji4 } from "../../assets/my/emoji4.svg";
-import { ReactComponent as Emoji5 } from "../../assets/my/emoji5.svg";
+import { ReactComponent as Emoji1 } from "../../assets/my/drink.svg";
+import { ReactComponent as Emoji2 } from "../../assets/my/drink.svg";
+import { ReactComponent as Emoji3 } from "../../assets/my/drink.svg";
+import { ReactComponent as Emoji4 } from "../../assets/my/drink.svg";
+import { ReactComponent as Emoji5 } from "../../assets/my/drink.svg";
 import { ReactComponent as Pen } from "../../assets/my/pen.svg";
 import { ReactComponent as Trash } from "../../assets/my/trash.svg";
 

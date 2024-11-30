@@ -6,17 +6,23 @@ export const postSharing = async (dto, imgList) => {
     try {
         const formData = new FormData();
 
+        // imgList가 비어 있지 않은지 확인
         if (Array.isArray(imgList) && imgList.length > 0) {
             imgList.forEach((image) => {
-                formData.append("imgList", image);
+                formData.append("imgList", image); // 이미지 파일 추가
             });
+        } else {
+            console.error("imgList가 비어 있습니다. 이미지를 업로드하세요.");
         }
-
-        formData.append(
-            "dto",
-            new Blob([JSON.stringify(dto)], { type: "application/json" }) // Blob으로 JSON 데이터 처리
-        );
-
+        // dto를 JSON 문자열로 변환하여 추가
+        if (dto) {
+            formData.append(
+                "dto",
+                new Blob([JSON.stringify(dto)], { type: "application/json" })
+            );
+        } else {
+            console.error("dto가 비어 있습니다. 전송할 데이터를 확인하세요.");
+        }
         const tokenString = localStorage.getItem("token");
         console.log("토큰 전체:", tokenString);
         const token = JSON.parse(tokenString); // 문자열을 객체로 변환

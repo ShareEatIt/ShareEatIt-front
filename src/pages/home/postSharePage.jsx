@@ -43,14 +43,16 @@ const PostSharePage = () => {
         kakaoLocationCode: "",
         endAt: "",
     });
-    const [imageUrls, setImageUrls] = useState([]);
+    const [imageFiles, setImageFiles] = useState([]); // 이미지 파일 상태 관리
 
+    // 입력 변경 핸들러
     const handleInputChange = (field, value) => {
         setFormData((prev) => ({ ...prev, [field]: value }));
     };
 
+    // 이미지 업로드 핸들러
     const handleImageUpload = (uploadedFiles) => {
-        setImageUrls(uploadedFiles); // 이미지 파일 상태 업데이트
+        setImageFiles(uploadedFiles); // 이미지 파일 상태 업데이트
         console.log("업로드된 이미지 파일:", uploadedFiles);
     };
 
@@ -63,7 +65,7 @@ const PostSharePage = () => {
             };
             console.log("전송 데이터:", dataToSend);
 
-            await postSharing(dataToSend, imageUrls); // API 호출
+            await postSharing(dataToSend, imageFiles); // API 호출
             alert("게시글이 성공적으로 등록되었습니다!");
         } catch (error) {
             alert("게시글 등록에 실패했습니다. 다시 시도해주세요.");
