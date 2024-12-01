@@ -26,6 +26,7 @@ const MyPage = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [profile, setProfile] = useState("");
   const [smile1, setSmile1] = useState(0);
   const [smile2, setSmile2] = useState(0);
   const [smile3, setSmile3] = useState(0);
@@ -36,9 +37,10 @@ const MyPage = () => {
   const readMemberInfo = async () => {
     try {
       const response = await getMemberInfo();
-      const { nickname, email, location } = response.data.data;
+      const { nickname, email, profileImg } = response.data.data;
       setName(nickname);
       setEmail(email);
+      setProfile(profileImg);
     } catch (err) {
       console.error(err);
     }
@@ -129,7 +131,19 @@ const MyPage = () => {
       <NavigationBar />
       <M.InfoContainer>
         <M.ProfileWrapper>
-          <Profile />
+          {profile ? (
+            <img
+              src={profile}
+              alt="Profile"
+              style={{
+                width: "90px",
+                height: "90px",
+                borderRadius: "50%",
+              }}
+            />
+          ) : (
+            <Profile />
+          )}
         </M.ProfileWrapper>
         <M.TextContainer>
           <M.TextWrapper>
