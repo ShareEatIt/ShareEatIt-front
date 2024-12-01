@@ -9,16 +9,18 @@ import { M } from "./my";
 import { getMemberInfo, putMemberInfo } from "../../api/member";
 
 const ProfileEditPage = () => {
-  const [imgFile, setImgFile] = useState("");
-  const [imgPreview, setImgPreview] = useState("");
+  const [imgFile, setImgFile] = useState(null);
+  const [imgPreview, setImgPreview] = useState(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [addressSt, setAddressSt] = useState("");
   const [addressDetail, setAddressDetail] = useState("");
+  const [latitude, setLatitude] = useState(null); // 위도
+  const [longitude, setLongitude] = useState(null); // 경도
   const [isPostcodeOpen, setIsPostcodeOpen] = useState(false); // 우편번호 모달 상태
   const navigate = useNavigate();
 
-  // 이미지 변경 핸들러
+  // 이미지변경 핸들러
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -32,54 +34,90 @@ const ProfileEditPage = () => {
   const readMemberInfo = async () => {
     try {
       const response = await getMemberInfo();
-      const { nickname, email, location } = response.data.data;
+      const { profileImg, nickname, email, location } = response.data.data;
+      setImgFile(profileImg);
+      setImgPreview(profileImg);
       setName(nickname);
       setEmail(email);
       setAddressSt(location?.addressSt || "");
       setAddressDetail(location?.addressDetail || "");
-      console.log("success");
+      setLatitude(location?.latitude || null);
+      setLongitude(location?.longitude || null);
+      console.log(response.data);
+      console.log(response.data.profileImg);
+      console.log(imgFile);
     } catch (err) {
       console.error(err);
     }
   };
 
   // 주소 검색 완료 핸들러
-  const handleCompletePostcode = (data) => {
+  const handleCompletePostcode = async (data) => {
     const fullAddress = data.address;
     setAddressSt(fullAddress);
     setIsPostcodeOpen(false); // 모달 닫기
+
+    // Kakao Local API를 사용하여 좌표 정보 가져오기
+    try {
+      const url = `https://dapi.kakao.com/v2/local/search/address.json?query=${encodeURIComponent(
+        fullAddress
+      )}`;
+      console.log("Request URL:", url);
+      console.log(
+        "Authorization Header:",
+        `KakaoAK ${process.env.REACT_APP_API_KEY}`
+      );
+
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: `KakaoAK ${process.env.REACT_APP_API_KEY}`,
+        },
+      });
+      const result = await response.json();
+      if (result.documents.length > 0) {
+        const { x, y } = result.documents[0];
+        setLongitude(x);
+        setLatitude(y);
+      } else {
+        console.error("좌표를 찾을 수 없습니다.");
+      }
+    } catch (error) {
+      console.error("Kakao Local API 호출 오류:", error);
+    }
   };
 
   // 버튼 클릭 핸들러
   const handleEditBtn = async () => {
     const response = await createUserInfo();
     if (response) {
-      navigate("/my");
+      const { profileImg } = response.data.data;
+      setImgPreview(profileImg);
+      navigate("/mypage");
     }
   };
 
   // 유저 정보 수정 API
   const createUserInfo = async () => {
     try {
-      const formData = new FormData();
-      if (imgFile) {
-        formData.append("profileImage", imgFile);
-      }
-      const dto = {
-        profileImg: imgPreview || "",
+      const formData = {
+        imgFile, // 선택한 이미지 파일
+        profileImg: imgPreview || "", // 이미지 미리보기 URL
         nickname: name,
-        latitude: 37.5665,
-        longitude: 126.978,
+        latitude, // 위도
+        longitude, // 경도
         addressSt: addressSt || "",
         addressDetail: addressDetail || "",
-        provider: "INDIVIDUAL",
+        provider: "INDIVIDUAL", // 또는 "STORE" 등 상황에 맞는 값
       };
-      formData.append("dto", JSON.stringify(dto));
+      console.log(imgFile);
+      console.log(imgPreview);
       const response = await putMemberInfo(formData);
-      console.log("formData", formData);
+
+      console.log("Response from server:", response.data);
       return response;
     } catch (err) {
-      console.error("Error:", err.response?.data || err);
+      console.error("Error in createUserInfo:", err);
     }
   };
 
@@ -98,7 +136,12 @@ const ProfileEditPage = () => {
                 <img
                   src={imgPreview}
                   alt="이미지 미리보기"
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                  }}
                 />
               ) : (
                 <Profile style={{ width: "136px", height: "136px" }} />
