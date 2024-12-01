@@ -61,13 +61,45 @@ export const patchIsNoticeAvail = async (isNoticeAvail) => {
 };
 
 // 유저 정보 수정
-export const putMemberInfo = async (userData) => {
+export const putMemberInfo = async (formData) => {
   try {
-    const response = await client.patch(`/members`, userData, {
-      headers: { "Content-type": "multipart/form-data" },
+    // FormData 객체 생성
+    const data = new FormData();
+
+    // 이미지 파일이 존재하면 추가
+    if (formData.imgFile) {
+      data.append("imgFile", formData.imgFile);
+    }
+    console.log(formData.imgFile);
+    // dto 객체 생성 및 JSON 문자열로 변환 후 추가
+    const dto = {
+      profileImg: formData.profileImg,
+      nickname: formData.nickname,
+      latitude: formData.latitude,
+      longitude: formData.longitude,
+      addressSt: formData.addressSt,
+      addressDetail: formData.addressDetail,
+      provider: formData.provider,
+    };
+    console.log(formData.profileImg);
+    data.append(
+      "dto",
+      new Blob([JSON.stringify(dto)], { type: "application/json" })
+    );
+    console.log("dto:", dto);
+    const imgFile = data.get("imgFile");
+    console.log("imgFile:", imgFile);
+
+    // API 요청
+    const response = await client.put(`/members`, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
+
     return response;
   } catch (err) {
+    console.error("Error in putMemberInfo:", err.response?.data || err);
     throw err;
   }
 };
