@@ -4,29 +4,52 @@ import { Client } from "@stomp/stompjs";
 import { useNavigate, useParams } from "react-router-dom";
 import { S } from "./chatPage.style";
 import BackButton from "../../components/common/BackButton/backButton";
+import { getChatHistory, sendChatMessage } from "../../api/chat";
+import { getMemberInfo } from "../../api/member";
 
-const dummyMessages = [
-    { id: 1, user: "이승진", text: "안녕하세요!", time: "10:30" },
-    { id: 2, user: "이가은", text: "반갑습니다!", time: "10:32" },
-    {
-        id: 3,
-        user: "이가은",
-        text: "글자가 많이 들어가는 경우에는 어떻게 되어야 합니까!",
-        time: "10:32",
-    },
-];
+const serverUrl = process.env.REACT_APP_SERVER_URL;
 
 const ChatPage = () => {
+    const { chatRoomId } = useParams();
+    const [senderId, setSenderId] = useState(null);
     const [messages, setMessages] = useState([]); // 채팅 메시지 상태
     const [inputText, setInputText] = useState(""); // 입력 메시지 상태
     const [isConnected, setIsConnected] = useState(false); // 연결 상태
     const stompClient = useRef(null); // STOMP 클라이언트 인스턴스 관리
-    const serverUrl = "http://54.180.228.54:8080/ws"; // WebSocket 서버 URL
+
     const token = JSON.parse(localStorage.getItem("token"))?.accessToken; // 토큰 가져오기
+    // 사용자 정보
+    useEffect(() => {
+        const fetchMemberInfo = async () => {
+            try {
+                const response = await getMemberInfo();
+                const userId = response.data.data.id; // 서버에서 반환된 사용자 ID
+                setSenderId(userId); // senderId 설정
+                console.log("사용자 정보: ", response.data.data);
+            } catch (error) {
+                console.error("사용자 정보 불러오기 실패: ", error);
+            }
+        };
+
+        fetchMemberInfo();
+    }, []);
 
     // WebSocket 연결 설정
     useEffect(() => {
         console.log("WebSocket 연결 시도...");
+
+        // 채팅 내역 로드
+        const fetchChatHistory = async () => {
+            try {
+                const chatHistory = await getChatHistory(chatRoomId); // API 호출
+                setMessages(chatHistory);
+                console.log("채팅 내역 로드: ", chatHistory);
+            } catch (error) {
+                console.error("채팅 내역 로드 실패:", error);
+            }
+        };
+
+        fetchChatHistory();
 
         // SockJS와 STOMP 클라이언트 초기화
         const socket = new SockJS(serverUrl);
@@ -41,7 +64,7 @@ const ChatPage = () => {
                 setIsConnected(true);
 
                 // 특정 채팅방 구독
-                client.subscribe(`/topic/chatRoom/3`, (message) => {
+                client.subscribe(`/topic/chatRoom/${chatRoomId}`, (message) => {
                     console.log(
                         "서버로부터 수신한 메시지:",
                         JSON.parse(message.body)
@@ -72,53 +95,67 @@ const ChatPage = () => {
                 client.deactivate();
             }
         };
-    }, [serverUrl, token]);
+    }, [chatRoomId, token]);
 
-    const sendMessage = () => {
-        if (
-            stompClient.current &&
-            stompClient.current.connected &&
-            inputText.trim()
-        ) {
-            const chatMessage = {
-                chatRoomId: 3, // 채팅방 ID
-                user: "나", // 사용자 정보
-                text: inputText, // 입력한 메시지
-                time: new Date().toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                }),
-            };
+    const handleSendMessage = async () => {
+        if (!inputText.trim()) return;
 
-            console.log("보내는 메시지:", chatMessage);
-
-            stompClient.current.publish({
-                destination: "/app/chat/message", // 메시지 전송 경로
-                body: JSON.stringify(chatMessage),
+        try {
+            const newMessage = await sendChatMessage({
+                chatRoomId,
+                senderId,
+                content: inputText,
             });
 
-            setInputText("");
+            // 성공적으로 전송된 메시지를 추가
+            setMessages((prevMessages) => [...prevMessages, newMessage]);
+            setInputText(""); // 입력창 초기화
+        } catch (error) {
+            console.error("메시지 전송 실패:", error);
+        }
+    };
+
+    // 메시지 전송 (Enter 키로도 가능)
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            handleSendMessage();
         }
     };
 
     return (
-        <span>웹소켓 연결 테스트 페이지</span>
-        /*<S.Layout>
-            <BackButton text={"이가은"} />
+        <S.Layout>
+            <BackButton text={"채팅방"} />
             <S.MessageContainer>
                 {messages.map((msg) => (
-                    <S.MessageWrapper>
-                        <S.UserProfileImage />
+                    <S.MessageWrapper
+                        key={msg.id}
+                        style={{
+                            display: "flex",
+                            justifyContent:
+                                msg.senderId === senderId
+                                    ? "flex-end"
+                                    : "flex-start",
+                        }}
+                    >
+                        {msg.senderId !== senderId && <S.UserProfileImage />}{" "}
                         <S.MessageContentContainer
-                            key={msg.id}
-                            isOwn={msg.user === "나"}
+                            isOwn={msg.senderId === senderId}
                         >
-                            <S.MessageText>{msg.text}</S.MessageText>
+                            <S.MessageText>{msg.content}</S.MessageText>
                         </S.MessageContentContainer>
                     </S.MessageWrapper>
                 ))}
             </S.MessageContainer>
-        </S.Layout>*/
+            <S.InputContainer>
+                <input
+                    type="text"
+                    value={inputText}
+                    onChange={(e) => setInputText(e.target.value)}
+                    placeholder="메시지를 입력하세요..."
+                />
+                <button onClick={handleSendMessage}>보내기</button>
+            </S.InputContainer>
+        </S.Layout>
     );
 };
 

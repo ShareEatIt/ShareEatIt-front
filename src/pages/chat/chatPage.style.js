@@ -43,6 +43,18 @@ const S = {
         border-radius: 5px;
     `,
     MessageTime: styled.div``,
+    InputContainer: styled.div`
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+        border-top: 1px solid #ddd; /* 위쪽에 경계선 추가 */
+        background-color: #f9f9f9; /* 배경 색상 */
+        position: fixed;
+        bottom: 0;
+        width: 100%; /* 화면 전체 너비 */
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* 상단 그림자 효과 */
+    `,
 };
 
 export { S };

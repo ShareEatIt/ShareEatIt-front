@@ -29,3 +29,37 @@ export const getChatList = async () => {
         throw err;
     }
 };
+
+export const getChatHistory = async (chatRoomId) => {
+    console.log("채팅 내역 불러오기");
+
+    const token = JSON.parse(localStorage.getItem("token"))?.accessToken;
+    console.log("토큰: ", token);
+    try {
+        const response = await client.get(`/chat/message/${chatRoomId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`, // Bearer 토큰을 Authorization 헤더에 추가
+            },
+        });
+        console.log("채팅 내역 API 응답:", response.data);
+        return response.data.data.chatList || [];
+    } catch (err) {
+        throw err;
+    }
+};
+
+export const sendChatMessage = async ({ chatRoomId, senderId, content }) => {
+    try {
+        const response = await client.post(`/app/chat/message/${chatRoomId}`, {
+            type: "TALK",
+            chatRoomId: chatRoomId.toString(),
+            senderId: senderId.toString(),
+            content,
+        });
+        console.log("메시지 전송 성공:", response.data);
+        return response.data;
+    } catch (error) {
+        console.error("메시지 전송 실패:", error);
+        throw error;
+    }
+};
