@@ -6,9 +6,19 @@ export const postSharing = async (dto, imgList) => {
     try {
         const formData = new FormData();
 
-        formData.append("imgList", imgList);
+        if (Array.isArray(imgList) && imgList.length > 0) {
+            imgList.forEach((image) => {
+                formData.append("imgList", image); // 동일한 "imgList" 키로 여러 개 추가
+            });
+        } else {
+            console.error("imgList가 비어있거나 배열이 아닙니다.");
+        }
 
-        formData.append("dto", JSON.stringify(dto));
+        formData.append(
+            "dto",
+            new Blob([JSON.stringify(dto)], { type: "application/json" }) // JSON을 Blob 형태로 추가
+        );
+        //formData.append("dto", JSON.stringify(dto));
 
         // 디버깅: FormData 내용 출력
         console.log("최종 전송 FormData:");
@@ -20,10 +30,11 @@ export const postSharing = async (dto, imgList) => {
         const tokenString = localStorage.getItem("token");
         const token = JSON.parse(tokenString);
         const accessToken = token?.accessToken;
-
+        console.log("토큰 ", accessToken);
         const response = await client.post(`/sharing`, formData, {
             headers: {
-                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": "multipart/form-data",
+                Authorization: accessToken,
             },
         });
 

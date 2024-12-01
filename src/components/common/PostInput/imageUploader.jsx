@@ -7,7 +7,7 @@ const ImageUploader = ({ text, maxFiles = 4, onChange }) => {
 
     const handleFileChange = (e) => {
         const files = Array.from(e.target.files);
-
+        console.log("업로드된 파일-이미지 업로더:", files);
         // 최대 파일 개수 확인
         if (images.length + files.length > maxFiles) {
             alert(`최대 ${maxFiles}개의 이미지만 업로드할 수 있습니다.`);

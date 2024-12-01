@@ -10,6 +10,7 @@ import {
     PostInput,
     DateInput,
     TradePlace,
+    DateInputEndAt,
 } from "../../components/common/PostInput/postInput";
 import { S } from "./postSharePage.style";
 
@@ -56,6 +57,7 @@ const PostSharePage = () => {
     };
 
     const handleSubmit = async () => {
+        console.log("전송될 이미지:", imageUrls);
         try {
             const dataToSend = {
                 ...formData,
@@ -126,7 +128,7 @@ const PostSharePage = () => {
                         );
                     }}
                 />
-                <DateInput
+                <DateInputEndAt
                     text={"나눔 종료일자"}
                     onChange={(value) => handleInputChange("endAt", value)}
                 />
