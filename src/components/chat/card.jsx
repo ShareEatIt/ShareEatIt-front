@@ -72,10 +72,10 @@ const ChatCard = () => {
                     key={item.chatRoomList}
                     onClick={() => handleClick(item.chatRoomId)}
                 >
-                    <S.ProfileImage />
+                    <S.ProfileImage src="https://shareeat-github-actions-s3-bucket.s3.ap-northeast-2.amazonaws.com/images/cdc917cf-1f1f-46ce-8b26-fa055fad9def_unnamed.jpg" />
                     <S.ChatContentContainer>
                         <S.TitleWrapper>{item.opponent}</S.TitleWrapper>
-                        <S.ContentWrapper>{item.status}</S.ContentWrapper>
+                        <S.ContentWrapper> </S.ContentWrapper>
                         <S.ModifiedATWrapper>
                             {item.modifiedAt}
                         </S.ModifiedATWrapper>

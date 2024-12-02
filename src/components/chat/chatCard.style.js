@@ -15,9 +15,8 @@ const S = {
         height: 3.125rem;
         margin-right: 0.5rem;
         border-radius: 50%;
-
         object-fit: contain;
-        background: lightgray 50%;
+        background: none;
     `,
 
     ChatContentContainer: styled.div`

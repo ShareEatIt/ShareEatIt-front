@@ -3,6 +3,7 @@ import DropDown from "./dropDown";
 
 const S = {
     Layout: styled.div`
+        box-sizing: border-box;
         margin: 0rem 1.5rem;
         margin-top: 1.5rem;
         position: relative;
@@ -17,6 +18,7 @@ const S = {
         display: flex;
         align-items: center;
         justify-content: center;
+        box-sizing: border-box;
         width: 100%;
         height: 1.5rem;
         padding: 0 0.5rem;
@@ -33,6 +35,7 @@ const S = {
 
         width: 100%;
         height: 6rem;
+        box-sizing: border-box;
         padding: 0 0.5rem;
         border-radius: 5px;
         border: solid 1.5px;
@@ -55,8 +58,9 @@ const S = {
         position: relative;
         display: flex;
         flex-direction: column;
-
+        width: 100%;
         justify-content: center;
+        box-sizing: border-box;
         min-height: 1.5rem;
         padding: 0 0.5rem;
         border-radius: 5px;

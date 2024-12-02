@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { ReactComponent as SendIcon } from "../../assets/chat/send.svg";
 
 const S = {
     Layout: styled.div`
@@ -7,53 +8,95 @@ const S = {
         width: 100%;
         height: 100vh;
         box-sizing: border-box;
+        background-color: #fff; /* 배경 흰색 */
     `,
     MessageContainer: styled.div`
-        flex-direction: column;
-        display: flex;
-        width: 100%;
         flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        margin-bottom: 3.5rem;
+        gap: 0.5rem;
+        overflow-y: auto;
         box-sizing: border-box;
-        border: solid 2px;
     `,
     MessageWrapper: styled.div`
         display: flex;
         flex-direction: row;
+        align-items: flex-start;
 
-        margin: 0 1.13rem;
-        margin-bottom: 1rem;
-        border: solid 2px pink;
-        border-radius: 0.625rem;
-        gap: 1rem;
-        box-sizing: border-box;
+        ${(props) =>
+            props.isOwn &&
+            `
+            flex-direction: row-reverse; /* 본인 메시지는 반대 정렬 */
+        `}
     `,
-    UserProfileImage: styled.img`
+    UserProfileImage: styled.div`
         width: 2.3rem;
         height: 2.3rem;
+        margin-right: 0.5rem;
         border-radius: 50%;
-        object-fit: contain;
-        background: lightgray 50%;
+        background: lightgray;
+        object-fit: cover;
     `,
-    MessageContentContainer: styled.div``,
-    MessageUser: styled.div``,
+    MessageContentContainer: styled.div`
+        max-width: 70%;
+    `,
     MessageText: styled.div`
-        max-width: 14.1875rem;
-        padding: 0.1rem 0.2rem;
-        background-color: var(--yellow-40);
-        border-radius: 5px;
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+
+        background-color: ${(props) =>
+            props.senderId === props.currentUserId
+                ? "var(--yellow-90)"
+                : "var(--yellow-50)"};
+        color: ${(props) => (props.isOwn ? "#000" : "#333")};
+        border-radius: 0.625rem;
+        word-wrap: break-word;
+        word-break: break-word;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     `,
-    MessageTime: styled.div``,
+    MessageTime: styled.div`
+        font-size: 0.75rem;
+        color: #aaa;
+        margin-top: 0.25rem;
+        text-align: ${(props) => (props.isOwn ? "right" : "left")};
+    `,
     InputContainer: styled.div`
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 10px;
-        border-top: 1px solid #ddd; /* 위쪽에 경계선 추가 */
-        background-color: #f9f9f9; /* 배경 색상 */
+
         position: fixed;
         bottom: 0;
-        width: 100%; /* 화면 전체 너비 */
-        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* 상단 그림자 효과 */
+        width: 100%;
+        height: 3.5rem;
+        input {
+            flex: 1;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            margin: 0 0.5rem;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            background-color: var(--yellow-75);
+            border: none;
+            border-radius: 10px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ffc000;
+        }
     `,
 };
 

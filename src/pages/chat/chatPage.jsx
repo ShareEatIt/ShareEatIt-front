@@ -1,36 +1,37 @@
 import React, { useEffect, useState, useRef } from "react";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { S } from "./chatPage.style";
-import BackButton from "../../components/common/BackButton/backButton";
-import { getChatHistory } from "../../api/chat";
+import { getChatHistory, getOtherInfo } from "../../api/chat";
 import { getMemberInfo } from "../../api/member";
+import ChatBackButton from "../../components/common/BackButton/chatBackButton";
+import { ReactComponent as SendIcon } from "../../assets/chat/send.svg";
+import { getPostDetail } from "../../api/sharing";
 
 const serverUrl = process.env.REACT_APP_SERVER_URL;
 
 const ChatPage = () => {
     const { chatRoomId } = useParams();
+    const location = useLocation();
+    const { state } = location;
+    const otherInfo = state?.otherInfo;
     const [senderId, setSenderId] = useState(null);
+
+    const [receiverProfileImg, setReceiverProfileImg] = useState(
+        otherInfo?.data.profileImg || null
+    );
+    const [receiverName, setReceiverName] = useState(
+        otherInfo?.data.nickname || "알 수 없음"
+    );
+    console.log("ChatPage에서 받은 상대방 정보:", otherInfo);
     const [messages, setMessages] = useState([]);
     const [inputText, setInputText] = useState("");
     const [isConnected, setIsConnected] = useState(false);
     const stompClient = useRef(null);
     const [accessToken, setAccessToken] = useState("");
     const isSubscribed = useRef(false); // 구독 상태를 useRef로 관리
-
-    // 사용자 정보 가져오기
-    useEffect(() => {
-        const fetchMemberInfo = async () => {
-            try {
-                const response = await getMemberInfo();
-                setSenderId(response.data.data.id);
-            } catch (error) {
-                console.error("사용자 정보 불러오기 실패:", error);
-            }
-        };
-        fetchMemberInfo();
-    }, []);
+    const messageContainerRef = useRef(null);
 
     // WebSocket 연결 설정 및 채팅 내역 로드
     useEffect(() => {
@@ -115,6 +116,13 @@ const ChatPage = () => {
         };
     }, [chatRoomId, accessToken]);
 
+    useEffect(() => {
+        if (messageContainerRef.current) {
+            messageContainerRef.current.scrollTop =
+                messageContainerRef.current.scrollHeight;
+        }
+    }, [messages]);
+
     // 메시지 전송 핸들러
     const handleSendMessage = async () => {
         if (!inputText.trim() || !stompClient.current?.connected) return;
@@ -152,8 +160,11 @@ const ChatPage = () => {
 
     return (
         <S.Layout>
-            <BackButton text="채팅방" />
-            <S.MessageContainer>
+            <ChatBackButton
+                text={receiverName}
+                profileImg={receiverProfileImg}
+            />
+            <S.MessageContainer ref={messageContainerRef}>
                 {messages.map((msg) => (
                     <S.MessageWrapper
                         key={msg.id}
@@ -164,9 +175,19 @@ const ChatPage = () => {
                                     : "flex-start",
                         }}
                     >
-                        {msg.senderId !== senderId && <S.UserProfileImage />}
+                        {msg.senderId !== senderId && (
+                            <S.UserProfileImage
+                                src={receiverProfileImg || "default.png"}
+                                alt="User"
+                            />
+                        )}
                         <S.MessageContentContainer>
-                            <S.MessageText>{msg.content}</S.MessageText>
+                            <S.MessageText
+                                senderId={msg.senderId}
+                                currentUserId={senderId}
+                            >
+                                {msg.content}
+                            </S.MessageText>
                         </S.MessageContentContainer>
                     </S.MessageWrapper>
                 ))}
@@ -179,7 +200,9 @@ const ChatPage = () => {
                     onKeyDown={handleKeyDown}
                     placeholder="메시지를 입력하세요..."
                 />
-                <button onClick={handleSendMessage}>보내기</button>
+                <button onClick={handleSendMessage}>
+                    <SendIcon />{" "}
+                </button>
             </S.InputContainer>
         </S.Layout>
     );

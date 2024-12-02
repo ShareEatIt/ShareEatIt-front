@@ -2,30 +2,8 @@ import { client } from "./api";
 import axios from "axios";
 
 // 나눔글 생성
-export const postSharing = async (dto, imgList) => {
+export const postSharing = async (formData) => {
     try {
-        const formData = new FormData();
-
-        if (Array.isArray(imgList) && imgList.length > 0) {
-            imgList.forEach((image) => {
-                formData.append("imgList", image); // 동일한 "imgList" 키로 여러 개 추가
-            });
-        } else {
-            console.error("imgList가 비어있거나 배열이 아닙니다.");
-        }
-
-        formData.append(
-            "dto",
-            new Blob([JSON.stringify(dto)], { type: "application/json" }) // JSON을 Blob 형태로 추가
-        );
-        //formData.append("dto", JSON.stringify(dto));
-
-        // 디버깅: FormData 내용 출력
-        console.log("최종 전송 FormData:");
-        for (let [key, value] of formData.entries()) {
-            console.log(`${key}:`, value);
-        }
-
         // 전송
         const tokenString = localStorage.getItem("token");
         const token = JSON.parse(tokenString);
@@ -124,6 +102,7 @@ export const getSharingList = async (postType, latitude, longitude) => {
 export const getPostDetail = async (id) => {
     try {
         const response = await client.get(`/sharing/${id}`);
+        console.log("위치 값을 확인해 봐");
         console.log(response);
         return response;
     } catch (err) {

@@ -29,6 +29,12 @@ const M = {
         align-items: center;
         margin: 3px;
     `,
+    DetailContailnerVerticalAlignment: styled.div`
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        margin: 3px;
+    `,
     DetailTitleWrapper: styled.div`
         display: flex;
         justify-content: space-between;
@@ -39,6 +45,12 @@ const M = {
         display: flex;
         align-items: center;
         font-size: 15px;
+    `,
+    ProfileImg: styled.img`
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        margin-right: 0.2rem;
     `,
     VLine: styled.div`
         height: 18px;
@@ -126,7 +138,7 @@ const M = {
 
         width: 40px;
     `,
-    Textarea: styled.textarea`
+    Textarea: styled.div`
         width: 350px;
         height: 138px;
         resize: none;
@@ -138,6 +150,7 @@ const M = {
             outline: none;
         }
     `,
+
     DetailContainer2: styled.div`
         display: flex;
         flex-direction: column;

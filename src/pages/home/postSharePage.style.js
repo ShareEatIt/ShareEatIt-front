@@ -1,11 +1,17 @@
 import styled from "styled-components";
 
 const S = {
+    AllContiner: styled.div`
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+    `,
     Layout: styled.div`
         margin-bottom: 2rem;
+        box-sizing: border-box;
     `,
     ButtonWrapper: styled.div`
-        margin: 0rem 1.5rem;
+        margin: 0rem 1rem;
         margin-top: 1.5rem;
     `,
     FieldSet: styled.fieldset`

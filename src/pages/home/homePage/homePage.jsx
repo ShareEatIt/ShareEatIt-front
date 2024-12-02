@@ -24,6 +24,9 @@ const HomePage = () => {
     const [latitude, setLatitude] = useState("");
     const [longitude, setLongitude] = useState("");
 
+    const [searchText, setSearchText] = useState(""); // 검색 텍스트
+    const [filteredSharingList, setFilteredSharingList] = useState([]); // 검색 결과 데이터
+
     useEffect(() => {
         const fetchLocation = async () => {
             try {
@@ -45,6 +48,7 @@ const HomePage = () => {
     }, [clicked, currentPosition]);
     //유저 정보조회 API
     const fetchSharingList = async () => {
+        setLoading(true);
         console.log("fetchSharingList: 함수 호출됨");
         console.log("fetchSharingList: 현재 위치:", currentPosition);
         try {
@@ -63,15 +67,32 @@ const HomePage = () => {
             console.log("경도:", longitude);
             const response = await getSharingList(
                 postType,
-                latitude,
-                longitude
+                currentPosition.latitude,
+                currentPosition.longitude
             );
 
             console.log("나눔글 조회 결과 호출:", response);
             // 데이터 설정
-            setSharingList(response.data.data.postList || []);
+            const postList = response.data.data.postList || [];
+            setSharingList(postList);
+            setFilteredSharingList(postList);
         } catch (err) {
             console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+    const handleSearchChange = (e) => {
+        const searchValue = e.target.value;
+        setSearchText(searchValue);
+
+        if (searchValue.trim() === "") {
+            setFilteredSharingList(sharingList);
+        } else {
+            const filtered = sharingList.filter((item) =>
+                item.title.toLowerCase().includes(searchValue.toLowerCase())
+            );
+            setFilteredSharingList(filtered);
         }
     };
 
@@ -118,14 +139,18 @@ const HomePage = () => {
                     <S.SectionContentContainer>
                         <S.SearchBarContainer>
                             <S.SerchBarIcon />
-                            <S.SerchInput placeholder="검색하세요" />
+                            <S.SerchInput
+                                placeholder="검색하세요"
+                                value={searchText}
+                                onChange={handleSearchChange}
+                            />
                         </S.SearchBarContainer>
                     </S.SectionContentContainer>
                     {loading ? (
                         <p>로딩 중...</p>
                     ) : (
                         <ShareList
-                            sharingList={sharingList}
+                            sharingList={filteredSharingList}
                             onClick={handlePostClick}
                         />
                     )}

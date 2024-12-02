@@ -2,7 +2,9 @@ import styled from "styled-components";
 const S = {
     Layout: styled.div`
         display: flex;
-        height: 100vh;
+        min-height: 100vh; /* 최소 높이를 화면 전체로 설정 */
+        box-sizing: border-box;
+        overflow: hidden;
         flex-direction: column;
         justify-content: center;
         //border: solid 2px pink;
