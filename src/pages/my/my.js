@@ -177,7 +177,7 @@ const M = {
       outline: none;
     }
     @media (max-width: 800px) {
-      width: 250px;
+      width: 251px;
       height: 50px;
     }
   `,
@@ -185,7 +185,7 @@ const M = {
     width: 120px;
     height: 45px;
     padding: 8px;
-    margin-left: 6px;
+    margin-left: 8px;
     color: var(--white);
     background-color: var(--yellow-100);
     border-radius: 8px;
