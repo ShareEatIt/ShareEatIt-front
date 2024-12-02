@@ -16,8 +16,9 @@ const ChatPage = () => {
     const [inputText, setInputText] = useState(""); // 입력 메시지 상태
     const [isConnected, setIsConnected] = useState(false); // 연결 상태
     const stompClient = useRef(null); // STOMP 클라이언트 인스턴스 관리
+    const [accessToken, setAccessToken] = useState();
 
-    const token = JSON.parse(localStorage.getItem("token"))?.accessToken; // 토큰 가져오기
+    // const token = JSON.parse(localStorage.getItem("token"))?.accessToken; // 토큰 가져오기
     // 사용자 정보
     useEffect(() => {
         const fetchMemberInfo = async () => {
@@ -36,8 +37,6 @@ const ChatPage = () => {
 
     // WebSocket 연결 설정
     useEffect(() => {
-        console.log("WebSocket 연결 시도...");
-
         // 채팅 내역 로드
         const fetchChatHistory = async () => {
             try {
@@ -49,15 +48,33 @@ const ChatPage = () => {
             }
         };
 
+        const token = localStorage.getItem("token");
+        if (token) setAccessToken(JSON.parse(token).accessToken);
         fetchChatHistory();
+    }, [chatRoomId]);
 
+    // a마운트 언마운트 기록
+    useEffect(() => {
+        console.log("ChatPage mounted");
+        return () => console.log("ChatPage unmounted");
+    }, []);
+
+    useEffect(() => {
         // SockJS와 STOMP 클라이언트 초기화
-        const socket = new SockJS(serverUrl);
+        //  const socket = new SockJS(serverUrl);
+        console.log("WebSocket 연결 시도...");
         const client = new Client({
-            webSocketFactory: () => socket,
+            webSocketFactory: () => new SockJS(serverUrl),
+
             reconnectDelay: 5000, // 재연결 딜레이
+            heartbeatIncoming: 10000, // 서버에서 클라이언트로 10초마다 핑
+            heartbeatOutgoing: 10000,
+            debug: (str) => {
+                console.log("[STOMP 디버그] ", str);
+                console.log("전송되는 토큰: ", accessToken);
+            },
             connectHeaders: {
-                Authorization: `Bearer ${token}`, // Authorization 헤더 추가
+                Authorization: accessToken, // Authorization 헤더 추가
             },
             onConnect: () => {
                 console.log("WebSocket 연결 성공");
@@ -65,23 +82,28 @@ const ChatPage = () => {
 
                 // 특정 채팅방 구독
                 client.subscribe(`/topic/chatRoom/${chatRoomId}`, (message) => {
-                    console.log(
-                        "서버로부터 수신한 메시지:",
-                        JSON.parse(message.body)
-                    );
-                    const newMessage = JSON.parse(message.body);
-                    setMessages((prevMessages) => [
-                        ...prevMessages,
-                        newMessage,
-                    ]);
+                    try {
+                        console.log(
+                            "서버로부터 수신한 메시지:",
+                            JSON.parse(message.body)
+                        );
+                        const newMessage = JSON.parse(message.body);
+                        setMessages((prevMessages) => [
+                            ...prevMessages,
+                            newMessage,
+                        ]);
+                    } catch (error) {
+                        console.error("구독에러: ", error);
+                    }
                 });
+            },
+
+            onStompError: (error) => {
+                console.error("STOMP 오류:", error.headers["message"]);
             },
             onDisconnect: () => {
                 console.log("WebSocket 연결 종료");
                 setIsConnected(false);
-            },
-            onStompError: (error) => {
-                console.error("STOMP 오류:", error.headers["message"]);
             },
         });
 
@@ -91,34 +113,50 @@ const ChatPage = () => {
 
         // 컴포넌트 언마운트 시 WebSocket 연결 해제
         return () => {
-            if (client.active) {
-                client.deactivate();
+            console.log("WebSocket 클라이언트 해제");
+            if (stompClient.current) {
+                stompClient.current.deactivate();
             }
         };
-    }, [chatRoomId, token]);
+    }, [chatRoomId, accessToken]);
 
     const handleSendMessage = async () => {
         if (!inputText.trim()) return;
 
-        try {
-            const newMessage = await sendChatMessage({
-                chatRoomId,
-                senderId,
+        if (
+            stompClient.current &&
+            stompClient.current.connected &&
+            inputText?.trim()
+        ) {
+            const chatMessage = {
+                type: "TALK",
+                chatRoomId: chatRoomId,
+                senderId: senderId,
                 content: inputText,
-            });
+            };
 
-            // 성공적으로 전송된 메시지를 추가
-            setMessages((prevMessages) => [...prevMessages, newMessage]);
+            console.log("액세스 토큰: ", accessToken);
+
+            stompClient.current.publish({
+                destination: `/app/chat/message/{chatRoomId}`,
+                body: JSON.stringify(chatMessage),
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
             setInputText(""); // 입력창 초기화
-        } catch (error) {
-            console.error("메시지 전송 실패:", error);
         }
     };
 
     // 메시지 전송 (Enter 키로도 가능)
-    const handleKeyPress = (e) => {
-        if (e.key === "Enter") {
-            handleSendMessage();
+    const handleKeyDown = (e) => {
+        if (e.key !== "Enter") return;
+
+        e.preventDefault();
+        if (e.shiftKey) {
+            setInputText((prev) => prev + "\n"); // Shift + Enter로 줄바꿈 추가
+        } else {
+            handleSendMessage(); // Enter로 메시지 전송
         }
     };
 
@@ -151,6 +189,7 @@ const ChatPage = () => {
                     type="text"
                     value={inputText}
                     onChange={(e) => setInputText(e.target.value)}
+                    onKeyDown={handleKeyDown}
                     placeholder="메시지를 입력하세요..."
                 />
                 <button onClick={handleSendMessage}>보내기</button>

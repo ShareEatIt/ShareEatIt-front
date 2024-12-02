@@ -49,13 +49,28 @@ export const getChatHistory = async (chatRoomId) => {
 };
 
 export const sendChatMessage = async ({ chatRoomId, senderId, content }) => {
+    const accessToken = JSON.parse(localStorage.getItem("token"))?.accessToken;
+    if (!accessToken) throw new Error("Access token is missing");
     try {
-        const response = await client.post(`/app/chat/message/${chatRoomId}`, {
+        console.log({
             type: "TALK",
             chatRoomId: chatRoomId.toString(),
             senderId: senderId.toString(),
             content,
         });
+
+        const response = await client.post(
+            `/app/chat/message/${chatRoomId}`,
+            {
+                type: "TALK",
+                chatRoomId: chatRoomId.toString(),
+                senderId: senderId.toString(),
+                content,
+            },
+            {
+                withCredentials: false, // 기본 설정을 덮어씀
+            }
+        );
         console.log("메시지 전송 성공:", response.data);
         return response.data;
     } catch (error) {
