@@ -59,18 +59,12 @@ export const sendChatMessage = async ({ chatRoomId, senderId, content }) => {
             content,
         });
 
-        const response = await client.post(
-            `/app/chat/message/${chatRoomId}`,
-            {
-                type: "TALK",
-                chatRoomId: chatRoomId.toString(),
-                senderId: senderId.toString(),
-                content,
-            },
-            {
-                withCredentials: false, // 기본 설정을 덮어씀
-            }
-        );
+        const response = await client.post(`/app/chat/message/${chatRoomId}`, {
+            type: "TALK",
+            chatRoomId: chatRoomId.toString(),
+            senderId: senderId.toString(),
+            content,
+        });
         console.log("메시지 전송 성공:", response.data);
         return response.data;
     } catch (error) {
