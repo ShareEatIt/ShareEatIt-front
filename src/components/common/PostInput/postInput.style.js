@@ -20,8 +20,8 @@ const S = {
         justify-content: center;
         box-sizing: border-box;
         width: 100%;
-        height: 1.5rem;
-        padding: 0 0.5rem;
+
+        padding: 0.2rem 0.6rem;
         border-radius: 5px;
         border: solid 1.5px
             ${({ isFocused }) => (isFocused ? "#ffb849" : "black")};
@@ -36,7 +36,7 @@ const S = {
         width: 100%;
         height: 6rem;
         box-sizing: border-box;
-        padding: 0 0.5rem;
+        padding: 0.5rem 0.5rem;
         border-radius: 5px;
         border: solid 1.5px;
         outline-color: #ffb849;
@@ -61,8 +61,8 @@ const S = {
         width: 100%;
         justify-content: center;
         box-sizing: border-box;
-        min-height: 1.5rem;
-        padding: 0 0.5rem;
+        min-height: 2rem;
+        padding: 0.5rem 0.5rem;
         border-radius: 5px;
         border: solid 1.5px
             ${({ isFocused }) => (isFocused ? "#ffb849" : "black")};

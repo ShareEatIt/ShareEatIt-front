@@ -50,7 +50,9 @@ const S = {
         box-sizing: border-box;
         padding: 0.3rem 0.5rem;
     `,
-    SerchBarIcon: styled(SerchIcon)``,
+    SerchBarIcon: styled(SerchIcon)`
+        color: var(--yellow-90);
+    `,
     SerchInput: styled.input`
         width: 100%;
         margin: 0 0.5rem;

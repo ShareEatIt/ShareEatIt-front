@@ -27,11 +27,14 @@ const S = {
     `,
     SearchForm: styled.form`
         width: 100%;
+        box-sizing: border-box;
     `,
     SearchInput: styled.input`
         border-radius: 5px;
         width: 93%;
         height: 1.8rem;
+        padding: 0 0.5rem;
+        box-sizing: border-box;
     `,
     SerchBarIcon: styled(SerchIcon)`
         margin: 0 0.5rem;

@@ -3,30 +3,54 @@ import { getPostDetail } from "../../../api/sharing";
 import { useParams } from "react-router-dom";
 import { S } from "./map.style";
 import axios from "axios";
+import { client } from "../../../api/api";
 
-// 기본 나눔장소 나의 위치
 export function Map() {
     const [currentPosition, setCurrentPosition] = useState(null); // 현재 위치 저장
-    const [mapList, setMapList] = useState([]);
+    const [map, setMap] = useState(null); // 지도 객체 저장
+    const [mapList, setMapList] = useState([]); // 나눔글 위치 리스트
 
-    const fetchMapList = async (lat, lng) => {
+    // 나눔글 리스트 가져오기 및 지도에 핀 추가
+    const fetchMapList = async (lat, lng, kakaoMap) => {
         try {
             const token = JSON.parse(
                 localStorage.getItem("token")
             )?.accessToken;
-            console.log(lat);
-            console.log(lng);
-            const response = await axios.get("/map/list", {
+            const response = await client.get("/map/list", {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: token,
                 },
-                params: {
-                    latitude: lat,
-                    longitude: lng,
-                },
+                params: { latitude: lat, longitude: lng },
             });
-            setMapList(response.data.data.mapList || []);
+
+            const fetchedList = response.data.data.mapList || [];
+            setMapList(fetchedList);
+
+            // 리스트의 위치에 마커 추가
+            fetchedList.forEach((item) => {
+                const markerPosition = new window.kakao.maps.LatLng(
+                    item.location.latitude,
+                    item.location.longitude
+                );
+
+                // 마커 생성
+                const marker = new window.kakao.maps.Marker({
+                    position: markerPosition,
+                    map: kakaoMap, // 지도 객체
+                    title: item.category, // 마커 제목
+                });
+
+                // 인포윈도우 생성
+                const infoWindow = new window.kakao.maps.InfoWindow({
+                    content: `<div style="padding:5px;font-size:12px;">${item.location.addressSt}</div>`,
+                });
+
+                // 마커 클릭 시 인포윈도우 열기
+                window.kakao.maps.event.addListener(marker, "click", () => {
+                    infoWindow.open(kakaoMap, marker);
+                });
+            });
         } catch (error) {
             console.error(
                 "나눔글 위치 데이터를 가져오는 데 실패했습니다.",
@@ -60,56 +84,32 @@ export function Map() {
                             };
 
                             // 지도 생성
-                            const map = new window.kakao.maps.Map(
+                            const kakaoMap = new window.kakao.maps.Map(
                                 container,
                                 options
                             );
+                            setMap(kakaoMap);
 
-                            // 현재 위치 마커 추가
+                            // 현재 위치 마커 추가 (초록색)
+                            const markerImage =
+                                new window.kakao.maps.MarkerImage(
+                                    "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png", // 초록색 마커 이미지
+                                    new window.kakao.maps.Size(24, 35) // 마커 크기
+                                );
+
                             new window.kakao.maps.Marker({
                                 position: new window.kakao.maps.LatLng(
                                     lat,
                                     lng
                                 ),
-                                map, // 지도 객체
+                                map: kakaoMap, // 지도 객체
                                 title: "현재 위치", // 마커 제목
+                                image: markerImage, // 마커 이미지
                             });
-                            fetchMapList(lat, lng).then(() => {
-                                // 가져온 나눔글 위치에 마커 추가
-                                mapList.forEach((item) => {
-                                    const markerPosition =
-                                        new window.kakao.maps.LatLng(
-                                            item.location.latitude,
-                                            item.location.longitude
-                                        );
 
-                                    // 마커 생성
-                                    const marker = new window.kakao.maps.Marker(
-                                        {
-                                            position: markerPosition,
-                                            map, // 지도 객체
-                                            title: item.category, // 마커 제목
-                                        }
-                                    );
-
-                                    // 인포윈도우 생성
-                                    const infoWindow =
-                                        new window.kakao.maps.InfoWindow({
-                                            content: `<div style="padding:5px;font-size:12px;">${item.location.addressSt}</div>`,
-                                        });
-
-                                    // 마커 클릭 시 인포윈도우 열기
-                                    window.kakao.maps.event.addListener(
-                                        marker,
-                                        "click",
-                                        () => {
-                                            infoWindow.open(map, marker);
-                                        }
-                                    );
-                                });
-                            });
+                            // 지도에 핀 추가
+                            fetchMapList(lat, lng, kakaoMap);
                         },
-
                         (error) => {
                             console.error(
                                 "현재 위치를 가져올 수 없습니다.",
@@ -135,29 +135,15 @@ export function Map() {
                             };
 
                             // 지도 생성
-                            new window.kakao.maps.Map(container, options);
+                            const kakaoMap = new window.kakao.maps.Map(
+                                container,
+                                options
+                            );
+                            setMap(kakaoMap);
                         }
                     );
                 } else {
                     console.error("Geolocation을 지원하지 않습니다.");
-
-                    // 기본 위치 설정 (서울)
-                    const defaultLat = 37.5665;
-                    const defaultLng = 126.978;
-
-                    setCurrentPosition({ lat: defaultLat, lng: defaultLng });
-
-                    const container = document.getElementById("map");
-                    const options = {
-                        center: new window.kakao.maps.LatLng(
-                            defaultLat,
-                            defaultLng
-                        ),
-                        level: 3,
-                    };
-
-                    // 지도 생성
-                    new window.kakao.maps.Map(container, options);
                 }
             });
         });
@@ -190,6 +176,7 @@ export const SearchMap = ({ onPlaceSelect }) => {
     const [pagination, setPagination] = useState(null); // 페이지네이션 상태
     const markers = useRef([]); // 마커 리스트를 Ref로 관리
     const geocoder = useRef(null); // Geocoder 객체를 저장
+    const [loading, setLoading] = useState(true);
 
     // 지도 초기화
     useEffect(() => {
@@ -210,6 +197,7 @@ export const SearchMap = ({ onPlaceSelect }) => {
                 };
                 mapRef.current = new window.kakao.maps.Map(container, options);
                 geocoder.current = new window.kakao.maps.services.Geocoder(); // 여기서 Geocoder 생성
+                setLoading(false); // 로딩 완료
                 console.log("Geocoder 객체 초기화 완료");
             });
         };
