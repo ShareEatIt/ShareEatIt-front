@@ -139,7 +139,7 @@ const M = {
         width: 40px;
     `,
     Textarea: styled.div`
-        width: 350px;
+        width: 100%;
         height: 138px;
         resize: none;
         border-radius: 10px;
