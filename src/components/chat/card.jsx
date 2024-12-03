@@ -49,8 +49,13 @@ const ChatCard = () => {
 
     const navigate = useNavigate();
 
-    const handleClick = (chatRoomId) => {
-        navigate(`/chatlist/${chatRoomId}`);
+    const handleClick = (chatRoomId, title, profileImage) => {
+        navigate(`/chatlist/${chatRoomId}`, {
+            state: {
+                title,
+                profileImage,
+            },
+        });
         const token = JSON.parse(localStorage.getItem("token"))?.accessToken;
 
         if (!token) {
@@ -70,7 +75,13 @@ const ChatCard = () => {
             {chatListData.map((item) => (
                 <S.Layout
                     key={item.chatRoomList}
-                    onClick={() => handleClick(item.chatRoomId)}
+                    onClick={() =>
+                        handleClick(
+                            item.chatRoomId,
+                            item.opponent,
+                            "https://shareeat-github-actions-s3-bucket.s3.ap-northeast-2.amazonaws.com/images/cdc917cf-1f1f-46ce-8b26-fa055fad9def_unnamed.jpg"
+                        )
+                    }
                 >
                     <S.ProfileImage src="https://shareeat-github-actions-s3-bucket.s3.ap-northeast-2.amazonaws.com/images/cdc917cf-1f1f-46ce-8b26-fa055fad9def_unnamed.jpg" />
                     <S.ChatContentContainer>
