@@ -19,10 +19,11 @@ const ChatPage = () => {
     const [senderId, setSenderId] = useState(null);
 
     const [receiverProfileImg, setReceiverProfileImg] = useState(
-        otherInfo?.data.profileImg || null
+        otherInfo?.data.profileImg ||
+            "https://shareeat-github-actions-s3-bucket.s3.ap-northeast-2.amazonaws.com/images/cdc917cf-1f1f-46ce-8b26-fa055fad9def_unnamed.jpg"
     );
     const [receiverName, setReceiverName] = useState(
-        otherInfo?.data.nickname || "알 수 없음"
+        otherInfo?.data.nickname || state?.title
     );
     console.log("ChatPage에서 받은 상대방 정보:", otherInfo);
     const [messages, setMessages] = useState([]);

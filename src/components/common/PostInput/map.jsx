@@ -208,8 +208,9 @@ export const SearchMap = ({ onPlaceSelect }) => {
                     ), // 초기 위치: 서울
                     level: 3,
                 };
-                mapRef.current = new window.kakao.maps.Map(container, options); // 지도 객체 저장
-                geocoder.current = new window.kakao.maps.services.Geocoder(); // Geocoder 객체 생성
+                mapRef.current = new window.kakao.maps.Map(container, options);
+                geocoder.current = new window.kakao.maps.services.Geocoder(); // 여기서 Geocoder 생성
+                console.log("Geocoder 객체 초기화 완료");
             });
         };
 
