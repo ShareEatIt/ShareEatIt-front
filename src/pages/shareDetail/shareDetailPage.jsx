@@ -152,10 +152,12 @@ const ShareDetailPage = () => {
                             <p>지도 데이터를 불러오는 중입니다...</p>
                         )}
                     </M.DetailContailnerVerticalAlignment>
-                    <BottomButtonPost
-                        text={"채팅시작"}
-                        onClick={handleStartChat}
-                    />
+                    {writerId !== currentUserId && (
+                        <BottomButtonPost
+                            text={"채팅시작"}
+                            onClick={handleStartChat}
+                        />
+                    )}
                 </M.Layout>
             );
         }
