@@ -161,7 +161,7 @@ const M = {
   PostcodeTextarea: styled.textarea`
     display: flex;
     justify-content: center;
-    width: 585px;
+    width: 575px;
     height: 25px;
     padding: 10px;
     border: 1px solid black;
@@ -177,19 +177,24 @@ const M = {
       outline: none;
     }
     @media (max-width: 800px) {
-      width: 220px;
+      width: 251px;
+      height: 50px;
     }
   `,
   PostcodeBtn: styled.button`
-    width: 110px;
+    width: 120px;
     height: 45px;
     padding: 8px;
-    margin-left: 6px;
+    margin-left: 8px;
     color: var(--white);
     background-color: var(--yellow-100);
     border-radius: 8px;
     font-weight: 700;
     font-size: 14px;
+    @media (max-width: 800px) {
+      width: 80px;
+      height: 70px;
+    }
   `,
 
   // 키워드 설정
