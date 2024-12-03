@@ -1,9 +1,39 @@
 import React, { useEffect, useRef, useState } from "react";
+import { getPostDetail } from "../../../api/sharing";
+import { useParams } from "react-router-dom";
 import { S } from "./map.style";
+import axios from "axios";
 
 // 기본 나눔장소 나의 위치
 export function Map() {
     const [currentPosition, setCurrentPosition] = useState(null); // 현재 위치 저장
+    const [mapList, setMapList] = useState([]);
+
+    const fetchMapList = async (lat, lng) => {
+        try {
+            const token = JSON.parse(
+                localStorage.getItem("token")
+            )?.accessToken;
+            console.log(lat);
+            console.log(lng);
+            const response = await axios.get("/map/list", {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: token,
+                },
+                params: {
+                    latitude: lat,
+                    longitude: lng,
+                },
+            });
+            setMapList(response.data.data.mapList || []);
+        } catch (error) {
+            console.error(
+                "나눔글 위치 데이터를 가져오는 데 실패했습니다.",
+                error
+            );
+        }
+    };
 
     // 카카오 API 호출 및 지도 초기화
     useEffect(() => {
@@ -44,7 +74,42 @@ export function Map() {
                                 map, // 지도 객체
                                 title: "현재 위치", // 마커 제목
                             });
+                            fetchMapList(lat, lng).then(() => {
+                                // 가져온 나눔글 위치에 마커 추가
+                                mapList.forEach((item) => {
+                                    const markerPosition =
+                                        new window.kakao.maps.LatLng(
+                                            item.location.latitude,
+                                            item.location.longitude
+                                        );
+
+                                    // 마커 생성
+                                    const marker = new window.kakao.maps.Marker(
+                                        {
+                                            position: markerPosition,
+                                            map, // 지도 객체
+                                            title: item.category, // 마커 제목
+                                        }
+                                    );
+
+                                    // 인포윈도우 생성
+                                    const infoWindow =
+                                        new window.kakao.maps.InfoWindow({
+                                            content: `<div style="padding:5px;font-size:12px;">${item.location.addressSt}</div>`,
+                                        });
+
+                                    // 마커 클릭 시 인포윈도우 열기
+                                    window.kakao.maps.event.addListener(
+                                        marker,
+                                        "click",
+                                        () => {
+                                            infoWindow.open(map, marker);
+                                        }
+                                    );
+                                });
+                            });
                         },
+
                         (error) => {
                             console.error(
                                 "현재 위치를 가져올 수 없습니다.",
@@ -292,5 +357,90 @@ export const SearchMap = ({ onPlaceSelect }) => {
                 }}
             ></S.MapWrapper>
         </S.Layout>
+    );
+};
+
+//게시글의 지도 표시
+export const MapPostDetail = () => {
+    const { id } = useParams();
+    const [latitude, setLatitude] = useState(null); // 경도
+    const [longitude, setLongitude] = useState(null); // 위도
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await getPostDetail(id); // API 호출
+                console.log("불러온 데이터:", response);
+
+                // API 데이터에서 경도/위도 추출
+                const location = response?.data?.data?.location;
+                console.log("위치 받아옴: ", location.latitude);
+                console.log(location);
+                console.log(location.latitude);
+                console.log(location.longitude);
+
+                if (location) {
+                    setLatitude(location.latitude);
+                    setLongitude(location.longitude);
+                }
+            } catch (error) {
+                console.error("API 호출 오류:", error);
+            }
+        };
+
+        fetchData();
+    }, [id]);
+
+    useEffect(() => {
+        if (latitude && longitude) {
+            const script = document.createElement("script");
+            script.async = true;
+            script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_API_KEY}&autoload=false`;
+            document.head.appendChild(script);
+
+            script.onload = () => {
+                window.kakao.maps.load(() => {
+                    const container = document.getElementById("map");
+                    const options = {
+                        center: new window.kakao.maps.LatLng(
+                            latitude,
+                            longitude
+                        ), // API 데이터로 중심 설정
+                        level: 3, // 확대 레벨
+                    };
+
+                    const map = new window.kakao.maps.Map(container, options);
+
+                    // 마커 추가
+                    new window.kakao.maps.Marker({
+                        position: new window.kakao.maps.LatLng(
+                            latitude,
+                            longitude
+                        ),
+                        map,
+                        title: "나눔 장소",
+                    });
+                });
+            };
+
+            return () => {
+                document.head.removeChild(script); // 메모리 누수 방지
+            };
+        }
+    }, [latitude, longitude]);
+
+    return (
+        <div
+            id="map"
+            style={{
+                width: "100%",
+                height: "400px",
+                border: "1px solid #ddd",
+            }}
+        >
+            {!latitude || !longitude ? (
+                <p>지도 데이터를 불러오는 중입니다...</p>
+            ) : null}
+        </div>
     );
 };

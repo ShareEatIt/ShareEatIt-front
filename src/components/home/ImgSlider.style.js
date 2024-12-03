@@ -16,8 +16,7 @@ const S = {
         width: 85%;
         margin: 0 0.88rem;
         align-items: center;
-        border: 1px red solid;
-        border: 2px green dotted;
+
         text-align: center;
         font-size: 40px;
     `,

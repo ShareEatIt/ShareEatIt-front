@@ -18,7 +18,6 @@ const S = {
         border-radius: 0.5rem;
 
         object-fit: contain;
-        background: lightgray 50%;
     `,
 
     CardContent: styled.div`

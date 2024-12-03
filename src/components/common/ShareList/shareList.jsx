@@ -2,58 +2,48 @@ import { useNavigate } from "react-router-dom";
 import { S } from "./shareList.style";
 import { isEditable } from "@testing-library/user-event/dist/utils";
 
-const dummyData = [
-    {
-        id: 1,
-        title: "제목 1",
-        endDate: "2024-10-15",
-        author: "이승진",
-        category: "빵",
-        timeAgo: "5분 전",
-    },
-    {
-        id: 2,
-        title: "제목 2",
-        endDate: "2024-10-15",
-        author: "이가은",
-        category: "과자",
-        timeAgo: "10분 전",
-    },
-];
+const categoryMap = {
+    BAKERY: "빵",
+    BEVERAGE: "음료",
+    CONVENIENCE_FOOD: "간편식",
+    KOREAN: "한식",
+    CHINESE: "중식",
+    WESTERN: "양식",
+    SNACK: "간식",
+    GROCERIES: "식료품",
+    ETC: "기타",
+};
 
-const ShareList = () => {
+const ShareList = ({ sharingList, onClick }) => {
     const navigate = useNavigate();
-
-    const handleClick = (id) => {
-        navigate(`/postdetail/${id}`);
-    };
 
     return (
         <>
-            {dummyData.map((item) => (
-                <S.Layout key={item.id} onClick={() => handleClick(item.id)}>
-                    <S.CardImage />
+            {[...sharingList].reverse().map((item) => (
+                <S.Layout key={item.id} onClick={() => onClick(item.id)}>
+                    <S.CardImage src={item.img} />
                     <S.CardContent>
                         <S.CardTitleWrapper>{item.title}</S.CardTitleWrapper>
                         <S.ShareContainer>
                             종료 일자{" "}
                             <S.ShareInfoContainer>
-                                {item.endDate}
+                                {item.endAt}
                             </S.ShareInfoContainer>
                         </S.ShareContainer>
                         <S.ShareContainer>
                             작성자{" "}
                             <S.ShareInfoContainer>
-                                {item.author}
+                                {item.nickname}
                             </S.ShareInfoContainer>
                         </S.ShareContainer>
                         <S.ShareContainer>
                             카테고리{" "}
                             <S.ShareInfoContainer>
-                                {item.category}
+                                {categoryMap[item.category] || item.category}
+                                {/* 한글 변환, 변환 실패 시 원래 값 표시 */}
                             </S.ShareInfoContainer>
                         </S.ShareContainer>
-                        <S.ShareTime>{item.timeAgo}</S.ShareTime>
+                        <S.ShareTime>{item.ago}</S.ShareTime>
                     </S.CardContent>
                 </S.Layout>
             ))}

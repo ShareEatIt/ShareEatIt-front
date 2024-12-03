@@ -7,9 +7,11 @@ const S = {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        height: 100vh;
+
         width: 100%;
+        min-height: 100vh; /* 최소 높이를 화면 전체로 설정 */
         box-sizing: border-box;
+        overflow: hidden;
     `,
     ContentContainer: styled.div`
         display: flex;

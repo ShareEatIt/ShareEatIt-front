@@ -15,9 +15,8 @@ const S = {
         height: 3.125rem;
         margin-right: 0.5rem;
         border-radius: 50%;
-
         object-fit: contain;
-        background: lightgray 50%;
+        background: none;
     `,
 
     ChatContentContainer: styled.div`
@@ -34,6 +33,9 @@ const S = {
     ContentWrapper: styled.div`
         width: 100%;
         font-size: 0.8rem;
+    `,
+    ModifiedATWrapper: styled.div`
+        font-size: 0.5rem;
     `,
 };
 
