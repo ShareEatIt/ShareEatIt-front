@@ -20,7 +20,7 @@ import HomePage from "./pages/home/homePage/homePage";
 import ReportPage from "./pages/report/reportPage";
 import PostSharePage from "./pages/home/postSharePage";
 import ShareDetailPage from "./pages/shareDetail/shareDetailPage";
-
+import MapPage from "./pages/home/mapPage";
 function App() {
     const [isFirstVisit, setIsFirstVisit] = useState(true);
 
@@ -48,12 +48,11 @@ function App() {
                     )
                 }
             />
-            <Route path="/postdetail" element={<ChatListPage />} />
-            <Route path="/postdetail/:id" element={<NotificationPage />} />
+
+            <Route path="/postdetail/:id" element={<ShareDetailPage />} />
             <Route path="/chatlist" element={<ChatListPage />} />
             <Route path="/chatlist/:chatRoomId" element={<ChatPage />} />
             <Route path="/noti" element={<NotificationPage />} />
-            <Route path="/createpost" element={<PostSharePage />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/keyword" element={<KeywordPage />} />
             <Route path="/profile" element={<ProfileEditPage />} />
@@ -64,6 +63,8 @@ function App() {
                 path="/participationstatus"
                 element={<ParticipationStatusPage />}
             />
+            <Route path="/mappage" element={<MapPage />} />
+            <Route path="/createpost" element={<PostSharePage />} />
         </Routes>
     );
 }
