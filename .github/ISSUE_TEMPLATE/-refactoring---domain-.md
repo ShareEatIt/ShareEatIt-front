@@ -1,7 +1,7 @@
 ---
 name: "[REFACTORING] [domain]"
 about: REFACTORING
-title: ''
+title: "[REFACTORING] [domain]"
 labels: ''
 assignees: ''
 
