@@ -1,5 +1,5 @@
 ---
-name: "[REFACTORING] [domain]"
+name: "\U0001F6E0[REFACTORING] [domain]"
 about: REFACTORING
 title: "[REFACTORING] [domain]"
 labels: ''
