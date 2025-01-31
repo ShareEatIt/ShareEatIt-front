@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import DropDown from "./dropDown";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 
 const S = {
     Layout: styled.div`
@@ -147,6 +149,13 @@ const S = {
     HiddenInput: styled.input`
         display: none;
     `,
-};
 
-export { S };
+    StyledCalendarWrapper: styled.div`
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        position: relative;
+    `,
+};
+const StyledCalendar = styled(Calendar)``;
+export { S, StyledCalendar };
