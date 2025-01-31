@@ -35,6 +35,7 @@ const S = {
     SectionWrapper: styled.div`
         flex-grow: 1;
         box-sizing: border-box;
+        // 선택된 메뉴 값에 따라 배경 색 변경
         background-color: var(--yellow-50);
     `,
     SectionContentContainer: styled.div`

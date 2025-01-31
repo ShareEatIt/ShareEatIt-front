@@ -16,6 +16,7 @@ const HomePage = () => {
         "var(--yellow-50)",
     ];
     const [clicked, setClicked] = useState(menuList[0]);
+    const [colorIndex, setColorIndex] = useState(0);
     const [sharingList, setSharingList] = useState([]); // 나눔글 데이터
     const [loading, setLoading] = useState(true); // 로딩 상태
     const [currentPosition, setCurrentPosition] = useState(null);
@@ -26,6 +27,14 @@ const HomePage = () => {
 
     const [searchText, setSearchText] = useState(""); // 검색 텍스트
     const [filteredSharingList, setFilteredSharingList] = useState([]); // 검색 결과 데이터
+
+    useEffect(() => {
+        clicked === "전체"
+            ? setColorIndex(0)
+            : clicked === "가게"
+            ? setColorIndex(1)
+            : setColorIndex(2);
+    });
 
     useEffect(() => {
         const fetchLocation = async () => {
@@ -135,7 +144,9 @@ const HomePage = () => {
                         </S.SectionClassificationButton>
                     ))}
                 </S.SectionContainer>
-                <S.SectionWrapper>
+                <S.SectionWrapper
+                    style={{ backgroundColor: colorList[colorIndex] }}
+                >
                     <S.SectionContentContainer>
                         <S.SearchBarContainer>
                             <S.SerchBarIcon />
