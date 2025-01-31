@@ -46,6 +46,10 @@ const S = {
             box-shadow: 1px 0px 2px 0px rgba(240, 99, 90, 0.5);
             pointer-events: none;
         }
+        &:hover {
+            color: var(--yellow-100);
+            background-color: var(--yellow-50);
+        }
     `,
 };
 
