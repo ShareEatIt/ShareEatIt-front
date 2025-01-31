@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { SearchMap } from "./map";
-import { S } from "./postInput.style";
+import { S, StyledCalendar } from "./postInput.style";
+import Calendar from "react-calendar";
+import moment from "moment";
 
 export const PostInput = ({ text, onChange }) => {
     const [isFocused, setIsFocused] = useState(false);
@@ -14,6 +16,39 @@ export const PostInput = ({ text, onChange }) => {
                 onBlur={() => setIsFocused(false)}
                 onChange={(e) => onChange(e.target.value)}
             />
+        </S.Layout>
+    );
+};
+
+export const CalendarInput = ({ text, onChange }) => {
+    const [date, setDate] = useState(new Date());
+
+    const handleDateChange = (newDate) => {
+        setDate(newDate);
+        if (onChange) {
+            onChange(moment(newDate).format("YYYY-MM-DD")); // 선택한 날짜를 YYYY-MM-DD 형식으로 전달
+        }
+    };
+
+    return (
+        <S.Layout>
+            <S.TitleWrapper>{`${text} *`}</S.TitleWrapper>
+            <S.StyledCalendarWrapper>
+                <StyledCalendar
+                    value={date}
+                    onChange={handleDateChange}
+                    formatDay={(locale, date) => moment(date).format("D")} // 일 제거하고 숫자만 표시
+                    formatYear={(locale, date) => moment(date).format("YYYY")} // 네비게이션에서 년도만 표시
+                    formatMonthYear={(locale, date) =>
+                        moment(date).format("YYYY. MM")
+                    }
+                    calendarType="gregory"
+                    showNeighboringMonth={false}
+                    next2Label={null}
+                    prev2Label={null}
+                    minDetail="year"
+                />
+            </S.StyledCalendarWrapper>
         </S.Layout>
     );
 };

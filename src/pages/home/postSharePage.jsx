@@ -11,8 +11,10 @@ import {
     DateInput,
     TradePlace,
     DateInputEndAt,
+    CalendarInput,
 } from "../../components/common/PostInput/postInput";
 import { S } from "./postSharePage.style";
+import EnumButton from "../../components/common/PostInput/enumButton";
 
 const PostSharePage = () => {
     const navigate = useNavigate();
@@ -117,7 +119,7 @@ const PostSharePage = () => {
                     text={"제목"}
                     onChange={(value) => handleInputChange("title", value)}
                 />
-                <DropDown
+                <EnumButton
                     text={"카테고리"}
                     options={categoryList}
                     onChange={(value) =>
@@ -129,16 +131,19 @@ const PostSharePage = () => {
                     text={"식품명"}
                     onChange={(value) => handleInputChange("foodName", value)}
                 />
-                <DateInput
+
+                <CalendarInput
                     text={"유통기한"}
                     onChange={(value) => handleInputChange("expDate", value)}
                 />
-                <DateInput
+
+                <CalendarInput
                     text={"구매일자"}
                     onChange={(value) =>
                         handleInputChange("purchaseDate", value)
                     }
                 />
+
                 <ImageUploader
                     text={"이미지(유통기한 이미지 첨부 추천)"}
                     onChange={handleImageUpload}

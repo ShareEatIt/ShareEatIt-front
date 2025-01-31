@@ -16,7 +16,6 @@ const S = {
         width: 85%;
         margin: 0 0.88rem;
         align-items: center;
-
         text-align: center;
         font-size: 40px;
     `,
@@ -26,7 +25,7 @@ const S = {
         flex-shrink: 0;
         font-size: 40px;
         text-align: center;
-        object-fit: cover;
+        object-fit: fill;
         background: lightgray 50%;
     `,
     PrevArrow: styled(IoIosArrowBack)`
