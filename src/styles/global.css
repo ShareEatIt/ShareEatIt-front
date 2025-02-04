@@ -3,9 +3,19 @@
 
   --black: #000000;
 
-  --yellow-pri: #ffb849;
+  --gray: #b7b7b7;
 
-  --red-pri: #f0635a;
+  --yellow-100: #ffb849;
+  --yellow-90: rgba(255, 184, 73, 0.9);
+  --yellow-75: rgba(255, 184, 73, 0.75);
+  --yellow-70: rgba(255, 184, 73, 0.7);
+  --yellow-50: rgba(255, 184, 73, 0.5);
+  --yellow-40: rgba(255, 215, 73, 0.4);
+
+  -yellow-sec: #ffd79a;
+  -yellow-sec-50: rgba(255, 215, 154, 0.5);
+
+  --red: #f0635a;
 
   background-color: var(--white);
 
@@ -20,7 +30,6 @@
   font-family: Pretendard;
 }
 #root {
-  width: 375px;
   height: 100svh;
   margin: 0 auto;
 }
