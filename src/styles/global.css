@@ -19,7 +19,7 @@
 
   background-color: var(--white);
 
-  font-family: Pretendard;
+  font-family: Presentation;
 
   -ms-overflow-style: none;
 }
@@ -27,7 +27,7 @@
   display: none;
 }
 * {
-  font-family: Pretendard;
+  font-family: Presentation;
 }
 #root {
   height: 100svh;
@@ -37,4 +37,8 @@
   #root {
     width: 100svw;
   }
+}
+@font-face {
+  font-family: "Presentation";
+  src: url("../../public/fonts/NotoSansKR-Medium.ttf") format("truetype");
 }
