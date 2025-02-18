@@ -9,6 +9,8 @@ import { ReactComponent as Chinese } from "../../assets/common/chinese.svg";
 import { ReactComponent as Western } from "../../assets/common/western.svg";
 import { ReactComponent as Snack } from "../../assets/common/snack.svg";
 import { ReactComponent as Grocery } from "../../assets/common/grocery.svg";
+import { ReactComponent as Etc } from "../../assets/common/etc.svg";
+import { BottomButton } from "../../components/common/BottomButton/bottomButton";
 
 import { M, S } from "./my";
 import {
@@ -84,27 +86,44 @@ const KeywordPage = () => {
   return (
     <M.Layout>
       <BackButton text="키워드 설정" />
-      <M.Background>
-        <M.KeywordContainer>
-          {keywordList.length > 0 ? (
-            keywordList.map((item) => (
-              <M.KeyItemContainer key={item.id}>
-                {item.keyword}
-                <X onClick={() => removeKeyword(item.id)} />
-              </M.KeyItemContainer>
-            ))
-          ) : (
-            <p>등록된 키워드가 없습니다.</p>
-          )}
-        </M.KeywordContainer>
-        <M.KeyContainer>
-          {Keywords.map((keyword) => (
-            <M.KeyBtn key={keyword} onClick={() => createKeyword(keyword)}>
-              {keyword}
-            </M.KeyBtn>
-          ))}
-        </M.KeyContainer>
-      </M.Background>
+      <M.KeywordContainer>
+        <M.KeywordWrapper>
+          <Bread />빵
+        </M.KeywordWrapper>
+        <M.KeywordWrapper>
+          <Drink />
+          음료
+        </M.KeywordWrapper>
+        <M.KeywordWrapper>
+          <Convenience />
+          간편식
+        </M.KeywordWrapper>
+        <M.KeywordWrapper>
+          <Korean />
+          한식
+        </M.KeywordWrapper>
+        <M.KeywordWrapper>
+          <Chinese />
+          중식
+        </M.KeywordWrapper>
+        <M.KeywordWrapper>
+          <Western />
+          양식
+        </M.KeywordWrapper>
+        <M.KeywordWrapper>
+          <Snack />
+          간식
+        </M.KeywordWrapper>
+        <M.KeywordWrapper>
+          <Grocery />
+          식료품
+        </M.KeywordWrapper>
+        <M.KeywordWrapper>
+          <Etc />
+          기타
+        </M.KeywordWrapper>
+      </M.KeywordContainer>
+      <BottomButton text="키워드 등록" />
     </M.Layout>
   );
 };

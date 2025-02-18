@@ -8,7 +8,7 @@ const S = {
     align-items: center;
     width: 100%;
     height: 24px;
-    padding: 10px;
+    padding: 7px 10px 7px 0px;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
   `,
 

@@ -16,7 +16,6 @@ const M = {
   InfoContainer: styled.div`
     display: flex;
     flex-direction: row;
-
     padding: 15px;
     margin: 20px 0px 0px 30px;
   `,
@@ -234,97 +233,27 @@ const M = {
   `,
 
   // 키워드 설정
-  Background: styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
-    margin-top: 20px;
-    height: 713px;
-    padding-top: 20px;
-    background-color: var(--yellow-40);
-    width: 100%; /* 화면 전체 너비 */
-  `,
-
   KeywordContainer: styled.div`
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    gap: 10px;
+    padding-top: 20px;
+  `,
+  KeywordWrapper: styled.div`
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    width: 100%;
-    max-width: 1000px;
-    padding: 0 20px;
-
-    /* 반응형 조정 */
-    @media (max-width: 768px) {
-      max-width: 90%; /* 모바일에서는 화면의 90% 너비 */
-    }
-  `,
-
-  KeyItemContainer: styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    border: 1px solid var(--yellow-100);
+    border-radius: 10px;
     padding: 10px;
-    margin: 4px;
-    width: 100%;
-    max-width: 650px;
-    height: 20px;
-    background-color: white;
-    border-radius: 8px;
-
-    /* 반응형 조정 */
-    @media (max-width: 768px) {
-      max-width: 90%; /* 화면이 좁아질수록 너비 축소 */
-    }
-  `,
-
-  KeyContainer: styled.div`
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    cursor: pointer;
     gap: 10px;
-    align-items: center;
-    width: 90%;
-    max-width: 700px;
-    position: absolute;
-    bottom: 60px;
-    left: 50%;
-    transform: translateX(-50.5%); /* 가운데로 정확히 위치시키기 위해서 */
-
-    /* 반응형 조정 */
-    @media (max-width: 768px) {
-      grid-template-columns: repeat(5, 1fr);
-    }
-
-    @media (max-width: 480px) {
-      grid-template-columns: repeat(5, 1fr);
-    }
-  `,
-
-  KeyBtn: styled.button`
-    width: 100%; /* 버튼의 너비가 부모에 맞춰 100%로 확장 */
-    height: 50px;
-    font-size: 16px;
-    font-weight: bold;
-    margin: 4px;
-    background-color: var(--yellow-100);
-    border-radius: 8px;
-
     &:hover {
-      background-color: var(--white); /* 호버 시 색상 변화 */
+      background-color: var(--yellow-100);
     }
   `,
-
-  KeyTextarea: styled.textarea`
-    width: 270px;
-    height: 29px;
-    resize: none;
-    border: 0px solid;
-    border-radius: 8px;
-    margin-right: 8px;
-    padding-top: 13px;
-    padding-left: 10px;
-  `,
-
   //나눔통계
   StatBackground: styled.div`
     display: flex;
