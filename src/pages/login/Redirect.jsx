@@ -4,59 +4,52 @@ import axios from "axios";
 import { api } from "../../api/api";
 
 const OAuthRedirectPage = () => {
-  console.log("Oauth");
-  const code = new URL(window.location.href).searchParams.get("code");
-  localStorage.setItem("code", code);
   const navigate = useNavigate();
-  //const url = process.env.REACT_APP_BASE_URL;
-  const readAccessTokenKakao = async () => {
+  const code = new URL(window.location.href).searchParams.get("code");
+
+  const fetchAccessToken = async (code) => {
     try {
-      console.log("Received OAuth code:", code);
+      const response = await api.post(`/oauth2/access-token`, code, {
+        withCredentials: true,
+      });
 
-      const fetchToken = async (code) => {
-        try {
-          const response = await api.get(`/oauth2/authorize`, {
-            params: { code },
-          });
-          console.log("Response from server:", response);
+      console.log("Response from server:", response);
 
-          const token = {
-            accessToken: response.data.data.accessToken,
-            refreshToken: response.data.data.refreshToken,
-            isNewMember: response.data.data.isNewMember,
-          };
+      // 헤더에서 accessToken, refreshToken 가져오기
+      const accessToken = response.headers["authorization"];
+      const refreshToken = response.headers["rt-token"];
+      const isNewMember = response.data.data; // 본문에서 isNewMember 가져오기
 
-          // 로컬스토리지에 토큰 저장
-          localStorage.setItem("token", JSON.stringify(token));
-          console.log("Token saved:", token);
+      if (accessToken && refreshToken) {
+        // 로컬스토리지에 토큰 저장
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+        console.log("Tokens saved:", { accessToken, refreshToken });
+      } else {
+        console.error("Tokens are missing in the response.");
+        throw new Error("Missing tokens");
+      }
 
-          return token;
-        } catch (error) {
-          localStorage.removeItem("token");
-          console.error("Failed to fetch token:", error);
-          throw error;
-        }
-      };
-
-      const token = await fetchToken(code);
-      if (token.isNewMember) {
-        navigate(
-          "/my",
-          { state: { isNewMember: token.isNewMember } },
-          { replace: true }
-        );
+      // 새로운 회원이면 /my 페이지로 이동, 기존 회원이면 홈으로 이동
+      if (isNewMember) {
+        navigate("/my", { state: { isNewMember } }, { replace: true });
       } else {
         navigate("/", { replace: true });
       }
     } catch (error) {
-      console.error("Error in readAccessTokenKakao:", error);
+      console.error("Error fetching OAuth tokens:", error);
       navigate("/login", { replace: true });
     }
   };
 
   useEffect(() => {
-    readAccessTokenKakao();
-  }, []);
+    if (code) {
+      fetchAccessToken(code);
+    } else {
+      console.error("OAuth code is missing.");
+      navigate("/login", { replace: true });
+    }
+  }, [code]);
 
   return <div>Redirecting...</div>;
 };

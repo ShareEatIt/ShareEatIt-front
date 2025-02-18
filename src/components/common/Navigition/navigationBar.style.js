@@ -1,56 +1,64 @@
 import styled from "styled-components";
 import { ReactComponent as Logo } from "../../../assets/common/s_logo.svg.svg";
+import { ReactComponent as LogoText } from "../../../assets/navigation/LogoText.svg";
+import { ReactComponent as LogoS } from "../../../assets/navigation/LogoS.svg";
+import { ReactComponent as Bell } from "../../../assets/navigation/bell.svg";
+import { ReactComponent as Chat } from "../../../assets/navigation/chat.svg";
+import { ReactComponent as Mypage } from "../../../assets/navigation/mypage.svg";
 import { NavLink } from "react-router-dom";
-const S = {
+
+const ChatWrapper = styled(Chat)`
+    color: #bcbcbc;
+`;
+const BellWrapper = styled(Bell)`
+    color: #bcbcbc;
+`;
+
+const MyPageWrapper = styled(Mypage)`
+    color: #bcbcbc;
+`;
+const S = {};
+const M = {
     Layout: styled.div`
         display: flex;
-        flex-direction: column;
+        justify-content: space-between;
         width: 100%;
+        padding: 0.5rem 1rem;
         box-sizing: border-box;
-        align-items: center;
     `,
-    LogoImg: styled(Logo)`
-        width: 12rem;
-        height: auto;
-        margin: 1rem;
-    `,
-    NavContainer: styled.div`
+    LogoWrapper: styled(NavLink)`
         display: flex;
-        width: 100%;
-        justify-content: space-around;
+        align-items: center;
+        gap: 0.2rem;
     `,
-    NavLink: styled(NavLink)`
-        width: 100%;
-        box-sizing: border-box;
-        padding: 0.5rem 1.5rem;
-        border-right: 2px solid rgba(255, 255, 255, 0.4);
-        color: var(--red);
-        text-align: center;
-        font-weight: bold;
-        cursor: pointer;
+    Logo: styled(LogoS)`
+        width: 20px;
+        height: auto;
+    `,
+    LogoText: styled(LogoText)`
+        width: 90px;
+        height: auto;
+    `,
+    NavWrapper: styled.div`
+        display: flex;
+        align-items: center;
+
+        gap: 1rem;
+    `,
+    NavButton: styled(NavLink)`
+        display: flex;
         position: relative;
-        &:last-child {
-            border-right: none;
-        }
-        &.active {
+
+        &.active ${ChatWrapper} {
             color: var(--yellow-100);
-            background-color: var(--yellow-50);
         }
-        &:not(:last-child)::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            width: 2px;
-            box-shadow: 1px 0px 2px 0px rgba(240, 99, 90, 0.5);
-            pointer-events: none;
-        }
-        &:hover {
+        &.active ${BellWrapper} {
             color: var(--yellow-100);
-            background-color: var(--yellow-50);
+        }
+        &.active ${MyPageWrapper} {
+            color: var(--yellow-100);
         }
     `,
 };
 
-export { S };
+export { S, M, ChatWrapper, BellWrapper, MyPageWrapper };
