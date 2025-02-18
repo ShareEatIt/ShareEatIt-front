@@ -31,6 +31,21 @@ const S = {
         }
     `,
 
+    DateInputWrapper: styled.div`
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        box-sizing: border-box;
+        width: 100%;
+
+        padding: 0.4rem 0.6rem;
+        border-radius: 5px;
+        border: solid 1.5px
+            ${({ isFocused }) => (isFocused ? "#ffb849" : "black")};
+        &::placeholder {
+        }
+    `,
+
     AdditionalInputWrapper: styled.textarea`
         display: flex;
         align-items: center;
@@ -157,5 +172,17 @@ const S = {
         position: relative;
     `,
 };
-const StyledCalendar = styled(Calendar)``;
+const StyledCalendar = styled(Calendar)`
+    border: solid 2px var(--yellow-100);
+    border-radius: 10px;
+    .react-calendar__tile--now {
+        background: none !important;
+        color: inherit !important;
+    }
+    .react-calendar__tile--active {
+        background: var(--yellow-70) !important;
+        color: white !important;
+        border-radius: 5px;
+    }
+`;
 export { S, StyledCalendar };

@@ -166,7 +166,8 @@ const PostSharePage = () => {
                         );
                     }}
                 />
-                <DateInputEndAt
+
+                <CalendarInput
                     text={"나눔 종료일자"}
                     onChange={(value) => handleInputChange("endAt", value)}
                 />

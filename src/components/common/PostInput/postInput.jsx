@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { SearchMap } from "./map";
 import { S, StyledCalendar } from "./postInput.style";
-import Calendar from "react-calendar";
 import moment from "moment";
 
 export const PostInput = ({ text, onChange }) => {
@@ -22,33 +21,49 @@ export const PostInput = ({ text, onChange }) => {
 
 export const CalendarInput = ({ text, onChange }) => {
     const [date, setDate] = useState(new Date());
+    // 입력창 클릭했을때만 달력 오픈
+    const [isOpne, setIsOpen] = useState(false);
 
     const handleDateChange = (newDate) => {
         setDate(newDate);
+        setIsOpen(false);
         if (onChange) {
-            onChange(moment(newDate).format("YYYY-MM-DD")); // 선택한 날짜를 YYYY-MM-DD 형식으로 전달
+            onChange(moment(newDate).format("YYYY-MM-DD"));
         }
     };
 
     return (
         <S.Layout>
             <S.TitleWrapper>{`${text} *`}</S.TitleWrapper>
-            <S.StyledCalendarWrapper>
-                <StyledCalendar
-                    value={date}
-                    onChange={handleDateChange}
-                    formatDay={(locale, date) => moment(date).format("D")} // 일 제거하고 숫자만 표시
-                    formatYear={(locale, date) => moment(date).format("YYYY")} // 네비게이션에서 년도만 표시
-                    formatMonthYear={(locale, date) =>
-                        moment(date).format("YYYY. MM")
-                    }
-                    calendarType="gregory"
-                    showNeighboringMonth={false}
-                    next2Label={null}
-                    prev2Label={null}
-                    minDetail="year"
-                />
-            </S.StyledCalendarWrapper>
+            <S.DateInputWrapper onClick={() => setIsOpen(!isOpne)}>
+                {moment(date).format("YYYY-MM-DD")}
+            </S.DateInputWrapper>
+            {isOpne && (
+                <S.StyledCalendarWrapper>
+                    <StyledCalendar
+                        value={date}
+                        onChange={handleDateChange}
+                        formatDay={(locale, date) => moment(date).format("D")} // 일 제거하고 숫자만 표시
+                        formatYear={(locale, date) =>
+                            moment(date).format("YYYY")
+                        } // 네비게이션에서 년도만 표시
+                        formatMonthYear={(locale, date) =>
+                            moment(date).format("YYYY. MM")
+                        }
+                        calendarType="gregory"
+                        showNeighboringMonth={false}
+                        next2Label={null}
+                        prev2Label={null}
+                        minDetail="year"
+                        tileClassName={({ date }) =>
+                            moment(date).format("YYYY-MM-DD") ===
+                            moment().format("YYYY-MM-DD")
+                                ? "today"
+                                : ""
+                        }
+                    />
+                </S.StyledCalendarWrapper>
+            )}
         </S.Layout>
     );
 };
