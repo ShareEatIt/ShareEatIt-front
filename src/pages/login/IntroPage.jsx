@@ -11,86 +11,84 @@ import { ReactComponent as Trashcan } from "../../../src/assets/login/trashcan.s
 import { ReactComponent as Co2 } from "../../../src/assets/login/co2.svg";
 import { ReactComponent as Arrow } from "../../../src/assets/login/arrow.svg";
 import { ReactComponent as ArrowB } from "../../../src/assets/login/arrow_black.svg";
-import { ReactComponent as Logo } from "../../../src/assets/common/logo_img.svg";
+import { ReactComponent as Logo } from "../../../src/assets/common/logo.svg";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const IntroPage = () => {
-    const [page, setPage] = useState(0);
-    const [scrolling, setScrolling] = useState(false);
-    const navigate = useNavigate();
-    const handleScroll = (event) => {
-        if (scrolling) return; // 연속 스크롤 방지
-        setScrolling(true);
+  const [page, setPage] = useState(0);
+  const [scrolling, setScrolling] = useState(false);
+  const navigate = useNavigate();
+  const handleScroll = (event) => {
+    if (scrolling) return; // 연속 스크롤 방지
+    setScrolling(true);
 
-        if (event.deltaY > 0 && page < 2) {
-            setPage(page + 1);
-        } else if (event.deltaY < 0 && page > 0) {
-            setPage(page - 1);
-        }
+    if (event.deltaY > 0 && page < 2) {
+      setPage(page + 1);
+    } else if (event.deltaY < 0 && page > 0) {
+      setPage(page - 1);
+    }
 
-        setTimeout(() => setScrolling(false), 600); // 부드러운 스크롤을 위한 딜레이
-    };
+    setTimeout(() => setScrolling(false), 600); // 부드러운 스크롤을 위한 딜레이
+  };
 
-    useEffect(() => {
-        window.addEventListener("wheel", handleScroll);
-        return () => window.removeEventListener("wheel", handleScroll);
-    }, [page, scrolling]);
+  useEffect(() => {
+    window.addEventListener("wheel", handleScroll);
+    return () => window.removeEventListener("wheel", handleScroll);
+  }, [page, scrolling]);
 
-    return (
-        <M.PageWrapper>
-            <M.PageContainer
-                style={{ transform: `translateY(-${page * 100}vh)` }}
-            >
-                <IntroPage1 />
-                <IntroPage2 />
-                <IntroPage3 />
-            </M.PageContainer>
-        </M.PageWrapper>
-    );
+  return (
+    <M.PageWrapper>
+      <M.PageContainer style={{ transform: `translateY(-${page * 100}vh)` }}>
+        <IntroPage1 />
+        <IntroPage2 />
+        <IntroPage3 />
+      </M.PageContainer>
+    </M.PageWrapper>
+  );
 };
 
 const IntroPage1 = () => {
-    const firstanimation = useScrollFadeIn();
-    return (
-        <M.PageSection>
-            <M.MsgTextWrapper>
-                <Msg1 />
-                <Text1 />
-            </M.MsgTextWrapper>
-            <Trashcan {...firstanimation}></Trashcan>
-            <Arrow />
-        </M.PageSection>
-    );
+  const firstanimation = useScrollFadeIn();
+  return (
+    <M.PageSection>
+      <M.MsgTextWrapper>
+        <Msg1 />
+        <Text1 />
+      </M.MsgTextWrapper>
+      <Trashcan {...firstanimation}></Trashcan>
+      <Arrow />
+    </M.PageSection>
+  );
 };
 
 const IntroPage2 = () => {
-    const secondanimation = useScrollFadeIn();
-    return (
-        <M.PageSection>
-            <M.MsgTextWrapper>
-                <Msg2 />
-                <Text2 />
-            </M.MsgTextWrapper>
-            <Co2 {...secondanimation} />
-            <Arrow />
-        </M.PageSection>
-    );
+  const secondanimation = useScrollFadeIn();
+  return (
+    <M.PageSection>
+      <M.MsgTextWrapper>
+        <Msg2 />
+        <Text2 />
+      </M.MsgTextWrapper>
+      <Co2 {...secondanimation} />
+      <Arrow />
+    </M.PageSection>
+  );
 };
 
 const IntroPage3 = () => {
-    const thirdanimation = useScrollFadeIn();
-    const navigate = useNavigate();
-    return (
-        <M.PageSection2>
-            <M.MsgTextWrapper>
-                <Msg3 />
-                <Text3 />
-            </M.MsgTextWrapper>
-            <Logo {...thirdanimation} />
-            <M.StyledArrowB onClick={() => navigate("/")} />
-        </M.PageSection2>
-    );
+  const thirdanimation = useScrollFadeIn();
+  const navigate = useNavigate();
+  return (
+    <M.PageSection2>
+      <M.MsgTextWrapper>
+        <Msg3 />
+        <Text3 />
+      </M.MsgTextWrapper>
+      <Logo {...thirdanimation} />
+      <M.StyledArrowB onClick={() => navigate("/")} />
+    </M.PageSection2>
+  );
 };
 
 export default IntroPage;
