@@ -4,11 +4,15 @@ import NavigationBar from "../../components/common/Navigition/navigationBar";
 import Toggle from "../../components/my/toggle";
 import { ReactComponent as Arrow } from "../../assets/common/right_arrow.svg";
 import { ReactComponent as Profile } from "../../assets/common/profile.svg";
-import emoji1 from "../../assets/my/emoji1.jpg";
-import emoji2 from "../../assets/my/emoji2.jpg";
-import emoji3 from "../../assets/my/emoji3.jpg";
-import emoji4 from "../../assets/my/emoji4.jpg";
-import emoji5 from "../../assets/my/emoji5.jpg";
+import { ReactComponent as ShareStatus } from "../../assets/my/sharestatus.svg";
+import { ReactComponent as ShareStat } from "../../assets/my/sharestat.svg";
+import { ReactComponent as ParticipationStatus } from "../../assets/my/participationstatus.svg";
+
+import emoji1 from "../../assets/my/heart.svg";
+import emoji2 from "../../assets/my/good.svg";
+import emoji3 from "../../assets/my/smile.svg";
+import emoji4 from "../../assets/my/star.svg";
+import emoji5 from "../../assets/my/king.svg";
 import { M, S } from "./my";
 import {
   getMemberInfo,
@@ -34,6 +38,7 @@ const MyPage = () => {
   const [smile5, setSmile5] = useState(0);
   const [isKeyword, setIsKeyword] = useState(false);
   const [isNotice, setIsNotice] = useState(false);
+  const [isNotice1, setIsNotice1] = useState(false);
   const readMemberInfo = async () => {
     try {
       const response = await getMemberInfo();
@@ -79,7 +84,7 @@ const MyPage = () => {
     }
   };
   const handleToggleKeyword = () => {
-    setIsKeyword((prev) => !prev);
+    setIsNotice1((prev) => !prev);
   };
   const handleToggleNotice = () => {
     setIsNotice((prev) => !prev);
@@ -136,8 +141,8 @@ const MyPage = () => {
               src={profile}
               alt="Profile"
               style={{
-                width: "90px",
-                height: "90px",
+                width: "76px",
+                height: "76px",
                 borderRadius: "50%",
               }}
             />
@@ -152,64 +157,72 @@ const MyPage = () => {
           </M.TextWrapper>
           <M.TextWrapper>{email}</M.TextWrapper>
           <M.TextWrapper>
-            <img src={emoji1} width="32px" />
+            <img src={emoji1} />
             {smile1 ?? 0}
-            <img src={emoji2} width="32px" />
+            <img src={emoji2} />
             {smile2 ?? 0}
-            <img src={emoji3} width="32px" />
+            <img src={emoji3} />
             {smile3 ?? 0}
-            <img src={emoji4} width="32px" />
+            <img src={emoji4} />
             {smile4 ?? 0}
-            <img src={emoji5} width="32px" />
+            <img src={emoji5} />
             {smile5 ?? 0}
           </M.TextWrapper>
         </M.TextContainer>
       </M.InfoContainer>
       <M.MyContentContainer>
-        <M.Label>나의 현황</M.Label>
-        <M.MyItemContainer>
-          <M.Text>나눔 현황</M.Text>
-          <Arrow onClick={() => navigate("/sharestatus")} />
-        </M.MyItemContainer>
-        <M.HLine />
-        <M.MyItemContainer>
-          <M.Text>나눔 통계</M.Text>
-          <Arrow onClick={() => navigate("/sharestat")} />
-        </M.MyItemContainer>
-        <M.HLine />
-        <M.MyItemContainer>
-          <M.Text>참여 현황</M.Text>
-          <Arrow onClick={() => navigate("/participationstatus")} />
-        </M.MyItemContainer>
+        <M.ItemContainer>
+          <M.ItemContentWrapper>
+            <M.ItemTitle>
+              <M.ItemTitleYellow>알림 </M.ItemTitleYellow>수신여부
+              <br />
+              <M.ItemText>
+                관심있는 나눔글에 대한 알림 수신 여부 on/off
+              </M.ItemText>
+            </M.ItemTitle>
+            <Toggle checked={isNotice} onChange={handleToggleNotice} />
+          </M.ItemContentWrapper>
+        </M.ItemContainer>
+        <M.ItemContainer>
+          <M.ItemContentWrapper>
+            <M.ItemTitle>
+              <M.ItemTitleYellow>키워드 </M.ItemTitleYellow>알림받기
+              <br />
+              <M.ItemText>
+                관심있는 나눔글에 대한 알림 수신 여부 on/off
+              </M.ItemText>
+            </M.ItemTitle>
+            <Toggle checked={isNotice1} onChange={handleToggleKeyword} />
+          </M.ItemContentWrapper>
+        </M.ItemContainer>
+        <M.ItemContainer>
+          <M.ItemContentWrapper onClick={() => navigate("/keyword")}>
+            <M.ItemTitle>
+              <M.ItemTitleYellow>키워드</M.ItemTitleYellow>설정하기
+              <br />
+              <M.ItemText>관심있는 식품 키워드 설정하기</M.ItemText>
+            </M.ItemTitle>
+            <Arrow />
+          </M.ItemContentWrapper>
+        </M.ItemContainer>
       </M.MyContentContainer>
+      <M.MyContentContainerRow>
+        <M.ItemContainer2 onClick={() => navigate("/sharestatus")}>
+          <ShareStatus />
+          <M.ItemTitle>나눔 현황</M.ItemTitle>
+        </M.ItemContainer2>
+        <M.ItemContainer2 onClick={() => navigate("/sharestat")}>
+          <ShareStat />
+          <M.ItemTitle>나눔 통계</M.ItemTitle>
+        </M.ItemContainer2>
+        <M.ItemContainer2 onClick={() => navigate("/participationstatus")}>
+          <ParticipationStatus />
+          <M.ItemTitle>참여 현황</M.ItemTitle>
+        </M.ItemContainer2>
+      </M.MyContentContainerRow>
       <M.MyContentContainer>
-        <M.Label>알림</M.Label>
-        <M.MyItemContainer>
-          <M.Text>알림 수신여부</M.Text>
-          <Toggle isChecked={isNotice} onChange={handleToggleNotice} />
-        </M.MyItemContainer>
-        <M.HLine />
-        <M.MyItemContainer>
-          <M.Text>키워드 알림받기</M.Text>
-          <Toggle isChecked={isKeyword} onChange={handleToggleKeyword} />
-        </M.MyItemContainer>
-        <M.HLine />
-        <M.MyItemContainer>
-          <M.Text>키워드 설정하기</M.Text>
-          <Arrow onClick={() => navigate("/keyword")} />
-        </M.MyItemContainer>
-      </M.MyContentContainer>
-      <M.MyContentContainer>
-        <M.Label>계정</M.Label>
-        <M.MyItemContainer>
-          <M.Text>로그아웃</M.Text>
-          <Arrow onClick={readLogout} />
-        </M.MyItemContainer>
-        <M.HLine />
-        <M.MyItemContainer>
-          <M.Text>회원탈퇴</M.Text>
-          <Arrow onClick={removeMember} />
-        </M.MyItemContainer>
+        <M.Text onClick={readLogout}>로그아웃</M.Text>
+        <M.Text onClick={removeMember}>회원탈퇴</M.Text>
       </M.MyContentContainer>
     </M.Layout>
   );

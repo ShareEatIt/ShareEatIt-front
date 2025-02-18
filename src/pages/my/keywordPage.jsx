@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from "react";
 import BackButton from "../../components/common/BackButton/backButton";
 import { ReactComponent as X } from "../../assets/my/x.svg";
+import { ReactComponent as Bread } from "../../assets/common/bread.svg";
+import { ReactComponent as Drink } from "../../assets/common/drink.svg";
+import { ReactComponent as Convenience } from "../../assets/common/convenience.svg";
+import { ReactComponent as Korean } from "../../assets/common/korean.svg";
+import { ReactComponent as Chinese } from "../../assets/common/chinese.svg";
+import { ReactComponent as Western } from "../../assets/common/western.svg";
+import { ReactComponent as Snack } from "../../assets/common/snack.svg";
+import { ReactComponent as Grocery } from "../../assets/common/grocery.svg";
+
 import { M, S } from "./my";
 import {
   postKeyword,

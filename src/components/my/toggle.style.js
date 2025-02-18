@@ -1,41 +1,49 @@
+import React from "react";
 import styled from "styled-components";
 
 const M = {
-  ToggleContainer: styled.label`
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-  `,
-
-  HiddenCheckbox: styled.input`
-    display: none;
-  `,
-
-  StyledSwitch: styled.div`
-    width: 50px;
-    height: 24px;
-    background-color: ${({ className }) =>
-      className === "on" ? "#FFD700" : "#ccc"};
-    border-radius: 15px;
+  ToggleSwitch: styled.label`
     position: relative;
-    transition: background-color 0.3s ease-in-out;
+    width: 36px;
+    height: 20px;
+  `,
 
-    &:hover {
-      background-color: ${({ className }) =>
-        className === "on" ? "#FFC107" : "#bbb"};
+  Input: styled.input`
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+    &:checked + span {
+      background-color: var(--yellow-100);
+    }
+
+    &:checked + span:before {
+      transform: translateX(16px);
     }
   `,
 
-  Circle: styled.div`
-    width: 20px;
-    height: 20px;
-    background-color: white;
-    border-radius: 50%;
+  Slider: styled.span`
     position: absolute;
-    top: 2px;
-    left: ${({ className }) => (className === "on" ? "26px" : "2px")};
-    transition: left 0.3s ease-in-out;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--gray-200);
+    border-radius: 34px;
+    transition: 0.3s;
+
+    &:before {
+      position: absolute;
+      content: "";
+      height: 14px;
+      width: 14px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
   `,
 };
 const S = {};
