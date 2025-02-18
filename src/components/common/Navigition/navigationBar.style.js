@@ -23,7 +23,7 @@ const M = {
         display: flex;
         justify-content: space-between;
         width: 100%;
-        padding: 0.5rem 1rem;
+        padding: 1rem 1rem;
         box-sizing: border-box;
     `,
     LogoWrapper: styled(NavLink)`
@@ -39,6 +39,7 @@ const M = {
         width: 90px;
         height: auto;
     `,
+
     NavWrapper: styled.div`
         display: flex;
         align-items: center;
