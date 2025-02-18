@@ -3,162 +3,173 @@ import { ReactComponent as Arrow } from "../../../src/assets/login/arrow.svg";
 import { ReactComponent as ArrowB } from "../../../src/assets/login/arrow_black.svg";
 
 const S = {
-  Layout: styled.div`
-    dislay: flex;
-    align-items: center;
-  `,
+    Layout: styled.div`
+        dislay: flex;
+        align-items: center;
+    `,
 };
 
 const M = {
-  //로그인 페이지
-  Layout: styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    padding: 100px;
-  `,
-  LogoWrapper: styled.div`
-    display: flex;
-    margin-bottom: 50px;
-  `,
-  Input: styled.textarea`
-    display: flex;
-    align-items: center;
-    width: 193px;
-    height: 20px;
-    padding: 8px;
-    background-color: var(--gray-100);
-    color: var(--gray-200);
-    border-radius: 10px;
-    font-size: 14px;
-    resize: none;
-    border: none;
-    outline: none;
+    //로그인 페이지
+    Layout: styled.div`
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+        padding: 100px;
+    `,
+    LogoWrapper: styled.div`
+        display: flex;
+        margin-bottom: 50px;
+    `,
+    PWWrapper: styled.div`
+        position: relative;
+    `,
+    CheckBox: styled.button`
+        position: absolute;
+        top: 7px;
+        right: 10px;
+        border: none;
+        background: none;
+        cursor: pointer;
+    `,
+    Input: styled.input`
+        display: flex;
+        align-items: center;
+        width: 193px;
+        height: 20px;
+        padding: 8px;
+        background-color: var(--gray-100);
+        color: var(--gray-200);
+        border-radius: 10px;
+        font-size: 14px;
+        resize: none;
+        border: none;
+        outline: none;
 
-    &::placeholder {
-      color: var(--gray-200);
-      font-size: 14px;
-    }
-    &:focus {
-      border: 1px solid var(--yellow-100);
-    }
-  `,
-  LoginBtn: styled.button`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 209px;
-    height: 34px;
-    padding: 10px;
-    background-color: var(--yellow-100);
-    color: var(--black);
-    border-radius: 10px;
-    margin-bottom: 5px;
-  `,
-  IconContainer: styled.div`
-    display: flex;
-    flex-direction: ro/w;
-    gap: 20px;
-    margin-top: 10px;
-    cursor: pointer;
-  `,
-  SignupText: styled.span`
-    font-size: 11px;
-    color: var(--gray-200);
-    margin-bottom: 20px;
-  `,
-  SignupTextYellow: styled.span`
-    font-size: 11px;
-    margin-bottom: 20px;
-    color: var(--yellow-100);
-    cursor: pointer;
-  `,
-  TextContainer: styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    position: relative;
-    margin-bottom: 270px;
-  `,
-  TextWrapper: styled.span`
-    font-size: 37px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    padding-top: 80px;
-    line-height: 1.2;
-  `,
-  SubtextWrapper: styled.span`
-    font-size: 17px;
-    color: var(--white);
-    position: relative;
-    text-align: left;
-    left: -32px;
-    z-index: 2;
-    line-height: 1.3;
-  `,
-  IconOverlay: styled.div`
-    position: absolute;
-    left: 50px;
-    top: 10px;
-    z-index: 1;
-  `,
+        &::placeholder {
+            color: var(--gray-200);
+            font-size: 14px;
+        }
+        &:focus {
+            border: 1px solid var(--yellow-100);
+        }
+    `,
+    LoginBtn: styled.button`
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 209px;
+        height: 34px;
+        padding: 10px;
+        background-color: var(--yellow-100);
+        color: var(--black);
+        border-radius: 10px;
+        margin-bottom: 5px;
+    `,
+    IconContainer: styled.div`
+        display: flex;
+        flex-direction: ro/w;
+        gap: 20px;
+        margin-top: 10px;
+        cursor: pointer;
+    `,
+    SignupText: styled.span`
+        font-size: 11px;
+        color: var(--gray-200);
+        margin-bottom: 20px;
+    `,
+    SignupTextYellow: styled.span`
+        font-size: 11px;
+        margin-bottom: 20px;
+        color: var(--yellow-100);
+        cursor: pointer;
+    `,
+    TextContainer: styled.div`
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        position: relative;
+        margin-bottom: 270px;
+    `,
+    TextWrapper: styled.span`
+        font-size: 37px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        padding-top: 80px;
+        line-height: 1.2;
+    `,
+    SubtextWrapper: styled.span`
+        font-size: 17px;
+        color: var(--white);
+        position: relative;
+        text-align: left;
+        left: -32px;
+        z-index: 2;
+        line-height: 1.3;
+    `,
+    IconOverlay: styled.div`
+        position: absolute;
+        left: 50px;
+        top: 10px;
+        z-index: 1;
+    `,
 
-  Title: styled.span`
-    font-size: 40px;
-    color: var(--yellow-100);
-  `,
-  Content: styled.span`
-    text-align: center;
-    color: var(--red);
-  `,
-  MsgTextWrapper: styled.div`
-    display: flex;
-    flex-direction: column;
+    Title: styled.span`
+        font-size: 40px;
+        color: var(--yellow-100);
+    `,
+    Content: styled.span`
+        text-align: center;
+        color: var(--red);
+    `,
+    MsgTextWrapper: styled.div`
+        display: flex;
+        flex-direction: column;
 
-    align-items: center;
-    gap: 25px;
-  `,
-  PageWrapper: styled.div`
-    height: 100vh;
-    overflow: hidden;
-  `,
+        align-items: center;
+        gap: 25px;
+    `,
+    PageWrapper: styled.div`
+        height: 100vh;
+        overflow: hidden;
+    `,
 
-  // 각 페이지가 화면 높이에 맞게 설정되도록 스타일 추가
-  PageContainer: styled.div`
-    height: 300vh; /* 100vh * 3 페이지 */
-    transition: transform 0.6s ease-in-out;
-    display: flex;
-    flex-direction: column;
-  `,
+    // 각 페이지가 화면 높이에 맞게 설정되도록 스타일 추가
+    PageContainer: styled.div`
+        height: 300vh; /* 100vh * 3 페이지 */
+        transition: transform 0.6s ease-in-out;
+        display: flex;
+        flex-direction: column;
+    `,
 
-  PageSection: styled.div`
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--yellow-100);
-  `,
-  PageSection2: styled.div`
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  `,
-  StyledArrow: styled(Arrow)`
-    position: absolute;
-    bottom: 0px;
-  `,
-  StyledArrowB: styled(ArrowB)`
-    position: absolute;
-    bottom: 20px;
-  `,
+    PageSection: styled.div`
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--yellow-100);
+    `,
+    PageSection2: styled.div`
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    `,
+    StyledArrow: styled(Arrow)`
+        position: absolute;
+        bottom: 0px;
+    `,
+    StyledArrowB: styled(ArrowB)`
+        position: absolute;
+        bottom: 20px;
+    `,
 };
 
 export { M, S };
