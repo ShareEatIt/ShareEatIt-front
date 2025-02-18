@@ -10,7 +10,7 @@ const S = {
 };
 
 const M = {
-  //로그인 페이지지
+  //로그인 페이지
   Layout: styled.div`
     display: flex;
     flex-direction: column;
@@ -20,7 +20,59 @@ const M = {
   `,
   LogoWrapper: styled.div`
     display: flex;
-    margin-bottom: 110px;
+    margin-bottom: 50px;
+  `,
+  Input: styled.textarea`
+    display: flex;
+    align-items: center;
+    width: 193px;
+    height: 20px;
+    padding: 8px;
+    background-color: var(--gray-100);
+    color: var(--gray-200);
+    border-radius: 10px;
+    font-size: 14px;
+    resize: none;
+    border: none;
+    outline: none;
+
+    &::placeholder {
+      color: var(--gray-200);
+      font-size: 14px;
+    }
+    &:focus {
+      border: 1px solid var(--yellow-100);
+    }
+  `,
+  LoginBtn: styled.button`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 209px;
+    height: 34px;
+    padding: 10px;
+    background-color: var(--yellow-100);
+    color: var(--black);
+    border-radius: 10px;
+    margin-bottom: 5px;
+  `,
+  IconContainer: styled.div`
+    display: flex;
+    flex-direction: ro/w;
+    gap: 20px;
+    margin-top: 10px;
+    cursor: pointer;
+  `,
+  SignupText: styled.span`
+    font-size: 11px;
+    color: var(--gray-200);
+    margin-bottom: 20px;
+  `,
+  SignupTextYellow: styled.span`
+    font-size: 11px;
+    margin-bottom: 20px;
+    color: var(--yellow-100);
+    cursor: pointer;
   `,
   TextContainer: styled.div`
     display: flex;
