@@ -1,1 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="95" height="95" viewBox="0 0 76 79" fill="none"><circle cx="38" cy="38" r="38" fill="#D4D4D4"/><mask id="a" width="76" height="76" x="0" y="0" maskUnits="userSpaceOnUse" style="mask-type:alpha"><circle cx="38" cy="38" r="38" fill="#D4D4D4"/></mask><g mask="url(#a)"><rect width="54.625" height="24.542" x="10.291" y="53.833" fill="#F3F4F5" rx="12.271"/></g><circle cx="38" cy="32.459" r="15.042" fill="#F3F4F5"/></svg>
+<svg width="76" height="79" viewBox="0 0 76 79" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="38" cy="38" r="38" fill="#D4D4D4"/>
+<mask id="mask0_595_5485" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="76" height="76">
+<circle cx="38" cy="38" r="38" fill="#D4D4D4"/>
+</mask>
+<g mask="url(#mask0_595_5485)">
+<rect x="10.291" y="53.8333" width="54.625" height="24.5417" rx="12.2708" fill="#F3F4F5"/>
+</g>
+<circle cx="38.0006" cy="32.4584" r="15.0417" fill="#F3F4F5"/>
+</svg>
