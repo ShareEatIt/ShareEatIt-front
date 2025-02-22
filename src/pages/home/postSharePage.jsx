@@ -8,9 +8,7 @@ import { useNavigate } from "react-router-dom";
 import {
     AdditionalInput,
     PostInput,
-    DateInput,
     TradePlace,
-    DateInputEndAt,
     CalendarInput,
 } from "../../components/common/PostInput/postInput";
 import { S } from "./postSharePage.style";
@@ -124,6 +122,13 @@ const PostSharePage = () => {
                     options={categoryList}
                     onChange={(value) =>
                         handleInputChange("category", categoryMap[value])
+                    }
+                />
+                <EnumButton
+                    text={"식료품/완제품"}
+                    options={foodState}
+                    onChange={(value) =>
+                        handleInputChange("foodtype", categoryMap[value])
                     }
                 />
                 <DropDown text={"식료품/완제품"} options={foodState} />

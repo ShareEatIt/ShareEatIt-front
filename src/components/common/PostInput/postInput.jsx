@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { SearchMap } from "./map";
+import { ReactComponent as Calendar } from "../../../assets/common/Calendar.svg";
 import { S, StyledCalendar } from "./postInput.style";
 import moment from "moment";
 
@@ -36,10 +37,11 @@ export const CalendarInput = ({ text, onChange }) => {
         <S.Layout>
             <S.TitleWrapper>{`${text} *`}</S.TitleWrapper>
             <S.DateInputWrapper onClick={() => setIsOpen(!isOpne)}>
-                {moment(date).format("YYYY-MM-DD")}
+                {moment(date).format("YYYY-MM-DD")} <Calendar />
             </S.DateInputWrapper>
             {isOpne && (
                 <S.StyledCalendarWrapper>
+                    <S.Triangle style={{ color: "var(--yellow-100)" }} />
                     <StyledCalendar
                         value={date}
                         onChange={handleDateChange}
@@ -166,6 +168,7 @@ export const AdditionalInput = ({ text, onChange }) => {
         <S.Layout>
             <S.TitleWrapper>{`${text} *`}</S.TitleWrapper>
             <S.AdditionalInputWrapper
+                placeholder="최대 100자까지 작성 가능"
                 isFocused={isFocused}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}

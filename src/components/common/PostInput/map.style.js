@@ -22,11 +22,12 @@ const S = {
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        border: solid 1.5px black;
+
         border-radius: 5px;
     `,
     SearchForm: styled.form`
         width: 100%;
+
         box-sizing: border-box;
     `,
     SearchInput: styled.input`
@@ -34,6 +35,7 @@ const S = {
         width: 93%;
         height: 1.8rem;
         padding: 0 0.5rem;
+
         box-sizing: border-box;
     `,
     SerchBarIcon: styled(SerchIcon)`
