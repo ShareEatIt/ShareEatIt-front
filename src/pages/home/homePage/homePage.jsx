@@ -8,8 +8,16 @@ import ShareList from "../../../components/common/ShareList/shareList";
 import { useNavigate } from "react-router-dom";
 import { getSharingList } from "../../../api/sharing";
 import { getCurrentPosition } from "../../../api/map";
+import { ReactComponent as All } from "../../../assets/Home/All.svg";
+import { ReactComponent as Store } from "../../../assets/Home/Store.svg";
+import { ReactComponent as Individual } from "../../../assets/Home/Individual.svg";
+
 const HomePage = () => {
-    const menuList = ["전체", "가게", "개인"];
+    const menuList = [
+        { label: "전체", icon: <All /> },
+        { label: "가게", icon: <Store /> },
+        { label: "개인", icon: <Individual /> },
+    ];
     const colorList = [
         "var(--yellow-90)",
         "var(--yellow-75)",
@@ -29,9 +37,9 @@ const HomePage = () => {
     const [filteredSharingList, setFilteredSharingList] = useState([]); // 검색 결과 데이터
 
     useEffect(() => {
-        clicked === "전체"
+        clicked.label === "전체"
             ? setColorIndex(0)
-            : clicked === "가게"
+            : clicked.label === "가게"
             ? setColorIndex(1)
             : setColorIndex(2);
     });
@@ -62,9 +70,9 @@ const HomePage = () => {
         console.log("fetchSharingList: 현재 위치:", currentPosition);
         try {
             const postType =
-                clicked === "전체"
+                clicked.label === "전체"
                     ? "ALL"
-                    : clicked === "가게"
+                    : clicked.label === "가게"
                     ? "STORE"
                     : "INDIVIDUAL";
 
@@ -137,16 +145,14 @@ const HomePage = () => {
                         <S.SectionClassificationButton
                             key={index}
                             onClick={() => handleClick(item)}
-                            $isActive={clicked === item}
-                            style={{ backgroundColor: colorList[index] }}
+                            $isActive={clicked.label === item.label}
                         >
-                            {item}
+                            {item.icon}
+                            {item.label}
                         </S.SectionClassificationButton>
                     ))}
                 </S.SectionContainer>
-                <S.SectionWrapper
-                    style={{ backgroundColor: colorList[colorIndex] }}
-                >
+                <S.SectionWrapper>
                     <S.SectionContentContainer>
                         <S.SearchBarContainer>
                             <S.SerchBarIcon />
