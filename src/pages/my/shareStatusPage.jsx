@@ -11,11 +11,14 @@ import { ReactComponent as Western } from "../../assets/common/western.svg";
 import { ReactComponent as Snack } from "../../assets/common/snack.svg";
 import { ReactComponent as Grocery } from "../../assets/common/grocery.svg";
 import { ReactComponent as Etc } from "../../assets/common/etc.svg";
-import { getMemberPostStatus } from "../../api/member";
+import { getMemberPostStatus, getMemberInfo } from "../../api/member";
 
 const ShareStatusPage = () => {
   const [name, setName] = useState("");
   const [count, setCount] = useState("");
+  const [popularCategory, setPopularCategory] = useState("");
+  const [participationRate, setParticipationRate] = useState("");
+  const [userRank10km, setUserRank10km] = useState("");
   const [bakery, setBakery] = useState("");
   const [beverage, setBeverage] = useState("");
   const [conveniencefood, setConveniencefood] = useState("");
@@ -25,38 +28,61 @@ const ShareStatusPage = () => {
   const [snack, setSnack] = useState("");
   const [groceries, setGroceries] = useState("");
   const [etc, setEtc] = useState("");
-
-  const readMemberPostStatus = async () => {
+  const readMemberInfo = async () => {
     try {
-      const response = await getMemberPostStatus();
-      const {
-        bakery,
-        conveniencefood,
-        snack,
-        western,
-        beverage,
-        etc,
-        groceries,
-        korean,
-        chinese,
-      } = response.data.data.statusByCategory;
-      setBakery(bakery);
-      setConveniencefood(conveniencefood);
-      setSnack(snack);
-      setWestern(western);
-      setBeverage(beverage);
-      setEtc(etc);
-      setGroceries(groceries);
-      setKorean(korean);
-      setChinese(chinese);
-      const { nickname, sharingTotal } = response.data.data.writer;
-      setName(nickname);
-      setCount(sharingTotal);
+      const response = await getMemberInfo();
+      setName(response.data.data.nickname);
     } catch (err) {
       console.error(err);
     }
   };
+  const readMemberPostStatus = async () => {
+    try {
+      const response = await getMemberPostStatus();
+
+      setPopularCategory(response.data.popularCategory);
+      setCount(response.data.totalSharedCount);
+      setParticipationRate(response.data.participationRate);
+      setUserRank10km(response.data.userRankIn10km);
+
+      const categoryList = response.data.data.categoryCountList;
+
+      // 기본값이 0인 객체를 생성해 한 번의 reduce로 count 값을 설정
+      const categoryCounts = categoryList.reduce(
+        (acc, { category, count }) => {
+          acc[category] = count;
+          return acc;
+        },
+        {
+          BAKERY: 0,
+          CONVENIENCEFOOD: 0,
+          SNACK: 0,
+          WESTERN: 0,
+          BEVERAGE: 0,
+          ETC: 0,
+          GROCERY: 0,
+          KOREAN: 0,
+          CHINESE: 0,
+        }
+      );
+
+      // 상태 업데이트
+      setBakery(categoryCounts.BAKERY);
+      setConveniencefood(categoryCounts.CONVENIENCEFOOD);
+      setSnack(categoryCounts.SNACK);
+      setWestern(categoryCounts.WESTERN);
+      setBeverage(categoryCounts.BEVERAGE);
+      setEtc(categoryCounts.ETC);
+      setGroceries(categoryCounts.GROCERY);
+      setKorean(categoryCounts.KOREAN);
+      setChinese(categoryCounts.CHINESE);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
+    readMemberInfo();
     readMemberPostStatus();
   }, []);
   return (
@@ -64,7 +90,10 @@ const ShareStatusPage = () => {
       <BackButton text="나눔 현황" />
       <M.TitleContainer>
         <M.TitleWrapper>
-          <M.TitleWrapperY>{name}</M.TitleWrapperY>님의 나눔 현황
+          <M.TitleWrapperY>
+            {name}
+            <span>님의 나눔현황</span>
+          </M.TitleWrapperY>
         </M.TitleWrapper>
         <M.TitleWrapper>총 횟수 {count}건</M.TitleWrapper>
       </M.TitleContainer>
@@ -107,6 +136,20 @@ const ShareStatusPage = () => {
             <M.CountText>기타 {etc}건</M.CountText>
           </M.CountContainer>
         </M.StatContainer>
+        <M.HighlightContainer>
+          <M.HighlightBox>
+            <M.CountText>가장 많이 나눔한 음식</M.CountText>
+            <M.StatImageWrapper>{popularCategory}</M.StatImageWrapper>
+            <M.CountText>{popularCategory}</M.CountText>
+          </M.HighlightBox>
+          <M.HighlightBox>
+            <M.CountText>10km 이내 나눔 순위</M.CountText>
+            <M.CountText>{userRank10km}위</M.CountText>
+          </M.HighlightBox>
+        </M.HighlightContainer>
+        <M.ParticipationRate>
+          나눔 성사 비율 {participationRate}%
+        </M.ParticipationRate>
       </M.StatBackground>
     </M.Layout>
   );

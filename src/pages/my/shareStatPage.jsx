@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BarChart,
   Bar,
@@ -7,8 +7,11 @@ import {
   ResponsiveContainer,
   LabelList,
 } from "recharts";
+import { getRank } from "../../api/sharing";
+import { getMemberInfo } from "../../api/member";
 import BackButton from "../../components/common/BackButton/backButton";
 import { M } from "./my";
+import { useEffect } from "react";
 
 const weeklyData = [
   { name: "1주차", value: 12 },
@@ -33,17 +36,40 @@ const monthlyData = [
 ];
 
 const ShareStatPage = () => {
+  const [rank, setRank] = useState("");
+  const [name, setName] = useState("");
+  const readRank = async () => {
+    try {
+      const response = await getRank();
+      setRank(response.data.data.rank);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const readMemberInfo = async () => {
+    try {
+      const response = await getMemberInfo();
+      setName(response.data.data.nickname);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    readRank();
+    readMemberInfo();
+  }, []);
   return (
     <M.Layout>
       <BackButton text="나눔 통계" />
       <M.StatTextWrapper>
         <span style={{ color: "var(--yellow-100)", fontWeight: "bold" }}>
-          이승진
-        </span>{" "}
-        님은 전체 사용자 중{"  "}
+          {name}
+        </span>
+        님은 전체 사용자 중
         <span style={{ color: "var(--yellow-100)", fontWeight: "bold" }}>
-          5
-        </span>{" "}
+          {rank}
+        </span>
         등이에요!
       </M.StatTextWrapper>
 

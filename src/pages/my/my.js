@@ -3,6 +3,7 @@ import styled from "styled-components";
 const S = {
   Layout: styled.div`
     display: flex;
+    flex-direction: column;
     align-items: center;
   `,
 };
@@ -258,30 +259,57 @@ const M = {
   //나눔통계
   StatBackground: styled.div`
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     height: 713px;
-    padding-top: 20px;
-    background-color: var(--yellow-40);
+    padding-top: 10px;
+    background-color: var(--yellow-10);
   `,
   StatContainer: styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    align-items: center;
-    height: 100px;
-    width: 350px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); // 3열 배치
+    gap: 20px;
+    margin: 0 auto;
   `,
+
   CountContainer: styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
     align-items: center;
+    justify-content: center;
     width: 90px;
-    height: 88px;
-    margin: 7px;
-    background-color: var(--white);
-    border-radius: 10px;
+    height: 90px;
+    margin: 0px 10px 0px 10px;
+    gap: 10px;
   `,
+  HighlightContainer: styled.div`
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    gap: 20px;
+  `,
+  HighlightBox: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: var(--white);
+    font-size: 15px;
+    font-weight: bold;
+    width: 140px;
+    height: 130px;
+  `,
+  ParticipationRate: styled.div`
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+  `,
+
   StatImageWrapper: styled.div`
     width: 50px;
     height: 50px;
@@ -294,7 +322,7 @@ const M = {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 10px;
+    margin: 15px;
   `,
   TitleWrapper: styled.div`
     font-weight: 500;
