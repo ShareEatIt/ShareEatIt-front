@@ -41,13 +41,14 @@ function App() {
   //const HomePage = lazy(() => import("./pages/home/homePage/homePage"));
   return (
     <Routes>
-      <Route path="/login" element={<KakaoLoginPage />} />
-      <Route path="/oauth2/access-token" element={<OAuthRedirectPage />} />
+      <Route path="/" element={<KakaoLoginPage />} />
+      <Route path="/oauth2-redirect" element={<OAuthRedirectPage />} />
+      <Route path="/home" element={<HomePage />} />
       <Route path="/intro" element={<IntroPage />} />
       <Route path="/postdetail/:id" element={<ShareDetailPage />} />
       <Route path="/chatlist" element={<ChatListPage />} />
       <Route path="/chatlist/:chatRoomId" element={<ChatPage />} />
-      <Route path="/noti" element={<NotificationPage />} />
+      <Route path="/notice" element={<NotificationPage />} />
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/keyword" element={<KeywordPage />} />
       <Route path="/profile" element={<ProfileEditPage />} />

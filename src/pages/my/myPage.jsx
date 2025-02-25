@@ -7,6 +7,7 @@ import { ReactComponent as Profile } from "../../assets/common/profile.svg";
 import { ReactComponent as ShareStatus } from "../../assets/my/sharestatus.svg";
 import { ReactComponent as ShareStat } from "../../assets/my/sharestat.svg";
 import { ReactComponent as ParticipationStatus } from "../../assets/my/participationstatus.svg";
+import { ReactComponent as Edit } from "../../assets/my/edit.svg";
 
 import emoji1 from "../../assets/my/heart.svg";
 import emoji2 from "../../assets/my/good.svg";
@@ -22,8 +23,8 @@ import {
   deleteMember,
 } from "../../api/member";
 import { logout } from "../../api/login";
-import ShareStatPage from "./shareStatPage";
-import ShareStatusPage from "./shareStatusPage";
+import ShareStatPage from "./shareStatusPage";
+import ShareStatusPage from "./shareStatPage";
 import KeywordPage from "./keywordPage";
 import { TbWashDryP } from "react-icons/tb";
 const MyPage = () => {
@@ -153,7 +154,7 @@ const MyPage = () => {
         <M.TextContainer>
           <M.TextWrapper>
             <M.NameWrapper>{name}</M.NameWrapper>
-            <M.EditBtn onClick={() => navigate("/profile")}>정보수정</M.EditBtn>
+            <Edit onClick={() => navigate("/profile")} />
           </M.TextWrapper>
           <M.TextWrapper>{email}</M.TextWrapper>
           <M.TextWrapper>

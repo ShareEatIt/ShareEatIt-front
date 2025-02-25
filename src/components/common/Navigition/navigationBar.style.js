@@ -8,57 +8,58 @@ import { ReactComponent as Mypage } from "../../../assets/navigation/mypage.svg"
 import { NavLink } from "react-router-dom";
 
 const ChatWrapper = styled(Chat)`
-    color: #bcbcbc;
+  color: #bcbcbc;
 `;
 const BellWrapper = styled(Bell)`
-    color: #bcbcbc;
+  color: #bcbcbc;
 `;
 
 const MyPageWrapper = styled(Mypage)`
-    color: #bcbcbc;
+  color: #bcbcbc;
 `;
 const S = {};
 const M = {
-    Layout: styled.div`
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        padding: 0.5rem 1rem;
-        box-sizing: border-box;
-    `,
-    LogoWrapper: styled(NavLink)`
-        display: flex;
-        align-items: center;
-        gap: 0.2rem;
-    `,
-    Logo: styled(LogoS)`
-        width: 20px;
-        height: auto;
-    `,
-    LogoText: styled(LogoText)`
-        width: 90px;
-        height: auto;
-    `,
-    NavWrapper: styled.div`
-        display: flex;
-        align-items: center;
+  Layout: styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.8rem 0.8rem;
+    box-sizing: border-box;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  `,
+  LogoWrapper: styled(NavLink)`
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+  `,
+  Logo: styled(LogoS)`
+    width: 20px;
+    height: auto;
+  `,
+  LogoText: styled(LogoText)`
+    width: 90px;
+    height: auto;
+  `,
+  NavWrapper: styled.div`
+    display: flex;
+    align-items: center;
 
-        gap: 1rem;
-    `,
-    NavButton: styled(NavLink)`
-        display: flex;
-        position: relative;
+    gap: 1rem;
+  `,
+  NavButton: styled(NavLink)`
+    display: flex;
+    position: relative;
 
-        &.active ${ChatWrapper} {
-            color: var(--yellow-100);
-        }
-        &.active ${BellWrapper} {
-            color: var(--yellow-100);
-        }
-        &.active ${MyPageWrapper} {
-            color: var(--yellow-100);
-        }
-    `,
+    &.active ${ChatWrapper} {
+      color: var(--yellow-100);
+    }
+    &.active ${BellWrapper} {
+      color: var(--yellow-100);
+    }
+    &.active ${MyPageWrapper} {
+      color: var(--yellow-100);
+    }
+  `,
 };
 
 export { S, M, ChatWrapper, BellWrapper, MyPageWrapper };

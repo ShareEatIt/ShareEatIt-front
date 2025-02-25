@@ -18,13 +18,19 @@ const LoginPage = () => {
     setShowPW((prev) => !prev);
   };
   const handleKakaoLogin = () => {
-    window.location.href = KAKAO_AUTH_URI;
+    const token = localStorage.getItem("accessToken"); // 또는 sessionStorage.getItem("token")
+    if (token) {
+      navigate("/home"); // 토큰이 존재하면 홈 화면으로 이동
+    } else {
+      console.log("dd");
+      window.location.href = KAKAO_AUTH_URI; // 토큰이 없으면 카카오 로그인 페이지로 이동
+    }
   };
 
   const handleGoogleLogin = () => {
     const token = localStorage.getItem("token"); // 또는 sessionStorage.getItem("token")
     if (token) {
-      navigate("/"); // 토큰이 존재하면 홈 화면으로 이동
+      navigate("/home"); // 토큰이 존재하면 홈 화면으로 이동
     } else {
       window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}
         &redirect_uri=${process.env.REACT_APP_GOOGLE_AUTH_REDIRECT_URI}&response_type=code&scope=email profile`; // 토큰이 없으면 구글 로그인 페이지로 이동
