@@ -16,28 +16,27 @@ const M = {
   InfoContainer: styled.div`
     display: flex;
     flex-direction: row;
-    padding: 15px;
-    margin: 20px 0px 0px 30px;
+    margin: 20px 0px 10px 30px;
   `,
   ProfileWrapper: styled.div`
-    margin-left: 5px;
     margin-right: 10px;
   `,
   TextContainer: styled.div`
     display: flex;
     flex-direction: column;
     margin-left: 10px;
-    margin-top: 10px;
-    gap: 4px;
+    margin-top: 5px;
+    gap: 8px;
   `,
   TextWrapper: styled.div`
     display: flex;
     align-items: center;
     flex-direction: row;
-    gap: 3px;
+    gap: 6px;
+    font-size: 12px;
   `,
   NameWrapper: styled.div`
-    font-size: 22px;
+    font-size: 17px;
     font-weight: 700;
   `,
   EditBtn: styled.button`
@@ -147,8 +146,9 @@ const M = {
     margin-bottom: 15px;
   `,
   Legend: styled.legend`
-    margin-bottom: 10px;
-    font-size: 18px;
+    margin-bottom: 6px;
+    margin-left: 5px;
+    font-size: 16px;
   `,
   Textarea: styled.textarea`
     display: flex;
@@ -156,12 +156,12 @@ const M = {
     width: 700px;
     height: 23px;
     padding: 10px;
-    border: 1px solid black;
+    border: none;
     border-radius: 8px;
     margin-top: 8px;
-
+    background-color: var(--gray-100);
     resize: none;
-    font-size: 18px;
+    font-size: 14px;
     &::placeholder {
       color: var(--gray);
     }
@@ -197,13 +197,14 @@ const M = {
     display: flex;
     justify-content: center;
     width: 575px;
-    height: 25px;
+    height: 15px;
     padding: 10px;
-    border: 1px solid black;
+    margin-top: 5px;
+    border: none;
     border-radius: 8px;
-
+    background-color: var(--gray-100);
     resize: none;
-    font-size: 18px;
+    font-size: 14px;
     &::placeholder {
       color: var(--gray);
     }
@@ -212,8 +213,8 @@ const M = {
       outline: none;
     }
     @media (max-width: 800px) {
-      width: 251px;
-      height: 50px;
+      width: 273px;
+      height: 23px;
     }
   `,
   PostcodeBtn: styled.button`
@@ -221,14 +222,14 @@ const M = {
     height: 45px;
     padding: 8px;
     margin-left: 8px;
+    margin-top: 5px;
     color: var(--white);
     background-color: var(--yellow-100);
     border-radius: 8px;
-    font-weight: 700;
-    font-size: 14px;
+    font-size: 10px;
     @media (max-width: 800px) {
-      width: 80px;
-      height: 70px;
+      width: 60px;
+      height: 43px;
     }
   `,
 
@@ -258,7 +259,6 @@ const M = {
   StatBackground: styled.div`
     display: flex;
     justify-content: center;
-
     height: 713px;
     padding-top: 20px;
     background-color: var(--yellow-40);
@@ -267,13 +267,14 @@ const M = {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    align-items: center;
     height: 100px;
     width: 350px;
   `,
   CountContainer: styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     width: 90px;
     height: 88px;
@@ -289,15 +290,39 @@ const M = {
     font-sise: 17px;
     font-weight: 700;
   `,
-  StatTitleWrapper: styled.div`
-    font-weight: 700;
-    font-size: 18px;
-    margin-top: 20px;
-    margin-bottom: 10px;
+  TitleContainer: styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 10px;
   `,
-  CntTextWrapper: styled.div`
-    font-weight: 700;
+  TitleWrapper: styled.div`
+    font-weight: 500;
+    font-size: 17px;
+  `,
+  TitleWrapperY: styled.div`
+    font-weight: 500;
+    font-size: 17px;
     color: var(--yellow-100);
+  `,
+
+  //나눔 통계
+  StatTextWrapper: styled.span`
+    display: flex;
+    margin: 20px;
+    font-size: 15px;
+  `,
+  StatTitleWrapper: styled.span`
+    display: flex;
+    margin: 15px;
+    font-size: 15px;
+  `,
+  GraphContainer: styled.div`
+    width: 90%;
+    height: 290px;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    margin: 0 auto;
     margin-bottom: 20px;
   `,
 };

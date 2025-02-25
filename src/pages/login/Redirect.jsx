@@ -2,16 +2,23 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { api } from "../../api/api";
-
+axios.defaults.withCredentials = true;
 const OAuthRedirectPage = () => {
   const navigate = useNavigate();
-  const code = new URL(window.location.href).searchParams.get("code");
+  //const code = new URL(window.location.href).searchParams.get("code");
+  const urlParams = new URLSearchParams(window.location.search);
+  const code = urlParams.get("code");
 
+  console.log("code", code);
   const fetchAccessToken = async (code) => {
     try {
-      const response = await api.post(`/oauth2/access-token`, code, {
-        withCredentials: true,
-      });
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL_LOGIN}/oauth2/access-token`,
+        code,
+        {
+          withCredentials: true,
+        }
+      );
 
       console.log("Response from server:", response);
 
@@ -34,11 +41,11 @@ const OAuthRedirectPage = () => {
       if (isNewMember) {
         navigate("/my", { state: { isNewMember } }, { replace: true });
       } else {
-        navigate("/", { replace: true });
+        navigate("/home", { replace: true });
       }
     } catch (error) {
       console.error("Error fetching OAuth tokens:", error);
-      navigate("/login", { replace: true });
+      navigate("/", { replace: true });
     }
   };
 
@@ -47,7 +54,7 @@ const OAuthRedirectPage = () => {
       fetchAccessToken(code);
     } else {
       console.error("OAuth code is missing.");
-      navigate("/login", { replace: true });
+      navigate("/", { replace: true });
     }
   }, [code]);
 

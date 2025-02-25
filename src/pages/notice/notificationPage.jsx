@@ -25,7 +25,6 @@ const NotificationPage = () => {
     <S.Layout>
       <NavigationBar />
       <S.ChatListWholeWrapper>
-        <S.TitleWrapper>알림 목록</S.TitleWrapper>
         {notiList.length > 0 ? (
           notiList.map((item) => {
             return (
