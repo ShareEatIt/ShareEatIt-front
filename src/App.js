@@ -23,7 +23,7 @@ import ShareDetailPage from "./pages/shareDetail/shareDetailPage";
 import MapPage from "./pages/home/mapPage";
 import IntroPage from "./pages/login/IntroPage";
 function App() {
-  const [isFirstVisit, setIsFirstVisit] = useState(true);
+  /*const [isFirstVisit, setIsFirstVisit] = useState(true);
 
   useEffect(() => {
     // 첫 방문 여부를 Local Storage에서 확인
@@ -34,20 +34,21 @@ function App() {
       localStorage.setItem("hasVisited", "true"); // 첫 방문 기록 저장
     }
   }, []);
+        <Route
+        path="/"
+        element={isFirstVisit ? <Navigate to="/login" replace /> : <HomePage />}
+      />*/
   //const HomePage = lazy(() => import("./pages/home/homePage/homePage"));
   return (
     <Routes>
-      <Route path="/oauth2/authorize" element={<OAuthRedirectPage />} />
-      <Route path="/login" element={<KakaoLoginPage />} />
-      <Route
-        path="/"
-        element={isFirstVisit ? <Navigate to="/login" replace /> : <HomePage />}
-      />
+      <Route path="/" element={<KakaoLoginPage />} />
+      <Route path="/oauth2-redirect" element={<OAuthRedirectPage />} />
+      <Route path="/home" element={<HomePage />} />
       <Route path="/intro" element={<IntroPage />} />
       <Route path="/postdetail/:id" element={<ShareDetailPage />} />
       <Route path="/chatlist" element={<ChatListPage />} />
       <Route path="/chatlist/:chatRoomId" element={<ChatPage />} />
-      <Route path="/noti" element={<NotificationPage />} />
+      <Route path="/notice" element={<NotificationPage />} />
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/keyword" element={<KeywordPage />} />
       <Route path="/profile" element={<ProfileEditPage />} />

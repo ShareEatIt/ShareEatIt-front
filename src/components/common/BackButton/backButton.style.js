@@ -7,9 +7,9 @@ const S = {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    height: 24px;
-    padding: 10px;
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
+    padding: 0.35rem 0.35rem;
+    box-sizing: border-box;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
   `,
 
   TextWrapper: styled.div`

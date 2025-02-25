@@ -5,13 +5,13 @@ export const api = axios.create({
   baseURL: `${process.env.REACT_APP_BASE_URL}`,
 });
 
-const token = JSON.parse(localStorage.getItem("token"));
-const accessToken = token?.accessToken || null;
-const auth = accessToken ? `${token.accessToken}` : null;
+const token = localStorage.getItem("accessToken");
+const accessToken = token || null;
+const auth = accessToken ? `${token}` : null;
 
 console.log("Auth value in fetchToken:", auth);
 console.log("token", token);
-console.log("accessToken", accessToken);
+console.log("accessToken123", accessToken);
 
 // Axios 인스턴스 생성
 const client = axios.create({
@@ -53,6 +53,7 @@ client.interceptors.response.use(
         // 로컬 스토리지에서 리프레시 토큰 가져오기
         await refreshToken();
         const token = JSON.parse(localStorage.getItem("token"));
+        console.log("expired");
         if (token && token.refreshToken) {
           const response = await axios.post(
             `/auth/refresh`,
@@ -82,7 +83,7 @@ client.interceptors.response.use(
       } catch (refreshError) {
         // 리프레시 실패 시 로그인 페이지로 리디렉션
         localStorage.removeItem("token");
-        window.location.href = "/login";
+        window.location.href = "/";
         return Promise.reject(refreshError);
       }
     }
