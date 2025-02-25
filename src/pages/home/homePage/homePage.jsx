@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 import BackButton from "../../../components/common/BackButton/backButton";
 import BottomButton from "../../../components/common/BottomButton/bottomButton";
 import NavigationBar from "../../../components/common/Navigition/navigationBar";
@@ -11,6 +12,7 @@ import { getCurrentPosition } from "../../../api/map";
 import { ReactComponent as All } from "../../../assets/Home/All.svg";
 import { ReactComponent as Store } from "../../../assets/Home/Store.svg";
 import { ReactComponent as Individual } from "../../../assets/Home/Individual.svg";
+import { ImNpm } from "react-icons/im";
 
 const HomePage = () => {
     const menuList = [
@@ -35,6 +37,27 @@ const HomePage = () => {
 
     const [searchText, setSearchText] = useState(""); // 검색 텍스트
     const [filteredSharingList, setFilteredSharingList] = useState([]); // 검색 결과 데이터
+    const accessToken = localStorage.getItem("accessToken");
+    console.log(accessToken);
+
+    useEffect(() => {
+        console.log(`Bearer ${accessToken}`);
+        axios
+            .get(
+                //'http://localhost:8080/members/test',
+                `${process.env.REACT_APP_BASE_URL_LOGIN}/members/test`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`, // 예시: 쿠키에서 토큰 가져오기
+                    },
+                    withCredentials: true,
+                }
+            )
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {});
+    }, []);
 
     useEffect(() => {
         clicked.label === "전체"
@@ -110,51 +133,7 @@ const HomePage = () => {
                 item.title.toLowerCase().includes(searchValue.toLowerCase())
             );
             setFilteredSharingList(filtered);
-
         }
-      )
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {});
-  }, []);
-
-  const menuList = ["전체", "가게", "개인"];
-  const colorList = [
-    "var(--yellow-90)",
-    "var(--yellow-75)",
-    "var(--yellow-50)",
-  ];
-  const [clicked, setClicked] = useState(menuList[0]);
-  const [colorIndex, setColorIndex] = useState(0);
-  const [sharingList, setSharingList] = useState([]); // 나눔글 데이터
-  const [loading, setLoading] = useState(true); // 로딩 상태
-  const [currentPosition, setCurrentPosition] = useState(null);
-
-  const [postType, setPostType] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
-
-  const [searchText, setSearchText] = useState(""); // 검색 텍스트
-  const [filteredSharingList, setFilteredSharingList] = useState([]); // 검색 결과 데이터
-
-  useEffect(() => {
-    clicked === "전체"
-      ? setColorIndex(0)
-      : clicked === "가게"
-      ? setColorIndex(1)
-      : setColorIndex(2);
-  });
-
-  useEffect(() => {
-    const fetchLocation = async () => {
-      try {
-        const position = await getCurrentPosition();
-        setCurrentPosition(position);
-        console.log("현재 위치:", position);
-      } catch (error) {
-        console.error(error.message);
-      }
     };
 
     useEffect(() => {
@@ -221,6 +200,5 @@ const HomePage = () => {
             <S.WriteButton onClick={handleWriteButtonClick} />
         </S.Layout>
     );
-
 };
 export default HomePage;
