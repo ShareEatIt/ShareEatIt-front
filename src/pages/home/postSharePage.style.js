@@ -6,7 +6,7 @@ const S = {
         flex-direction: column;
         width: 100%;
         box-sizing: border-box;
-        margin: 0rem 1.5rem;
+        padding: 0rem 1.5rem;
 
         @media (max-width: 749px) {
             width: 100%;

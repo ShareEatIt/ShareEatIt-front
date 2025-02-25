@@ -28,13 +28,17 @@ const PostSharePage = () => {
         ETC: "ETC",
     };
     const categoryList = Object.keys(categoryMap);
-    const foodState = ["식료품", "완제품"];
+    const isFinishedMap = {
+        식료품: false,
+        완제품: true,
+    };
+    const foodState = Object.keys(isFinishedMap);
 
     const [formData, setFormData] = useState({
         imgList: [],
         title: "",
         category: "",
-
+        isFinished: "",
         foodName: "",
         expDate: "",
         purchaseDate: "",
@@ -128,10 +132,10 @@ const PostSharePage = () => {
                     text={"식료품/완제품"}
                     options={foodState}
                     onChange={(value) =>
-                        handleInputChange("foodtype", categoryMap[value])
+                        handleInputChange("isFinished", isFinishedMap[value])
                     }
                 />
-                <DropDown text={"식료품/완제품"} options={foodState} />
+
                 <PostInput
                     text={"식품명"}
                     onChange={(value) => handleInputChange("foodName", value)}

@@ -5,7 +5,6 @@ const S = {
         width: 100%;
         flex-direction: column;
         box-sizing: border-box;
-        margin: 0rem 1.5rem;
         margin-top: 1.5rem;
     `,
     TitleWrapper: styled.div`
