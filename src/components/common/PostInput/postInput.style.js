@@ -6,9 +6,11 @@ import { ReactComponent as Triangle } from "../../../assets/common/triangle.svg"
 
 const S = {
     Layout: styled.div`
+        display: flex;
+        flex-direction: column;
         box-sizing: border-box;
         width: 100%;
-        margin: 0rem 1.5rem;
+
         margin-top: 1.5rem;
         position: relative;
     `,
