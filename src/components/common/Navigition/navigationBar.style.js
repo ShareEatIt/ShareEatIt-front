@@ -19,6 +19,7 @@ const MyPageWrapper = styled(Mypage)`
 `;
 const S = {};
 const M = {
+
   Layout: styled.div`
     display: flex;
     justify-content: space-between;
@@ -43,6 +44,7 @@ const M = {
   NavWrapper: styled.div`
     display: flex;
     align-items: center;
+
 
     gap: 1rem;
   `,
