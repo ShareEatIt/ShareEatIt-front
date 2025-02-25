@@ -8,9 +8,7 @@ import { useNavigate } from "react-router-dom";
 import {
     AdditionalInput,
     PostInput,
-    DateInput,
     TradePlace,
-    DateInputEndAt,
     CalendarInput,
 } from "../../components/common/PostInput/postInput";
 import { S } from "./postSharePage.style";
@@ -30,13 +28,17 @@ const PostSharePage = () => {
         ETC: "ETC",
     };
     const categoryList = Object.keys(categoryMap);
-    const foodState = ["식료품", "완제품"];
+    const isFinishedMap = {
+        식료품: false,
+        완제품: true,
+    };
+    const foodState = Object.keys(isFinishedMap);
 
     const [formData, setFormData] = useState({
         imgList: [],
         title: "",
         category: "",
-
+        isFinished: "",
         foodName: "",
         expDate: "",
         purchaseDate: "",
@@ -126,7 +128,14 @@ const PostSharePage = () => {
                         handleInputChange("category", categoryMap[value])
                     }
                 />
-                <DropDown text={"식료품/완제품"} options={foodState} />
+                <EnumButton
+                    text={"식료품/완제품"}
+                    options={foodState}
+                    onChange={(value) =>
+                        handleInputChange("isFinished", isFinishedMap[value])
+                    }
+                />
+
                 <PostInput
                     text={"식품명"}
                     onChange={(value) => handleInputChange("foodName", value)}
@@ -166,7 +175,8 @@ const PostSharePage = () => {
                         );
                     }}
                 />
-                <DateInputEndAt
+
+                <CalendarInput
                     text={"나눔 종료일자"}
                     onChange={(value) => handleInputChange("endAt", value)}
                 />

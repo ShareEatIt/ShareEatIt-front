@@ -12,6 +12,14 @@ const S = {
         min-height: 100vh; /* 최소 높이를 화면 전체로 설정 */
         box-sizing: border-box;
         overflow: hidden;
+
+        @media (max-width: 749px) {
+            width: 100%;
+        }
+        @media (min-width: 750px) {
+            max-width: 750px;
+            margin: 0 auto;
+        }
     `,
     ContentContainer: styled.div`
         display: flex;
@@ -20,23 +28,31 @@ const S = {
         box-sizing: border-box;
     `,
     SectionContainer: styled.div`
+        display: flex;
+        justify-content: space-between;
         box-sizing: border-box;
-        margin-left: 0.5rem;
         padding-top: 2rem;
     `,
     SectionClassificationButton: styled.button`
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
         padding: 0.35rem 1.25rem;
-        border-top-right-radius: 5px;
-        border-top-left-radius: 5px;
+        gap: 0.5rem;
         background-color: transparent;
-        color: var(--white);
-        padding-top: ${({ $isActive }) => ($isActive ? "0.75rem" : "0.35rem")};
+        color: ${({ $isActive }) =>
+            $isActive ? "var(--yellow-100)" : "#D4D4D4"};
+
+        border-bottom: ${({ $isActive }) =>
+            $isActive
+                ? "2px solid var(--yellow-100)"
+                : "2px solid transparent"};
     `,
     SectionWrapper: styled.div`
         flex-grow: 1;
         box-sizing: border-box;
         // 선택된 메뉴 값에 따라 배경 색 변경
-        background-color: var(--yellow-50);
     `,
     SectionContentContainer: styled.div`
         box-sizing: border-box;
@@ -45,9 +61,9 @@ const S = {
     SearchBarContainer: styled.div`
         display: flex;
         align-items: center;
-        border-radius: 5px;
+        border: solid 1px var(--yellow-100);
+        border-radius: 10px;
         background-color: var(--white);
-        filter: drop-shadow(0px 2px 2px rgba(255, 184, 73, 0.3));
         box-sizing: border-box;
         padding: 0.3rem 0.5rem;
     `,

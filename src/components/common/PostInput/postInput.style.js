@@ -2,11 +2,15 @@ import styled from "styled-components";
 import DropDown from "./dropDown";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import { ReactComponent as Triangle } from "../../../assets/common/triangle.svg";
 
 const S = {
     Layout: styled.div`
+        display: flex;
+        flex-direction: column;
         box-sizing: border-box;
-        margin: 0rem 1.5rem;
+        width: 100%;
+
         margin-top: 1.5rem;
         position: relative;
     `,
@@ -22,11 +26,27 @@ const S = {
         justify-content: center;
         box-sizing: border-box;
         width: 100%;
-
+        background-color: #f5f5f5;
         padding: 0.2rem 0.6rem;
-        border-radius: 5px;
+        border-radius: 10px;
         border: solid 1.5px
-            ${({ isFocused }) => (isFocused ? "#ffb849" : "black")};
+            ${({ isFocused }) => (isFocused ? "#ffb849" : "none")};
+        &::placeholder {
+        }
+    `,
+
+    DateInputWrapper: styled.div`
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-sizing: border-box;
+        width: 100%;
+
+        padding: 0.4rem 0.6rem;
+        background-color: #f5f5f5;
+        border-radius: 10px;
+        border: solid 1.5px
+            ${({ isOpen }) => (isOpen ? "#ffb849" : "transparent")};
         &::placeholder {
         }
     `,
@@ -40,7 +60,8 @@ const S = {
         box-sizing: border-box;
         padding: 0.5rem 0.5rem;
         border-radius: 5px;
-        border: solid 1.5px;
+        border: none;
+        background-color: #f5f5f5;
         outline-color: #ffb849;
         &::placeholder {
         }
@@ -140,7 +161,7 @@ const S = {
         width: 100px;
         height: 100px;
         border-radius: 10px;
-        border: 1.5px solid black;
+        background-color: #f5f5f5;
         cursor: pointer;
         font-size: 24px;
         font-weight: bold;
@@ -149,13 +170,33 @@ const S = {
     HiddenInput: styled.input`
         display: none;
     `,
+    Triangle: styled(Triangle)`
+        width: 0.5rem;
+        height: 0.5rem;
+        margin-right: 0.7rem;
+        color: var(--yellow-100);
+    `,
 
     StyledCalendarWrapper: styled.div`
-        width: 100%;
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        align-items: end;
+        width: 100%;
+
         position: relative;
     `,
 };
-const StyledCalendar = styled(Calendar)``;
+const StyledCalendar = styled(Calendar)`
+    border: solid 2px var(--yellow-100);
+    border-radius: 10px;
+    .react-calendar__tile--now {
+        background: none !important;
+        color: inherit !important;
+    }
+    .react-calendar__tile--active {
+        background: var(--yellow-70) !important;
+        color: white !important;
+        border-radius: 5px;
+    }
+`;
 export { S, StyledCalendar };

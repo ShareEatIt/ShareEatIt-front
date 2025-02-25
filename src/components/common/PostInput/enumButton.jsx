@@ -1,7 +1,7 @@
 import { S } from "./enumButton.style";
 import { useState } from "react";
 const EnumButton = ({ text, options, onChange }) => {
-    const [selected, setSelected] = useState("");
+    const [selected, setSelected] = useState(options[0] || "");
     const handleSelect = (option) => {
         setSelected(option);
 

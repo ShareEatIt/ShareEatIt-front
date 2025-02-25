@@ -4,7 +4,17 @@ const S = {
     AllContiner: styled.div`
         display: flex;
         flex-direction: column;
+        width: 100%;
         box-sizing: border-box;
+        padding: 0rem 1.5rem;
+
+        @media (max-width: 749px) {
+            width: 100%;
+        }
+        @media (min-width: 750px) {
+            max-width: 750px;
+            margin: 0 auto;
+        }
     `,
     Layout: styled.div`
         margin-bottom: 2rem;
