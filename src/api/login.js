@@ -2,20 +2,17 @@ import { client } from "./api";
 
 //로그아웃
 export const logout = async () => {
-<<<<<<< HEAD
     try {
         //const code = localStorage.getItem("code");
-        const response = await client.get(`/auth/logout`, {
-            //params: { code: code },
-        });
+        const response = await client.get(`/logout`);
         console.log("logout success");
-        //localStorage.removeItem("code");
         localStorage.removeItem("token");
         return response;
     } catch (err) {
         throw err;
     }
 };
+import { client } from "./api";
 
 // 자체 로그인
 export const postLogin = async (username, password) => {
@@ -66,15 +63,4 @@ export const postSignup = async (formData) => {
             message: error.response?.data?.message || "회원가입 실패",
         };
     }
-=======
-  try {
-    //const code = localStorage.getItem("code");
-    const response = await client.get(`/logout`);
-    console.log("logout success");
-    localStorage.removeItem("token");
-    return response;
-  } catch (err) {
-    throw err;
-  }
->>>>>>> cbcd311abe3cf221d6f507e7b1cced98d4fb3cfd
 };
