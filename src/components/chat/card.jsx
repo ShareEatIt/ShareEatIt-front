@@ -20,8 +20,8 @@ const dummyData = [
     },
 ];
 
-const ChatCard = () => {
-    const [chatListData, setChatListData] = useState([]);
+const ChatCard = ({ chatListData }) => {
+    /* const [chatListData, setChatListData] = useState([]);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         const fetchChatList = async () => {
@@ -45,7 +45,7 @@ const ChatCard = () => {
             }
         };
         fetchChatList();
-    }, []);
+    }, []);*/
 
     const navigate = useNavigate();
 
@@ -67,8 +67,6 @@ const ChatCard = () => {
         connectWebSocket(chatRoomId, token);
         console.log(`WebSocket 연결 시도: 채팅방 ID ${chatRoomId}`);
     };
-
-    if (loading) return <div>로딩 중...</div>; // 로딩 중 메시지
 
     return (
         <>

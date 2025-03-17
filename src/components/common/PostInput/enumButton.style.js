@@ -16,10 +16,10 @@ const S = {
         display: flex;
         justify-content: start;
         flex-wrap: wrap;
-        gap: 2rem;
+        gap: 0.5rem;
     `,
     ButtonWrapper: styled.button`
-        padding: 0.5rem 0.5rem;
+        padding: 0.5rem 1.5rem;
         background-color: ${({ isSelected }) =>
             isSelected ? "var(--yellow-100)" : "none"};
         color: black;

@@ -23,6 +23,7 @@ const S = {
         display: flex;
         flex-direction: column;
         justify-content: center;
+        width: 100%;
         gap: 0.5rem;
     `,
     TitleWrapper: styled.div`
@@ -35,6 +36,8 @@ const S = {
         font-size: 0.8rem;
     `,
     ModifiedATWrapper: styled.div`
+        display: flex;
+        justify-content: end;
         font-size: 0.5rem;
     `,
 };
