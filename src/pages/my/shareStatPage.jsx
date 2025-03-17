@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BarChart,
   Bar,
@@ -7,65 +7,95 @@ import {
   ResponsiveContainer,
   LabelList,
 } from "recharts";
+import { getRank, getMonthYearStat } from "../../api/sharing";
+import { getMemberInfo } from "../../api/member";
 import BackButton from "../../components/common/BackButton/backButton";
 import { M } from "./my";
-
-const weeklyData = [
-  { name: "1주차", value: 12 },
-  { name: "2주차", value: 8 },
-  { name: "3주차", value: 15 },
-  { name: "4주차", value: 3 },
-];
-
-const monthlyData = [
-  { name: "1월", value: 5 },
-  { name: "2월", value: 3 },
-  { name: "3월", value: 4 },
-  { name: "4월", value: 3 },
-  { name: "5월", value: 12 },
-  { name: "6월", value: 3 },
-  { name: "7월", value: 14 },
-  { name: "8월", value: 3 },
-  { name: "9월", value: 10 },
-  { name: "10월", value: 3 },
-  { name: "11월", value: 4 },
-  { name: "12월", value: 3 },
-];
+import { useEffect } from "react";
 
 const ShareStatPage = () => {
+  const [rank, setRank] = useState("");
+  const [name, setName] = useState("");
+  const [monthData, setMonthData] = useState([]);
+  const [yearData, setYearData] = useState([]);
+  const [month, setMonth] = useState("");
+  const [year, setYear] = useState("");
+  const readRank = async () => {
+    try {
+      const response = await getRank();
+      setRank(response.data.data.rank);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const readMemberInfo = async () => {
+    try {
+      const response = await getMemberInfo();
+      setName(response.data.data.nickname);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const readMonthYearStat = async () => {
+    try {
+      const response = await getMonthYearStat();
+      // 주간 데이터 가공
+      const monthStats =
+        response.data.data.monthStats.currentMonthStatsList.map((item) => ({
+          name: `${item.unit}주차`,
+          count: item.count,
+        }));
+      // 월간 데이터 가공
+      const yearStats = response.data.data.yearStats.currentYearStatsList.map(
+        (item) => ({
+          name: `${item.unit}월`,
+          count: item.count,
+        })
+      );
+      setMonth(response.data.data.monthStats.currentMonth);
+      setYear(response.data.data.yearStats.currentYear);
+      setMonthData(monthStats);
+      setYearData(yearStats);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    readRank();
+    readMemberInfo();
+    readMonthYearStat();
+  }, []);
   return (
     <M.Layout>
       <BackButton text="나눔 통계" />
       <M.StatTextWrapper>
         <span style={{ color: "var(--yellow-100)", fontWeight: "bold" }}>
-          이승진
-        </span>{" "}
-        님은 전체 사용자 중{"  "}
+          {name}
+        </span>
+        님은 전체 사용자 중
         <span style={{ color: "var(--yellow-100)", fontWeight: "bold" }}>
-          5
-        </span>{" "}
+          {rank}
+        </span>
         등이에요!
       </M.StatTextWrapper>
 
       {/* 주간 통계 그래프 */}
       <M.GraphContainer>
-        <M.StatTitleWrapper>주간 통계</M.StatTitleWrapper>
+        <M.StatTitleWrapper>{month}월 주간 통계</M.StatTitleWrapper>
         <ResponsiveContainer width="100%" height={250}>
           <BarChart
-            data={weeklyData}
+            data={monthData}
             margin={{ top: 0, right: 20, left: 20, bottom: 10 }}
             barSize={40}
           >
             <XAxis dataKey="name" tickLine={false} />
             <Tooltip cursor={{ fill: "transparent" }} />
-            <Bar
-              dataKey={(entry) => Math.min(entry.value, 10)}
-              fill="var(--yellow-100)"
-            >
+            <Bar dataKey="count" fill="var(--yellow-100)">
               <LabelList
-                dataKey="value" /* 원래 숫자 그대로 표시 */
+                dataKey="count"
                 position="top"
-                fontSize={14}
+                fontSize={13}
                 fontWeight="bold"
               />
             </Bar>
@@ -75,10 +105,10 @@ const ShareStatPage = () => {
 
       {/* 월간 통계 그래프 */}
       <M.GraphContainer>
-        <M.StatTitleWrapper>월간 통계</M.StatTitleWrapper>
+        <M.StatTitleWrapper>{year} 월간 통계</M.StatTitleWrapper>
         <ResponsiveContainer width="100%" height={250}>
           <BarChart
-            data={monthlyData}
+            data={yearData}
             margin={{ top: 0, right: 20, left: 20, bottom: 10 }}
             barSize={20}
           >
@@ -89,12 +119,9 @@ const ShareStatPage = () => {
               interval={0}
             />
             <Tooltip cursor={{ fill: "transparent" }} />
-            <Bar
-              dataKey={(entry) => Math.min(entry.value, 10)}
-              fill="var(--yellow-50)"
-            >
+            <Bar dataKey="count" fill="var(--yellow-50)">
               <LabelList
-                dataKey="value" /* 원래 숫자 그대로 표시 */
+                dataKey="count"
                 position="top"
                 fontSize={13}
                 fontWeight="bold"
