@@ -1,9 +1,8 @@
-import { NotiCard } from "../../components/chat/card";
 import NavigationBar from "../../components/common/Navigition/navigationBar";
-import { S } from "../chat/chatListPage.style";
+import { M } from "../notice/notification.style";
 import { getNotice } from "../../api/notice";
 import { useState, useEffect } from "react";
-
+import NotificationItem from "../../pages/notice/notificationItem";
 const NotificationPage = () => {
   const [notiList, setNotiList] = useState([]);
 
@@ -22,22 +21,18 @@ const NotificationPage = () => {
   }, []);
 
   return (
-    <S.Layout>
+    <M.Layout>
       <NavigationBar />
-      <S.ChatListWholeWrapper>
+      <M.ChatListWholeWrapper>
         {notiList.length > 0 ? (
           notiList.map((item) => {
-            return (
-              <li key={item.id}>
-                <NotiCard data={item} />
-              </li>
-            );
+            return <NotificationItem key={item.id} data={item} />;
           })
         ) : (
-          <div>알림이 없습니다</div>
+          <div></div>
         )}
-      </S.ChatListWholeWrapper>
-    </S.Layout>
+      </M.ChatListWholeWrapper>
+    </M.Layout>
   );
 };
 export default NotificationPage;

@@ -3,25 +3,25 @@ import axios from "axios";
 
 // 나눔글 생성
 export const postSharing = async (formData) => {
-    try {
-        // 전송
-        const tokenString = localStorage.getItem("token");
-        const token = JSON.parse(tokenString);
-        const accessToken = token?.accessToken;
-        console.log("토큰 ", accessToken);
-        const response = await client.post(`/sharing`, formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-                Authorization: accessToken,
-            },
-        });
+  try {
+    // 전송
+    const tokenString = localStorage.getItem("token");
+    const token = JSON.parse(tokenString);
+    const accessToken = token?.accessToken;
+    console.log("토큰 ", accessToken);
+    const response = await client.post(`/sharing`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: accessToken,
+      },
+    });
 
-        console.log("응답 데이터:", response.data);
-        return response;
-    } catch (err) {
-        console.error("Error posting sharing:", err);
-        throw err;
-    }
+    console.log("응답 데이터:", response.data);
+    return response;
+  } catch (err) {
+    console.error("Error posting sharing:", err);
+    throw err;
+  }
 };
 
 // 나눔글 조회
@@ -74,38 +74,74 @@ export const getSharingList = async (postType, latitude, longitude) => {
 };*/
 
 export const getSharingList = async (postType, latitude, longitude) => {
-    console.log("요기서 받아오기 시작");
-    try {
-        const token = JSON.parse(localStorage.getItem("token"))?.accessToken;
-        console.log("받아오기 try 들어와");
-        console.log("토큰이요1: ", token);
-        const response = await client.get(`/sharing/list`, {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: token,
-            },
-            params: {
-                postType: postType,
-                latitude: latitude,
-                longitude: longitude,
-            },
-        });
-        console.log("토큰이요: ", token);
-        console.log("전체 응답 객체:", response); // 전체 응답 객체 출력
-        return response;
-    } catch (err) {
-        throw err;
-    }
+  console.log("요기서 받아오기 시작");
+  try {
+    const token = JSON.parse(localStorage.getItem("token"))?.accessToken;
+    console.log("받아오기 try 들어와");
+    console.log("토큰이요1: ", token);
+    const response = await client.get(`/sharing/list`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      params: {
+        postType: postType,
+        latitude: latitude,
+        longitude: longitude,
+      },
+    });
+    console.log("토큰이요: ", token);
+    console.log("전체 응답 객체:", response); // 전체 응답 객체 출력
+    return response;
+  } catch (err) {
+    throw err;
+  }
 };
 
 // 나눔글 상세 조회
 export const getPostDetail = async (id) => {
-    try {
-        const response = await client.get(`/sharing/${id}`);
-        console.log("위치 값을 확인해 봐");
-        console.log(response);
-        return response;
-    } catch (err) {
-        throw err;
-    }
+  try {
+    const response = await client.get(`/sharing/${id}`);
+    console.log("위치 값을 확인해 봐");
+    console.log(response);
+    return response;
+  } catch (err) {
+    throw err;
+  }
+};
+
+//나눔글 기간별 상세통계
+export const getStat = async (startDate, endDate) => {
+  try {
+    const response = await client.get(`/sharing/stats/period/detail`, {
+      startDate,
+      endDate,
+    });
+    console.log(response);
+    return response;
+  } catch (err) {
+    throw err;
+  }
+};
+
+//나눔 전체 순위
+export const getRank = async () => {
+  try {
+    const response = await client.get(`/sharing/stats/rank`);
+    console.log(response);
+    return response;
+  } catch (err) {
+    throw err;
+  }
+};
+
+//나눔글 현재 시간 월별/주별 통계
+export const getMonthYearStat = async () => {
+  try {
+    const response = await client.get(`sharing/stats/period/current`);
+    console.log(response);
+    return response;
+  } catch (err) {
+    throw err;
+  }
 };

@@ -3,6 +3,7 @@ import styled from "styled-components";
 const S = {
   Layout: styled.div`
     display: flex;
+    flex-direction: column;
     align-items: center;
   `,
 };
@@ -12,6 +13,13 @@ const M = {
   Layout: styled.div`
     display: flex;
     flex-direction: column;
+    @media (max-width: 749px) {
+      width: 100%;
+    }
+    @media (min-width: 750px) {
+      max-width: 750px;
+      margin: 0 auto;
+    }
   `,
   InfoContainer: styled.div`
     display: flex;
@@ -119,6 +127,13 @@ const M = {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    @media (max-width: 749px) {
+      width: 100%;
+    }
+    @media (min-width: 750px) {
+      max-width: 750px;
+      margin: 0 auto;
+    }
   `,
   Form: styled.form`
     display: flex;
@@ -197,7 +212,7 @@ const M = {
     display: flex;
     justify-content: center;
     width: 575px;
-    height: 15px;
+    height: 23px;
     padding: 10px;
     margin-top: 5px;
     border: none;
@@ -237,8 +252,9 @@ const M = {
   KeywordContainer: styled.div`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    width: 100%;
-    gap: 10px;
+    width: 85%;
+    margin: 0 auto;
+    gap: 19px;
     padding-top: 20px;
   `,
   KeywordWrapper: styled.div`
@@ -246,7 +262,8 @@ const M = {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid var(--yellow-100);
+    border: 1px solid var(--gray-100);
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     padding: 10px;
     cursor: pointer;
@@ -256,56 +273,130 @@ const M = {
     }
   `,
   //나눔통계
+  Layout2: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    @media (max-width: 749px) {
+      width: 100%;
+    }
+    @media (min-width: 750px) {
+      max-width: 750px;
+      margin: 0 auto;
+    }
+  `,
   StatBackground: styled.div`
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     height: 713px;
-    padding-top: 20px;
-    background-color: var(--yellow-40);
+    padding-top: 10px;
   `,
   StatContainer: styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    align-items: center;
-    height: 100px;
-    width: 350px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); // 3열 배치
+    gap: 20px;
+    margin: 0 auto;
+    border: 1px solid var(--gray-100);
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
   `,
+
   CountContainer: styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
     align-items: center;
+    justify-content: center;
     width: 90px;
-    height: 88px;
-    margin: 7px;
-    background-color: var(--white);
-    border-radius: 10px;
+    height: 90px;
+    gap: 10px;
   `,
+  HighlightContainer: styled.div`
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    gap: 12px;
+  `,
+  HighlightBox: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 19px;
+    border: 1px solid var(gray-100);
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background-color: var(--white);
+    font-size: 15px;
+    font-weight: bold;
+    width: 130px;
+    height: 130px;
+    margin-top: 13px;
+  `,
+  ParticipationRate: styled.div`
+    display: flex;
+    width: 310px;
+    margin-top: 15px;
+    font-size: 15px;
+    border: 1px solid var(--gray-100);
+    padding: 19px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  `,
+
   StatImageWrapper: styled.div`
     width: 50px;
     height: 50px;
   `,
   CountText: styled.div`
     font-sise: 17px;
-    font-weight: 700;
+    font-weight: 500;
   `,
   TitleContainer: styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 10px;
+    margin: 13px;
+    width: 370px;
   `,
   TitleWrapper: styled.div`
     font-weight: 500;
     font-size: 17px;
+    padding: 10px 15px 0px 15px;
   `,
   TitleWrapperY: styled.div`
     font-weight: 500;
     font-size: 17px;
     color: var(--yellow-100);
   `,
-
+  DateContainer: styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 18px 0px 18px;
+  `,
+  DateWrapper: styled.div`
+    display: flex;
+    border: 1px solid var(--gray-100);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  `,
+  Button: styled.button`
+    display: flex;
+    width: 40px;
+    height: 40px;
+    margin-left: 8px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: 1px solid var(--gray-100);
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  `,
   //나눔 통계
   StatTextWrapper: styled.span`
     display: flex;

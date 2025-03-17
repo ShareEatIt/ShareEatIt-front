@@ -17,6 +17,13 @@ const M = {
     align-items: center;
     gap: 5px;
     padding: 100px;
+    @media (max-width: 749px) {
+      width: 100%;
+    }
+    @media (min-width: 750px) {
+      max-width: 750px;
+      margin: 0 auto;
+    }
   `,
   LogoWrapper: styled.div`
     display: flex;
