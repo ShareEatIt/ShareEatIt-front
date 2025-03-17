@@ -1,9 +1,9 @@
 import React, { lazy, Suspense, useEffect, useState } from "react";
 import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
+    BrowserRouter as Router,
+    Route,
+    Routes,
+    Navigate,
 } from "react-router-dom";
 import ChatListPage from "./pages/chat/chatListPage";
 import NotificationPage from "./pages/notice/notificationPage";
@@ -22,8 +22,9 @@ import PostSharePage from "./pages/home/postSharePage";
 import ShareDetailPage from "./pages/shareDetail/shareDetailPage";
 import MapPage from "./pages/home/mapPage";
 import IntroPage from "./pages/login/IntroPage";
+import RegisterPage from "./pages/login/RegisterPage";
 function App() {
-  /*const [isFirstVisit, setIsFirstVisit] = useState(true);
+    /*const [isFirstVisit, setIsFirstVisit] = useState(true);
 
   useEffect(() => {
     // 첫 방문 여부를 Local Storage에서 확인
@@ -38,31 +39,32 @@ function App() {
         path="/"
         element={isFirstVisit ? <Navigate to="/login" replace /> : <HomePage />}
       />*/
-  //const HomePage = lazy(() => import("./pages/home/homePage/homePage"));
-  return (
-    <Routes>
-      <Route path="/" element={<KakaoLoginPage />} />
-      <Route path="/oauth2-redirect" element={<OAuthRedirectPage />} />
-      <Route path="/home" element={<HomePage />} />
-      <Route path="/intro" element={<IntroPage />} />
-      <Route path="/postdetail/:id" element={<ShareDetailPage />} />
-      <Route path="/chatlist" element={<ChatListPage />} />
-      <Route path="/chatlist/:chatRoomId" element={<ChatPage />} />
-      <Route path="/notice" element={<NotificationPage />} />
-      <Route path="/mypage" element={<MyPage />} />
-      <Route path="/keyword" element={<KeywordPage />} />
-      <Route path="/profile" element={<ProfileEditPage />} />
-      <Route path="/sharestat" element={<ShareStatPage />} />
-      <Route path="/sharestatus" element={<ShareStatusPage />} />
-      <Route path="/report" element={<ReportPage />} />
-      <Route
-        path="/participationstatus"
-        element={<ParticipationStatusPage />}
-      />
-      <Route path="/mappage" element={<MapPage />} />
-      <Route path="/createpost" element={<PostSharePage />} />
-    </Routes>
-  );
+    //const HomePage = lazy(() => import("./pages/home/homePage/homePage"));
+    return (
+        <Routes>
+            <Route path="/" element={<KakaoLoginPage />} />
+            <Route path="/oauth2-redirect" element={<OAuthRedirectPage />} />
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/intro" element={<IntroPage />} />
+            <Route path="/postdetail/:id" element={<ShareDetailPage />} />
+            <Route path="/chatlist" element={<ChatListPage />} />
+            <Route path="/chatlist/:chatRoomId" element={<ChatPage />} />
+            <Route path="/notice" element={<NotificationPage />} />
+            <Route path="/mypage" element={<MyPage />} />
+            <Route path="/keyword" element={<KeywordPage />} />
+            <Route path="/profile" element={<ProfileEditPage />} />
+            <Route path="/sharestat" element={<ShareStatPage />} />
+            <Route path="/sharestatus" element={<ShareStatusPage />} />
+            <Route path="/report" element={<ReportPage />} />
+            <Route
+                path="/participationstatus"
+                element={<ParticipationStatusPage />}
+            />
+            <Route path="/mappage" element={<MapPage />} />
+            <Route path="/createpost" element={<PostSharePage />} />
+            <Route path="/register" element={<RegisterPage />} />
+        </Routes>
+    );
 }
 
 /*<Suspense fallback={<div>Loading...</div>}></Suspense>

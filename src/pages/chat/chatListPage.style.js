@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { ReactComponent as SerchIcon } from "../../assets/common/SearchIcon.svg";
 const S = {
     Layout: styled.div`
         display: flex;
@@ -13,7 +14,6 @@ const S = {
         display: flex;
         flex-grow: 1;
         flex-direction: column;
-        background-color: var(--yellow-50);
     `,
     TitleWrapper: styled.div`
         display: flex;
@@ -26,6 +26,26 @@ const S = {
         font-weight: bold;
     `,
     ChatListContainer: styled.div``,
+    SearchBarContainer: styled.div`
+        display: flex;
+        align-items: center;
+        border: solid 1px #e3e3e3;
+        border-radius: 10px;
+        background-color: var(--white);
+        box-sizing: border-box;
+        padding: 0.3rem 0.5rem;
+    `,
+    SerchBarIcon: styled(SerchIcon)`
+        color: #e3e3e3;
+    `,
+    SerchInput: styled.input`
+        width: 100%;
+        margin: 0 0.5rem;
+
+        &::placeholder {
+            color: #e3e3e3;
+        }
+    `,
 };
 
 export { S };

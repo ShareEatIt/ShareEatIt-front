@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { S } from "./shareList.style";
 import { isEditable } from "@testing-library/user-event/dist/utils";
-
+import { ReactComponent as Arrow } from "../../../assets/Home/arrow-outlined.svg";
 const categoryMap = {
     BAKERY: "빵",
     BEVERAGE: "음료",
@@ -16,10 +16,10 @@ const categoryMap = {
 
 const ShareList = ({ sharingList, onClick }) => {
     const navigate = useNavigate();
-
+    console.log("데이터:", sharingList);
     return (
         <>
-            {[...sharingList].reverse().map((item) => (
+            {[...sharingList].map((item) => (
                 <S.Layout key={item.id} onClick={() => onClick(item.id)}>
                     <S.CardImage src={item.img} />
                     <S.CardContent>
@@ -43,8 +43,14 @@ const ShareList = ({ sharingList, onClick }) => {
                                 {/* 한글 변환, 변환 실패 시 원래 값 표시 */}
                             </S.ShareInfoContainer>
                         </S.ShareContainer>
-                        <S.ShareTime>{item.ago}</S.ShareTime>
                     </S.CardContent>
+                    <S.RightBox>
+                        <S.MoreWrapper>
+                            상세보기
+                            <Arrow />{" "}
+                        </S.MoreWrapper>
+                        <S.ShareTime>{item.ago}</S.ShareTime>
+                    </S.RightBox>
                 </S.Layout>
             ))}
         </>

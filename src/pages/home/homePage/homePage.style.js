@@ -96,6 +96,24 @@ const S = {
         cursor: pointer;
         font-size: 16px;
     `,
+    MoreButton: styled.button`
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: var(--yellow-90);
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 10px auto;
+        text-align: center;
+
+        &:hover {
+            background-color: var(--yellow-75);
+        }
+    `,
 };
 
 export { S };

@@ -12,17 +12,22 @@ const S = {
         border-radius: 0.5rem;
     `,
     CardImage: styled.img`
+        display: flex;
+        align-items: center;
         width: 6.4375rem;
         height: 6.25rem;
         margin-right: 0.69rem;
         border-radius: 0.5rem;
 
-        object-fit: contain;
+        object-fit: cover;
+        aspect-ratio: 1 / 1;
+        background-color: #f0f0f0;
     `,
 
     CardContent: styled.div`
         display: flex;
         flex-direction: column;
+        width: 100%;
         gap: 0.3rem;
     `,
 
@@ -38,16 +43,32 @@ const S = {
     `,
 
     ShareInfoContainer: styled.div`
-        color: var(--yellow-100);
         margin-left: 0.5rem;
         white-space: pre-wrap;
     `,
     ShareTime: styled.div`
-        margin-top: 0.4rem;
+        display: flex;
+        justify-content: end;
+        width: 100%;
+
         font-size: 0.62rem;
     `,
 
     CardDetailButton: styled.button``,
+    RightBox: styled.div`
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 20%;
+    `,
+    MoreWrapper: styled.div`
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        width: 100%;
+        gap: 0.3rem;
+        font-size: 0.75rem;
+    `,
 };
 
 export { S };
