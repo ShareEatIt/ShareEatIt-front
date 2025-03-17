@@ -12,7 +12,6 @@ export const logout = async () => {
         throw err;
     }
 };
-import { client } from "./api";
 
 // 자체 로그인
 export const postLogin = async (username, password) => {
