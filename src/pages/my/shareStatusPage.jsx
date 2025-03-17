@@ -12,11 +12,13 @@ import { ReactComponent as Snack } from "../../assets/common/snack.svg";
 import { ReactComponent as Grocery } from "../../assets/common/grocery.svg";
 import { ReactComponent as Etc } from "../../assets/common/etc.svg";
 import { getMemberPostStatus, getMemberInfo } from "../../api/member";
+import { getStat } from "../../api/sharing";
 
 const ShareStatusPage = () => {
   const [name, setName] = useState("");
   const [count, setCount] = useState("");
   const [popularCategory, setPopularCategory] = useState("");
+  const [totalSharedCount, setTotalSharedCount] = useState("");
   const [participationRate, setParticipationRate] = useState("");
   const [userRank10km, setUserRank10km] = useState("");
   const [bakery, setBakery] = useState("");
@@ -28,6 +30,19 @@ const ShareStatusPage = () => {
   const [snack, setSnack] = useState("");
   const [groceries, setGroceries] = useState("");
   const [etc, setEtc] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+
+  const formatDate = (date) => {
+    if (!date) return "";
+    const newDate = new Date(date);
+    const year = newDate.getFullYear(); // 네 자리 연도
+    const month = (newDate.getMonth() + 1).toString().padStart(2, "0"); // 월을 두 자리로 맞추기
+    const day = newDate.getDate().toString().padStart(2, "0"); // 일을 두 자리로 맞추기
+
+    return `${year}-${month}-${day}`;
+  };
+
   const readMemberInfo = async () => {
     try {
       const response = await getMemberInfo();
@@ -36,6 +51,17 @@ const ShareStatusPage = () => {
       console.error(err);
     }
   };
+  const readStat = async () => {
+    try {
+      const response = await getStat(startDate, endDate);
+      setPopularCategory(response.data.data.popularCategory);
+      setTotalSharedCount(response.data.data.totalSharedCount);
+      setUserRank10km(response.data.data.userRank10km);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  /*
   const readMemberPostStatus = async () => {
     try {
       const response = await getMemberPostStatus();
@@ -80,14 +106,33 @@ const ShareStatusPage = () => {
       console.error(err);
     }
   };
+*/
 
   useEffect(() => {
     readMemberInfo();
-    readMemberPostStatus();
+    //readMemberPostStatus();
   }, []);
   return (
-    <M.Layout>
+    <M.Layout2>
       <BackButton text="나눔 현황" />
+      <M.DateContainer>
+        <M.DateWrapper>
+          <input
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(formatDate(e.target.value))}
+          />
+        </M.DateWrapper>
+        -
+        <M.DateWrapper>
+          <input
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(formatDate(e.target.value))}
+          />
+        </M.DateWrapper>
+        <M.Button onClick={readStat}>조회</M.Button>
+      </M.DateContainer>
       <M.TitleContainer>
         <M.TitleWrapper>
           <M.TitleWrapperY>
@@ -138,12 +183,12 @@ const ShareStatusPage = () => {
         </M.StatContainer>
         <M.HighlightContainer>
           <M.HighlightBox>
-            <M.CountText>가장 많이 나눔한 음식</M.CountText>
+            <M.CountText>최다 나눔 음식</M.CountText>
             <M.StatImageWrapper>{popularCategory}</M.StatImageWrapper>
             <M.CountText>{popularCategory}</M.CountText>
           </M.HighlightBox>
           <M.HighlightBox>
-            <M.CountText>10km 이내 나눔 순위</M.CountText>
+            <M.CountText>10km 내 나눔 순위</M.CountText>
             <M.CountText>{userRank10km}위</M.CountText>
           </M.HighlightBox>
         </M.HighlightContainer>
@@ -151,7 +196,7 @@ const ShareStatusPage = () => {
           나눔 성사 비율 {participationRate}%
         </M.ParticipationRate>
       </M.StatBackground>
-    </M.Layout>
+    </M.Layout2>
   );
 };
 export default ShareStatusPage;

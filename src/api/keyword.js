@@ -31,9 +31,9 @@ export const getRegisteredList = async () => {
 };
 
 //키워드 사용 중지
-export const patchKeywordList = async (id) => {
+export const patchKeywordList = async (keyword) => {
   try {
-    const response = await client.patch(`/keyword/${id}`);
+    const response = await client.patch(`/keyword?keyword=${keyword}`);
     return response;
   } catch (err) {
     throw err;

@@ -13,6 +13,13 @@ const M = {
   Layout: styled.div`
     display: flex;
     flex-direction: column;
+    @media (max-width: 749px) {
+      width: 100%;
+    }
+    @media (min-width: 750px) {
+      max-width: 750px;
+      margin: 0 auto;
+    }
   `,
   InfoContainer: styled.div`
     display: flex;
@@ -120,6 +127,13 @@ const M = {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    @media (max-width: 749px) {
+      width: 100%;
+    }
+    @media (min-width: 750px) {
+      max-width: 750px;
+      margin: 0 auto;
+    }
   `,
   Form: styled.form`
     display: flex;
@@ -198,7 +212,7 @@ const M = {
     display: flex;
     justify-content: center;
     width: 575px;
-    height: 15px;
+    height: 23px;
     padding: 10px;
     margin-top: 5px;
     border: none;
@@ -238,8 +252,9 @@ const M = {
   KeywordContainer: styled.div`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    width: 100%;
-    gap: 10px;
+    width: 85%;
+    margin: 0 auto;
+    gap: 19px;
     padding-top: 20px;
   `,
   KeywordWrapper: styled.div`
@@ -247,7 +262,8 @@ const M = {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid var(--yellow-100);
+    border: 1px solid var(--gray-100);
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     padding: 10px;
     cursor: pointer;
@@ -257,18 +273,34 @@ const M = {
     }
   `,
   //나눔통계
+  Layout2: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    @media (max-width: 749px) {
+      width: 100%;
+    }
+    @media (min-width: 750px) {
+      max-width: 750px;
+      margin: 0 auto;
+    }
+  `,
   StatBackground: styled.div`
     display: flex;
     flex-direction: column;
+    align-items: center;
     height: 713px;
     padding-top: 10px;
-    background-color: var(--yellow-10);
   `,
   StatContainer: styled.div`
     display: grid;
     grid-template-columns: repeat(3, 1fr); // 3열 배치
     gap: 20px;
     margin: 0 auto;
+    border: 1px solid var(--gray-100);
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
   `,
 
   CountContainer: styled.div`
@@ -278,7 +310,6 @@ const M = {
     justify-content: center;
     width: 90px;
     height: 90px;
-    margin: 0px 10px 0px 10px;
     gap: 10px;
   `,
   HighlightContainer: styled.div`
@@ -287,27 +318,33 @@ const M = {
     justify-content: center;
     align-items: center;
     margin: 0 auto;
-    gap: 20px;
+    gap: 12px;
   `,
   HighlightBox: styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 15px;
+    padding: 19px;
+    border: 1px solid var(gray-100);
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     background-color: var(--white);
     font-size: 15px;
     font-weight: bold;
-    width: 140px;
+    width: 130px;
     height: 130px;
+    margin-top: 13px;
   `,
   ParticipationRate: styled.div`
-    width: 100%;
-    text-align: center;
-    margin-top: 20px;
-    font-size: 16px;
-    font-weight: bold;
+    display: flex;
+    width: 310px;
+    margin-top: 15px;
+    font-size: 15px;
+    border: 1px solid var(--gray-100);
+    padding: 19px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
   `,
 
   StatImageWrapper: styled.div`
@@ -316,24 +353,50 @@ const M = {
   `,
   CountText: styled.div`
     font-sise: 17px;
-    font-weight: 700;
+    font-weight: 500;
   `,
   TitleContainer: styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 15px;
+    margin: 13px;
+    width: 370px;
   `,
   TitleWrapper: styled.div`
     font-weight: 500;
     font-size: 17px;
+    padding: 10px 15px 0px 15px;
   `,
   TitleWrapperY: styled.div`
     font-weight: 500;
     font-size: 17px;
     color: var(--yellow-100);
   `,
-
+  DateContainer: styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 18px 0px 18px;
+  `,
+  DateWrapper: styled.div`
+    display: flex;
+    border: 1px solid var(--gray-100);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  `,
+  Button: styled.button`
+    display: flex;
+    width: 40px;
+    height: 40px;
+    margin-left: 8px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: 1px solid var(--gray-100);
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  `,
   //나눔 통계
   StatTextWrapper: styled.span`
     display: flex;

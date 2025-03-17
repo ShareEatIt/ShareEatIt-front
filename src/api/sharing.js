@@ -110,10 +110,13 @@ export const getPostDetail = async (id) => {
   }
 };
 
-//나눔글 기간별 통계
-export const getStat = async (periodType) => {
+//나눔글 기간별 상세통계
+export const getStat = async (startDate, endDate) => {
   try {
-    const response = await client.get(`/sharing/stats/period/${periodType}`);
+    const response = await client.get(`/sharing/stats/period/detail`, {
+      startDate,
+      endDate,
+    });
     console.log(response);
     return response;
   } catch (err) {
@@ -125,6 +128,17 @@ export const getStat = async (periodType) => {
 export const getRank = async () => {
   try {
     const response = await client.get(`/sharing/stats/rank`);
+    console.log(response);
+    return response;
+  } catch (err) {
+    throw err;
+  }
+};
+
+//나눔글 현재 시간 월별/주별 통계
+export const getMonthYearStat = async () => {
+  try {
+    const response = await client.get(`sharing/stats/period/current`);
     console.log(response);
     return response;
   } catch (err) {
